@@ -253,6 +253,27 @@ body::after {
   animation: audio-equalizer 0.9s ease-in-out infinite;
 }
 
+.terminal-category-float .scroll-float-text {
+  text-align: left;
+  line-height: 1.05;
+  font-size: clamp(2rem, 4.6vw, 4.8rem);
+  letter-spacing: 0.08em;
+}
+
+.terminal-scroll-stack .scroll-stack-inner {
+  padding: 0 0 32rem;
+  min-height: auto;
+}
+
+.terminal-scroll-stack .scroll-stack-card {
+  border-radius: 0;
+}
+
+.terminal-scroll-card {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
 .sponsors-arc-track {
   animation: marquee 24s linear infinite;
   transform-origin: center center;
