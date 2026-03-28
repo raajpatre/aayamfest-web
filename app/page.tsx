@@ -1,110 +1,128 @@
-import { Footer } from "@/components/sections/Footer";
-import { HeroSection } from "@/components/sections/HeroSection";
-import { EmptyState } from "@/components/sections/EmptyState";
-import { ActionButton } from "@/components/ui/ActionButton";
-import { AnimatedPrizeValue } from "@/components/ui/AnimatedPrizeValue";
+"use client";
+
+import { AnimatedAboutStatsSection } from "@/components/sections/AnimatedAboutStatsSection";
+import { FeaturedEventsSection } from "@/components/sections/FeaturedEventsSection";
+import { HomeTerminalFooter } from "@/components/sections/HomeTerminalFooter";
+import { InitializeRegistrationCTA } from "@/components/sections/InitializeRegistrationCTA";
+import { SponsorsPreviewSection } from "@/components/sections/SponsorsPreviewSection";
 import { CountdownTimer } from "@/components/ui/CountdownTimer";
-import { EventCard } from "@/components/ui/EventCard";
-import { FadeIn } from "@/components/ui/FadeIn";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { SponsorMarquee } from "@/components/ui/SponsorMarquee";
-import { getFeaturedEvents, getSiteConfig, getSponsors } from "@/lib/data";
+import { FestLogo } from "@/components/ui/FestLogo";
+import Hyperspeed from "@/components/ui/Hyperspeed";
+import { hyperspeedPresets } from "@/components/ui/HyperspeedPresets";
 
-export default async function HomePage() {
-  const [siteConfig, featuredEvents, sponsors] = await Promise.all([
-    getSiteConfig().catch(() => null),
-    getFeaturedEvents().catch(() => []),
-    getSponsors().catch(() => [])
-  ]);
+const glassCardClass =
+  "border border-white/5 bg-gradient-to-br from-black/60 to-black/30 backdrop-blur-lg shadow-[0_12px_40px_rgba(0,0,0,0.28),inset_0_1px_0_0_rgba(255,255,255,0.1)] transition-all duration-300 hover:border-fuchsia-500/50 hover:shadow-[0_18px_55px_rgba(0,0,0,0.38),0_0_24px_rgba(217,70,239,0.16),inset_0_1px_0_0_rgba(255,255,255,0.1)]";
 
+const galaxyBackdropStyle = {
+  backgroundColor: "#020308",
+  backgroundImage: `
+    radial-gradient(circle at 52% 50%, rgba(108, 68, 224, 0.34) 0%, rgba(108, 68, 224, 0.12) 16%, rgba(3, 7, 18, 0) 34%),
+    radial-gradient(circle at 57% 46%, rgba(34, 211, 238, 0.18) 0%, rgba(34, 211, 238, 0.06) 12%, rgba(0, 0, 0, 0) 28%),
+    radial-gradient(circle at 46% 60%, rgba(217, 70, 239, 0.2) 0%, rgba(217, 70, 239, 0.08) 14%, rgba(0, 0, 0, 0) 30%),
+    radial-gradient(circle at 24% 24%, rgba(59, 130, 246, 0.14) 0%, rgba(59, 130, 246, 0.04) 10%, rgba(0, 0, 0, 0) 22%),
+    radial-gradient(circle at 78% 18%, rgba(168, 85, 247, 0.08) 0%, rgba(168, 85, 247, 0.02) 8%, rgba(0, 0, 0, 0) 18%),
+    linear-gradient(180deg, rgba(1, 4, 12, 0.7) 0%, rgba(1, 6, 16, 0.2) 42%, rgba(2, 4, 10, 0.75) 100%),
+    radial-gradient(circle, rgba(255,255,255,0.9) 0.75px, transparent 1.2px),
+    radial-gradient(circle, rgba(120,180,255,0.55) 0.6px, transparent 1.1px),
+    radial-gradient(circle, rgba(255,255,255,0.65) 0.9px, transparent 1.4px)
+  `,
+  backgroundSize: "100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 180px 180px, 260px 260px, 340px 340px",
+  backgroundPosition: "center center, center center, center center, center center, center center, center center, 0 0, 40px 60px, 120px 30px"
+} as const;
+
+const hyperspeedEffect = {
+  ...hyperspeedPresets.six,
+  length: 520,
+  roadWidth: 22,
+  lanesPerRoad: 4,
+  speedUp: 4.4,
+  fov: 96,
+  fovSpeedUp: 168,
+  totalSideLightSticks: 90,
+  lightPairsPerRoadWay: 82,
+  movingAwaySpeed: [84, 128],
+  movingCloserSpeed: [-220, -320],
+  carLightsLength: [520 * 0.08, 520 * 0.24],
+  carLightsRadius: [0.05, 0.18],
+  lightStickWidth: [0.18, 0.72],
+  lightStickHeight: [1.8, 2.6],
+  colors: {
+    ...hyperspeedPresets.six.colors,
+    leftCars: [0xff4fd8, 0xd653ff, 0xa855f7],
+    rightCars: [0x64f5ff, 0x3b82f6, 0x6ee7ff],
+    sticks: [0x64f5ff, 0xff6cf3, 0xc4b5fd]
+  }
+} as const;
+
+const borderStreaks = [
+  "left-[3%] top-[64%] h-[44vh] w-[2px] -rotate-[62deg] from-transparent via-cyan-300/85 to-transparent",
+  "left-[10%] top-[58%] h-[34vh] w-[2px] -rotate-[61deg] from-transparent via-fuchsia-400/70 to-transparent",
+  "right-[5%] top-[60%] h-[46vh] w-[2px] rotate-[65deg] from-transparent via-cyan-300/90 to-transparent",
+  "right-[12%] top-[54%] h-[30vh] w-[2px] rotate-[66deg] from-transparent via-blue-400/65 to-transparent",
+  "left-[2%] top-[20%] h-[24vh] w-[1px] -rotate-[72deg] from-transparent via-white/40 to-transparent",
+  "right-[3%] top-[18%] h-[22vh] w-[1px] rotate-[74deg] from-transparent via-cyan-200/35 to-transparent"
+] as const;
+
+export default function HomePage() {
   return (
-    <main>
-      <HeroSection />
-
-      <section className="container-shell py-10">
-        <FadeIn>
-          <SectionHeading
-            eyebrow="Countdown"
-            title="The gateway opens soon"
-            description="The timer is synced to the fest date from your admin settings."
+    <main className="relative min-h-screen">
+      <div className="fixed inset-0 -z-30 h-full w-full bg-black" />
+      <div className="fixed inset-0 -z-20 h-full w-full bg-cover bg-center" style={galaxyBackdropStyle}>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_52%_50%,rgba(255,255,255,0.05),transparent_18%),linear-gradient(180deg,rgba(0,0,0,0.1),rgba(0,0,0,0.35))]" />
+      </div>
+      <div className="fixed inset-0 -z-10 h-full w-full">
+        <Hyperspeed effectOptions={hyperspeedEffect} />
+      </div>
+      <div className="pointer-events-none fixed inset-0 -z-[5] overflow-hidden">
+        {borderStreaks.map((streak) => (
+          <div
+            key={streak}
+            className={`absolute bg-gradient-to-b blur-[1px] opacity-90 mix-blend-screen ${streak}`}
           />
-        </FadeIn>
-        <div className="mt-8">
-          <CountdownTimer targetDate={siteConfig?.festDate} />
-        </div>
-      </section>
+        ))}
+        <div className="absolute left-0 top-0 h-full w-32 bg-[radial-gradient(circle_at_left_center,rgba(34,211,238,0.12),transparent_62%)]" />
+        <div className="absolute right-0 top-0 h-full w-32 bg-[radial-gradient(circle_at_right_center,rgba(217,70,239,0.12),transparent_62%)]" />
+      </div>
 
-      <section className="container-shell py-10">
-        <FadeIn>
-          <div className="glass-panel rounded-[2rem] p-8 sm:p-10">
-            <p className="text-sm uppercase tracking-[0.32em] text-pinkGlow">Prize Pool</p>
-            <div className="mt-5 font-display text-5xl uppercase text-white sm:text-7xl">
-              <AnimatedPrizeValue value={siteConfig?.totalPrizePool} />
-            </div>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-textDim">
-              Big stakes, premium competition, and a stage built to spotlight the most ambitious
-              teams on campus.
-            </p>
-          </div>
-        </FadeIn>
-      </section>
-
-      <section className="container-shell py-10">
-        <FadeIn>
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <SectionHeading
-              eyebrow="Featured Events"
-              title="High-impact challenges"
-              description="Featured events are dynamically picked from the admin dashboard."
-            />
-            <ActionButton href="/events" variant="secondary">
-              Explore Events
-            </ActionButton>
-          </div>
-        </FadeIn>
-        <div className="mt-8 grid gap-6 lg:grid-cols-2 xl:grid-cols-4">
-          {featuredEvents.length
-            ? featuredEvents.map((event, index) => (
-                <FadeIn key={event._id} delay={index * 0.08}>
-                  <EventCard event={event} />
-                </FadeIn>
-              ))
-            : (
-              <EmptyState
-                title="Featured events will appear here"
-                description="Add events and toggle Featured from the admin dashboard to populate this section."
+      <div className="relative z-10 mx-auto max-w-7xl px-4 py-20 text-white sm:px-6 lg:px-8">
+        <section className="flex min-h-[calc(100vh-11rem)] items-start pt-8">
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-center">
+            <div className="relative">
+              <div className="pointer-events-none absolute inset-0 translate-y-8 scale-[1.03] opacity-35 blur-2xl">
+                <FestLogo className="h-36 w-[400px] sm:h-44 sm:w-[560px] lg:h-64 lg:w-[860px]" />
+              </div>
+                <FestLogo
+                className="relative h-36 w-[400px] sm:h-44 sm:w-[560px] lg:h-64 lg:w-[860px]"
+                priority
               />
-              )}
-        </div>
-      </section>
+            </div>
 
-      <section className="container-shell py-10">
-        <FadeIn>
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <SectionHeading
-              eyebrow="Sponsors"
-              title="Backed by the bold"
-              description="Sponsor logos loop here automatically as they are added and categorized."
-            />
-            <div className="flex flex-wrap gap-3">
-              <ActionButton
-                href={siteConfig?.contactDetails?.sponsorFormLink || "#"}
-                external={Boolean(siteConfig?.contactDetails?.sponsorFormLink)}
-              >
-                Become a Sponsor
-              </ActionButton>
-              <ActionButton href="/sponsors" variant="secondary">
-                View All Sponsors
-              </ActionButton>
+            <div className="mt-10 w-full">
+              <div className="mx-auto mb-8 max-w-3xl text-center">
+              <p className="font-mono text-xs uppercase tracking-[0.34em] text-cyan-300/80">
+                Countdown Sequence
+              </p>
+              <h2 className="mt-4 text-2xl font-bold uppercase tracking-[0.08em] text-white [text-shadow:0_4px_18px_rgba(0,0,0,0.85)] sm:text-3xl">
+                First signal on your descent into AAYAM
+              </h2>
+              </div>
+              <CountdownTimer targetDate="2026-04-24T00:00:00" />
             </div>
           </div>
-        </FadeIn>
-        <div className="mt-8">
-          <SponsorMarquee sponsors={sponsors} />
-        </div>
-      </section>
+        </section>
 
-      <Footer siteConfig={siteConfig} />
+        <section className="mt-4">
+          <div className="lg:col-span-2">
+            <AnimatedAboutStatsSection />
+          </div>
+        </section>
+
+        <FeaturedEventsSection />
+        <SponsorsPreviewSection />
+        <InitializeRegistrationCTA />
+
+        <HomeTerminalFooter />
+      </div>
     </main>
   );
 }

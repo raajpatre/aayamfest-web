@@ -9,43 +9,32 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        base: "#050816",
-        panel: "#0B1226",
-        cyanGlow: "#54f3ff",
-        pinkGlow: "#ff5edb",
-        violetGlow: "#8c68ff",
-        textDim: "#9eb3d9"
+        base: "#131315",
+        panel: "#1c1b1e",
+        cyanGlow: "#00dddd",
+        pinkGlow: "#ff00ff",
+        violetGlow: "#a900a9",
+        amberGlow: "#fd8b00",
+        textDim: "#dcbed4",
+        outlineSoft: "#564052"
       },
       fontFamily: {
-        sans: [
-          "ui-sans-serif",
-          "system-ui",
-          "-apple-system",
-          "BlinkMacSystemFont",
-          "\"Segoe UI\"",
-          "sans-serif"
-        ],
-        display: [
-          "ui-sans-serif",
-          "system-ui",
-          "-apple-system",
-          "BlinkMacSystemFont",
-          "\"Segoe UI\"",
-          "sans-serif"
-        ]
+        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["Space Grotesk", "Inter", "ui-sans-serif", "sans-serif"]
       },
       boxShadow: {
-        glow: "0 0 0 1px rgba(84,243,255,0.22), 0 0 32px rgba(140,104,255,0.2)",
-        neon: "0 0 28px rgba(255,94,219,0.28)"
+        glow: "0 0 24px rgba(255,0,255,0.24)",
+        neon: "0 0 40px rgba(0,221,221,0.12)"
       },
       backgroundImage: {
         "hero-grid":
-          "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)"
+          "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)"
       },
       animation: {
         float: "float 10s ease-in-out infinite",
         shine: "shine 4s linear infinite",
-        marquee: "marquee 26s linear infinite"
+        marquee: "marquee 26s linear infinite",
+        sweep: "sweep 4s linear infinite"
       },
       keyframes: {
         float: {
@@ -59,6 +48,10 @@ const config: Config = {
         marquee: {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(-50%)" }
+        },
+        sweep: {
+          "0%": { transform: "translateX(-120%)" },
+          "100%": { transform: "translateX(180%)" }
         }
       }
     }
