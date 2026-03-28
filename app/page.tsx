@@ -84,8 +84,8 @@ export default function HomePage() {
         <div className="absolute right-0 top-0 h-full w-32 bg-[radial-gradient(circle_at_right_center,rgba(217,70,239,0.12),transparent_62%)]" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 py-20 text-white sm:px-6 lg:px-8">
-        <section className="flex min-h-[calc(100vh-11rem)] items-start pt-8">
+      <div className="relative z-10 py-20 text-white">
+        <section className="flex min-h-[calc(100vh-11rem)] items-start px-4 pt-8 sm:px-6 lg:px-8">
           <div className="mx-auto flex w-full max-w-6xl flex-col items-center">
             <div className="relative">
               <div className="pointer-events-none absolute inset-0 translate-y-8 scale-[1.03] opacity-35 blur-2xl">
@@ -111,8 +111,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="mt-4">
-          <div className="lg:col-span-2">
+        <section className="mt-4 px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl lg:col-span-2">
             <AnimatedAboutStatsSection />
           </div>
         </section>
