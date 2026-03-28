@@ -8,9 +8,5 @@ export function GlassCard({
   className?: string;
   children: ReactNode;
 }) {
-  return (
-    <div className={cn("glass-panel reveal-border rounded-[1.75rem]", className)}>
-      {children}
-    </div>
-  );
+  return <div className={cn("terminal-panel", className)}>{children}</div>;
 }

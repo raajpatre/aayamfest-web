@@ -8,12 +8,12 @@ export function SectionHeading({
   description?: string;
 }) {
   return (
-    <div className="max-w-2xl">
-      <p className="mb-3 text-sm uppercase tracking-[0.32em] text-cyanGlow">{eyebrow}</p>
-      <h2 className="font-display text-3xl uppercase tracking-[0.12em] text-white sm:text-4xl">
+    <div className="max-w-3xl">
+      <p className="data-line">{eyebrow}</p>
+      <h2 className="terminal-heading mt-4 text-4xl font-black leading-none text-white sm:text-5xl">
         {title}
       </h2>
-      {description ? <p className="mt-4 text-base leading-7 text-textDim">{description}</p> : null}
+      {description ? <p className="mt-5 max-w-2xl text-base leading-7 text-textDim">{description}</p> : null}
     </div>
   );
 }

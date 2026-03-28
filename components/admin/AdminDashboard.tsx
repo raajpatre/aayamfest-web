@@ -72,6 +72,25 @@ async function parseResponse(response: Response) {
   return result.data;
 }
 
+function panelButton(kind: "primary" | "ghost" | "danger" = "primary") {
+  if (kind === "danger") {
+    return "command-btn bg-rose-500/90 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-white";
+  }
+  if (kind === "ghost") {
+    return "command-btn border border-outlineSoft/35 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-white";
+  }
+  return "command-btn bg-pinkGlow px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-[#510051]";
+}
+
+function formatListLabel(primary: string, secondary: string) {
+  return (
+    <div>
+      <p className="terminal-heading text-lg font-black text-white">{primary}</p>
+      <p className="mt-2 text-xs uppercase tracking-[0.18em] text-white/45">{secondary}</p>
+    </div>
+  );
+}
+
 export function AdminDashboard() {
   const [events, setEvents] = useState<EventRecord[]>([]);
   const [sponsors, setSponsors] = useState<SponsorRecord[]>([]);
@@ -113,16 +132,6 @@ export function AdminDashboard() {
   function saveMessage(message: string) {
     setNotice(message);
     window.setTimeout(() => setNotice(""), 2200);
-  }
-
-  function renderBanner() {
-    if (error) {
-      return <div className="mb-6 rounded-2xl bg-rose-50 px-4 py-3 text-sm text-rose-700">{error}</div>;
-    }
-    if (notice) {
-      return <div className="mb-6 rounded-2xl bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{notice}</div>;
-    }
-    return null;
   }
 
   async function saveEvent() {
@@ -185,16 +194,27 @@ export function AdminDashboard() {
 
   return (
     <AdminShell
-      title="Manage AAYAM Tech Fest"
-      description="Everything on the public website is controlled here: hero data, countdown timing, prize pool, sponsors, events, and team members."
+      title="Event Registration"
+      description="Manage every dynamic feed powering the public AAYAM experience: countdown, prize pool, event modules, sponsor hierarchy, and operator roster."
     >
-      {renderBanner()}
-      <div className="grid gap-6">
-        <AdminSection
-          title="Site Settings"
-          description="Update core site information used across the home page, contact page, countdown, and sponsor CTA."
+      {(error || notice) && (
+        <div
+          className={`mb-6 border px-4 py-3 text-sm ${
+            error
+              ? "border-rose-500/30 bg-rose-500/10 text-rose-300"
+              : "border-cyanGlow/25 bg-cyanGlow/10 text-cyanGlow"
+          }`}
         >
-          <div className="grid gap-4 md:grid-cols-2">
+          {error || notice}
+        </div>
+      )}
+
+      <div className="mb-6 grid gap-6 lg:grid-cols-[1.35fr_0.65fr]">
+        <AdminSection
+          title="System Settings"
+          description="Update the main public signals broadcast across hero, contact, countdown, and sponsor call-to-action modules."
+        >
+          <div className="grid gap-6 md:grid-cols-2">
             <FormField label="Fest Name">
               <input
                 value={settings?.festName || ""}
@@ -220,7 +240,7 @@ export function AdminDashboard() {
                 className={inputStyles()}
               />
             </FormField>
-            <FormField label="Total Prize Pool">
+            <FormField label="Prize Pool">
               <input
                 value={settings?.totalPrizePool || ""}
                 onChange={(event) =>
@@ -229,7 +249,6 @@ export function AdminDashboard() {
                     totalPrizePool: event.target.value
                   }))
                 }
-                placeholder="₹4,00,000+"
                 className={inputStyles()}
               />
             </FormField>
@@ -280,6 +299,7 @@ export function AdminDashboard() {
             </FormField>
             <FormField label="Address" className="md:col-span-2">
               <textarea
+                rows={3}
                 value={settings?.contactDetails?.address || ""}
                 onChange={(event) =>
                   setSettings((current) => ({
@@ -290,12 +310,11 @@ export function AdminDashboard() {
                     }
                   }))
                 }
-                rows={3}
                 className={inputStyles()}
               />
             </FormField>
             {(["instagram", "linkedin", "twitter", "youtube"] as const).map((key) => (
-              <FormField key={key} label={`${key[0].toUpperCase()}${key.slice(1)} Link`}>
+              <FormField key={key} label={`${key} Link`}>
                 <input
                   value={settings?.socialLinks?.[key] || ""}
                   onChange={(event) =>
@@ -312,373 +331,186 @@ export function AdminDashboard() {
               </FormField>
             ))}
           </div>
-          <button
-            type="button"
-            onClick={() => startTransition(() => void saveSettings())}
-            className="mt-6 rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
-          >
+          <button type="button" onClick={() => startTransition(() => void saveSettings())} className={`mt-8 ${panelButton()}`}>
             {isPending ? "Saving..." : "Save Site Settings"}
           </button>
         </AdminSection>
 
-        <div className="grid gap-6 xl:grid-cols-2">
-          <AdminSection
-            title="Manage Events"
-            description="Create, update, delete, and feature public event cards."
-          >
-            <div className="grid gap-4">
-              <FormField label="Title">
-                <input
-                  value={eventForm.title}
-                  onChange={(event) => setEventForm((current) => ({ ...current, title: event.target.value }))}
-                  className={inputStyles()}
-                />
-              </FormField>
-              <div className="grid gap-4 md:grid-cols-2">
-                <FormField label="Category">
-                  <select
-                    value={eventForm.category}
-                    onChange={(event) =>
-                      setEventForm((current) => ({ ...current, category: event.target.value as EventCategory }))
-                    }
-                    className={inputStyles()}
-                  >
-                    {eventCategories.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </select>
-                </FormField>
-                <FormField label="Team Size">
-                  <input
-                    value={eventForm.teamSize}
-                    onChange={(event) =>
-                      setEventForm((current) => ({ ...current, teamSize: event.target.value }))
-                    }
-                    className={inputStyles()}
-                  />
-                </FormField>
+        <div className="space-y-6">
+          <div className="terminal-panel p-6">
+            <p className="system-label text-[10px] text-amberGlow">System Logs</p>
+            <div className="mt-4 space-y-3 text-xs uppercase tracking-[0.18em] text-white/45">
+              <p>&gt; Initializing operator dashboard...</p>
+              <p>&gt; Syncing event registry...</p>
+              <p>&gt; Sponsors online: {sponsors.length}</p>
+              <p>&gt; Team dossiers active: {teamMembers.length}</p>
+            </div>
+          </div>
+          <div className="terminal-panel terminal-grid p-6">
+            <p className="system-label text-[10px] text-cyanGlow">Live Counts</p>
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div>
+                <p className="terminal-heading text-4xl font-black text-white">{events.length}</p>
+                <p className="mt-2 text-xs uppercase tracking-[0.18em] text-white/45">Events</p>
               </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                <FormField label="Prize Pool">
-                  <input
-                    value={eventForm.prizePool}
-                    onChange={(event) =>
-                      setEventForm((current) => ({ ...current, prizePool: event.target.value }))
-                    }
-                    className={inputStyles()}
-                  />
-                </FormField>
-                <FormField label="Registration Link">
-                  <input
-                    value={eventForm.registrationLink}
-                    onChange={(event) =>
-                      setEventForm((current) => ({ ...current, registrationLink: event.target.value }))
-                    }
-                    className={inputStyles()}
-                  />
-                </FormField>
-              </div>
-              <FormField label="Description">
-                <textarea
-                  rows={4}
-                  value={eventForm.description}
-                  onChange={(event) =>
-                    setEventForm((current) => ({ ...current, description: event.target.value }))
-                  }
-                  className={inputStyles()}
-                />
-              </FormField>
-              <FormField label="Poster Image">
-                <AssetUploader
-                  label="Poster"
-                  value={eventForm.posterImage}
-                  onChange={(value) => setEventForm((current) => ({ ...current, posterImage: value }))}
-                  folder="aayam/events"
-                />
-              </FormField>
-              <label className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm">
-                <input
-                  type="checkbox"
-                  checked={eventForm.isFeatured}
-                  onChange={(event) =>
-                    setEventForm((current) => ({ ...current, isFeatured: event.target.checked }))
-                  }
-                />
-                Mark as featured for homepage
-              </label>
-              <div className="flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  onClick={() => startTransition(() => void saveEvent())}
-                  className="rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
-                >
-                  {editingEventId ? "Update Event" : "Create Event"}
-                </button>
-                {editingEventId ? (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setEditingEventId(null);
-                      setEventForm(emptyEvent);
-                    }}
-                    className="rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700"
-                  >
-                    Cancel Edit
-                  </button>
-                ) : null}
+              <div>
+                <p className="terminal-heading text-4xl font-black text-pinkGlow">{sponsors.length}</p>
+                <p className="mt-2 text-xs uppercase tracking-[0.18em] text-white/45">Sponsors</p>
               </div>
             </div>
-
-            <div className="mt-8 space-y-3">
-              {events.map((event) => (
-                <div key={event._id} className="rounded-2xl border border-slate-200 p-4">
-                  <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                    <div>
-                      <p className="font-semibold text-slate-950">{event.title}</p>
-                      <p className="text-sm text-slate-500">
-                        {event.category} • {event.prizePool} • {event.teamSize}
-                      </p>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setEditingEventId(event._id);
-                          setEventForm({
-                            title: event.title,
-                            category: event.category,
-                            description: event.description,
-                            prizePool: event.prizePool,
-                            teamSize: event.teamSize,
-                            posterImage: event.posterImage,
-                            registrationLink: event.registrationLink,
-                            isFeatured: event.isFeatured
-                          });
-                        }}
-                        className="rounded-full border border-slate-200 px-4 py-2 text-sm text-slate-700"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => startTransition(() => void removeItem(`/api/events/${event._id}`, "Event deleted"))}
-                        className="rounded-full bg-rose-600 px-4 py-2 text-sm text-white"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </AdminSection>
-
-          <AdminSection
-            title="Manage Sponsors"
-            description="Upload sponsor logos and assign hierarchy categories for the public sponsor page."
-          >
-            <div className="grid gap-4">
-              <FormField label="Name">
-                <input
-                  value={sponsorForm.name}
-                  onChange={(event) => setSponsorForm((current) => ({ ...current, name: event.target.value }))}
-                  className={inputStyles()}
-                />
-              </FormField>
-              <div className="grid gap-4 md:grid-cols-2">
-                <FormField label="Category">
-                  <select
-                    value={sponsorForm.category}
-                    onChange={(event) =>
-                      setSponsorForm((current) => ({
-                        ...current,
-                        category: event.target.value as SponsorCategory
-                      }))
-                    }
-                    className={inputStyles()}
-                  >
-                    {sponsorCategories.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </select>
-                </FormField>
-                <FormField label="Website Link">
-                  <input
-                    value={sponsorForm.websiteLink}
-                    onChange={(event) =>
-                      setSponsorForm((current) => ({ ...current, websiteLink: event.target.value }))
-                    }
-                    className={inputStyles()}
-                  />
-                </FormField>
-              </div>
-              <FormField label="Logo">
-                <AssetUploader
-                  label="Logo"
-                  value={sponsorForm.logo}
-                  onChange={(value) => setSponsorForm((current) => ({ ...current, logo: value }))}
-                  folder="aayam/sponsors"
-                />
-              </FormField>
-              <div className="flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  onClick={() => startTransition(() => void saveSponsor())}
-                  className="rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
-                >
-                  {editingSponsorId ? "Update Sponsor" : "Create Sponsor"}
-                </button>
-                {editingSponsorId ? (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setEditingSponsorId(null);
-                      setSponsorForm(emptySponsor);
-                    }}
-                    className="rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700"
-                  >
-                    Cancel Edit
-                  </button>
-                ) : null}
-              </div>
-            </div>
-
-            <div className="mt-8 space-y-3">
-              {sponsors.map((sponsor) => (
-                <div key={sponsor._id} className="rounded-2xl border border-slate-200 p-4">
-                  <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                    <div>
-                      <p className="font-semibold text-slate-950">{sponsor.name}</p>
-                      <p className="text-sm text-slate-500">{sponsor.category}</p>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setEditingSponsorId(sponsor._id);
-                          setSponsorForm({
-                            name: sponsor.name,
-                            category: sponsor.category,
-                            logo: sponsor.logo,
-                            websiteLink: sponsor.websiteLink
-                          });
-                        }}
-                        className="rounded-full border border-slate-200 px-4 py-2 text-sm text-slate-700"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          startTransition(() =>
-                            void removeItem(`/api/sponsors/${sponsor._id}`, "Sponsor deleted")
-                          )
-                        }
-                        className="rounded-full bg-rose-600 px-4 py-2 text-sm text-white"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </AdminSection>
+          </div>
         </div>
+      </div>
 
-        <AdminSection
-          title="Manage Team"
-          description="Update core team members and keep the public team page in sync with the latest leadership."
-        >
-          <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-6 xl:grid-cols-2">
+        <AdminSection title="Event Registry" description="Create, update, delete, and feature public event modules.">
+          <div className="grid gap-6">
+            <FormField label="Title">
+              <input value={eventForm.title} onChange={(event) => setEventForm((current) => ({ ...current, title: event.target.value }))} className={inputStyles()} />
+            </FormField>
+            <div className="grid gap-6 md:grid-cols-2">
+              <FormField label="Category">
+                <select value={eventForm.category} onChange={(event) => setEventForm((current) => ({ ...current, category: event.target.value as EventCategory }))} className={inputStyles()}>
+                  {eventCategories.map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
+              </FormField>
+              <FormField label="Team Size">
+                <input value={eventForm.teamSize} onChange={(event) => setEventForm((current) => ({ ...current, teamSize: event.target.value }))} className={inputStyles()} />
+              </FormField>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2">
+              <FormField label="Prize Pool">
+                <input value={eventForm.prizePool} onChange={(event) => setEventForm((current) => ({ ...current, prizePool: event.target.value }))} className={inputStyles()} />
+              </FormField>
+              <FormField label="Registration Link">
+                <input value={eventForm.registrationLink} onChange={(event) => setEventForm((current) => ({ ...current, registrationLink: event.target.value }))} className={inputStyles()} />
+              </FormField>
+            </div>
+            <FormField label="Description">
+              <textarea rows={4} value={eventForm.description} onChange={(event) => setEventForm((current) => ({ ...current, description: event.target.value }))} className={inputStyles()} />
+            </FormField>
+            <FormField label="Poster Image">
+              <AssetUploader label="Poster" value={eventForm.posterImage} onChange={(value) => setEventForm((current) => ({ ...current, posterImage: value }))} folder="aayam/events" />
+            </FormField>
+            <label className="flex items-center gap-3 border border-outlineSoft/25 px-4 py-3 text-sm text-white/70">
+              <input type="checkbox" checked={eventForm.isFeatured} onChange={(event) => setEventForm((current) => ({ ...current, isFeatured: event.target.checked }))} />
+              Mark as featured on homepage
+            </label>
+            <div className="flex flex-wrap gap-3">
+              <button type="button" onClick={() => startTransition(() => void saveEvent())} className={panelButton()}>
+                {editingEventId ? "Update Event" : "Create Event"}
+              </button>
+              {editingEventId ? (
+                <button type="button" onClick={() => { setEditingEventId(null); setEventForm(emptyEvent); }} className={panelButton("ghost")}>
+                  Cancel Edit
+                </button>
+              ) : null}
+            </div>
+          </div>
+
+          <div className="mt-10 space-y-3">
+            {events.map((event) => (
+              <div key={event._id} className="border border-outlineSoft/25 bg-[#151518] px-4 py-4">
+                <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                  {formatListLabel(event.title, `${event.category} • ${event.prizePool} • ${event.teamSize}`)}
+                  <div className="flex flex-wrap gap-2">
+                    <button type="button" onClick={() => { setEditingEventId(event._id); setEventForm({ title: event.title, category: event.category, description: event.description, prizePool: event.prizePool, teamSize: event.teamSize, posterImage: event.posterImage, registrationLink: event.registrationLink, isFeatured: event.isFeatured }); }} className={panelButton("ghost")}>Edit</button>
+                    <button type="button" onClick={() => startTransition(() => void removeItem(`/api/events/${event._id}`, "Event deleted"))} className={panelButton("danger")}>Delete</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </AdminSection>
+
+        <AdminSection title="Sponsor Network" description="Upload logos, assign hierarchy, and keep the sponsor architecture in sync.">
+          <div className="grid gap-6">
             <FormField label="Name">
-              <input
-                value={teamForm.name}
-                onChange={(event) => setTeamForm((current) => ({ ...current, name: event.target.value }))}
-                className={inputStyles()}
-              />
+              <input value={sponsorForm.name} onChange={(event) => setSponsorForm((current) => ({ ...current, name: event.target.value }))} className={inputStyles()} />
+            </FormField>
+            <div className="grid gap-6 md:grid-cols-2">
+              <FormField label="Category">
+                <select value={sponsorForm.category} onChange={(event) => setSponsorForm((current) => ({ ...current, category: event.target.value as SponsorCategory }))} className={inputStyles()}>
+                  {sponsorCategories.map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
+              </FormField>
+              <FormField label="Website Link">
+                <input value={sponsorForm.websiteLink} onChange={(event) => setSponsorForm((current) => ({ ...current, websiteLink: event.target.value }))} className={inputStyles()} />
+              </FormField>
+            </div>
+            <FormField label="Logo">
+              <AssetUploader label="Logo" value={sponsorForm.logo} onChange={(value) => setSponsorForm((current) => ({ ...current, logo: value }))} folder="aayam/sponsors" />
+            </FormField>
+            <div className="flex flex-wrap gap-3">
+              <button type="button" onClick={() => startTransition(() => void saveSponsor())} className={panelButton()}>
+                {editingSponsorId ? "Update Sponsor" : "Create Sponsor"}
+              </button>
+              {editingSponsorId ? (
+                <button type="button" onClick={() => { setEditingSponsorId(null); setSponsorForm(emptySponsor); }} className={panelButton("ghost")}>
+                  Cancel Edit
+                </button>
+              ) : null}
+            </div>
+          </div>
+
+          <div className="mt-10 space-y-3">
+            {sponsors.map((sponsor) => (
+              <div key={sponsor._id} className="border border-outlineSoft/25 bg-[#151518] px-4 py-4">
+                <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                  {formatListLabel(sponsor.name, sponsor.category)}
+                  <div className="flex flex-wrap gap-2">
+                    <button type="button" onClick={() => { setEditingSponsorId(sponsor._id); setSponsorForm({ name: sponsor.name, category: sponsor.category, logo: sponsor.logo, websiteLink: sponsor.websiteLink }); }} className={panelButton("ghost")}>Edit</button>
+                    <button type="button" onClick={() => startTransition(() => void removeItem(`/api/sponsors/${sponsor._id}`, "Sponsor deleted"))} className={panelButton("danger")}>Delete</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </AdminSection>
+      </div>
+
+      <div className="mt-6">
+        <AdminSection title="Operator Roster" description="Keep the team page in sync with live members and LinkedIn endpoints.">
+          <div className="grid gap-6 md:grid-cols-2">
+            <FormField label="Name">
+              <input value={teamForm.name} onChange={(event) => setTeamForm((current) => ({ ...current, name: event.target.value }))} className={inputStyles()} />
             </FormField>
             <FormField label="Role">
-              <input
-                value={teamForm.role}
-                onChange={(event) => setTeamForm((current) => ({ ...current, role: event.target.value }))}
-                className={inputStyles()}
-              />
+              <input value={teamForm.role} onChange={(event) => setTeamForm((current) => ({ ...current, role: event.target.value }))} className={inputStyles()} />
             </FormField>
             <FormField label="LinkedIn">
-              <input
-                value={teamForm.linkedin}
-                onChange={(event) =>
-                  setTeamForm((current) => ({ ...current, linkedin: event.target.value }))
-                }
-                className={inputStyles()}
-              />
+              <input value={teamForm.linkedin} onChange={(event) => setTeamForm((current) => ({ ...current, linkedin: event.target.value }))} className={inputStyles()} />
             </FormField>
             <FormField label="Image">
-              <AssetUploader
-                label="Image"
-                value={teamForm.image}
-                onChange={(value) => setTeamForm((current) => ({ ...current, image: value }))}
-                folder="aayam/team"
-              />
+              <AssetUploader label="Image" value={teamForm.image} onChange={(value) => setTeamForm((current) => ({ ...current, image: value }))} folder="aayam/team" />
             </FormField>
           </div>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={() => startTransition(() => void saveTeamMember())}
-              className="rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
-            >
+          <div className="mt-8 flex flex-wrap gap-3">
+            <button type="button" onClick={() => startTransition(() => void saveTeamMember())} className={panelButton()}>
               {editingTeamId ? "Update Member" : "Create Member"}
             </button>
             {editingTeamId ? (
-              <button
-                type="button"
-                onClick={() => {
-                  setEditingTeamId(null);
-                  setTeamForm(emptyTeamMember);
-                }}
-                className="rounded-full border border-slate-200 px-5 py-3 text-sm font-medium text-slate-700"
-              >
+              <button type="button" onClick={() => { setEditingTeamId(null); setTeamForm(emptyTeamMember); }} className={panelButton("ghost")}>
                 Cancel Edit
               </button>
             ) : null}
           </div>
 
-          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {teamMembers.map((member) => (
-              <div key={member._id} className="rounded-2xl border border-slate-200 p-4">
-                <p className="font-semibold text-slate-950">{member.name}</p>
-                <p className="mt-1 text-sm text-slate-500">{member.role}</p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setEditingTeamId(member._id);
-                      setTeamForm({
-                        name: member.name,
-                        role: member.role,
-                        image: member.image,
-                        linkedin: member.linkedin
-                      });
-                    }}
-                    className="rounded-full border border-slate-200 px-4 py-2 text-sm text-slate-700"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      startTransition(() => void removeItem(`/api/team/${member._id}`, "Team member deleted"))
-                    }
-                    className="rounded-full bg-rose-600 px-4 py-2 text-sm text-white"
-                  >
-                    Delete
-                  </button>
+              <div key={member._id} className="border border-outlineSoft/25 bg-[#151518] p-5">
+                {formatListLabel(member.name, member.role)}
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <button type="button" onClick={() => { setEditingTeamId(member._id); setTeamForm({ name: member.name, role: member.role, image: member.image, linkedin: member.linkedin }); }} className={panelButton("ghost")}>Edit</button>
+                  <button type="button" onClick={() => startTransition(() => void removeItem(`/api/team/${member._id}`, "Team member deleted"))} className={panelButton("danger")}>Delete</button>
                 </div>
               </div>
             ))}

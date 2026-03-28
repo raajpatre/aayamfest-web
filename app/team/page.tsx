@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { EmptyState } from "@/components/sections/EmptyState";
 import { Footer } from "@/components/sections/Footer";
+import { ActionButton } from "@/components/ui/ActionButton";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -13,13 +14,13 @@ export default async function TeamPage() {
   ]);
 
   return (
-    <main className="pb-10">
-      <section className="container-shell py-14 sm:py-20">
+    <main>
+      <section className="container-shell py-16">
         <FadeIn>
           <SectionHeading
-            eyebrow="Team"
+            eyebrow="Operator Roster"
             title="The people behind the signal"
-            description="Team members, roles, and LinkedIn profiles are all controlled from the admin dashboard."
+            description="Team profiles stay dynamic while the presentation shifts to a more cinematic dossier style."
           />
         </FadeIn>
 
@@ -27,35 +28,34 @@ export default async function TeamPage() {
           {teamMembers.length ? (
             teamMembers.map((member, index) => (
               <FadeIn key={member._id} delay={index * 0.05}>
-                <GlassCard className="overflow-hidden">
-                  <div className="relative h-72">
+                <GlassCard className="group overflow-hidden p-1">
+                  <div className="noise-mask relative h-80 overflow-hidden border border-outlineSoft/25">
                     <Image
                       src={member.image}
                       alt={member.name}
                       fill
-                      className="object-cover"
+                      className="object-cover grayscale transition-all duration-500 group-hover:grayscale-0"
                       sizes="(max-width: 768px) 100vw, 25vw"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-base via-base/15 to-transparent" />
                   </div>
                   <div className="p-6">
-                    <h3 className="text-xl font-semibold text-white">{member.name}</h3>
-                    <p className="mt-2 text-textDim">{member.role}</p>
-                    <a
-                      href={member.linkedin}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="mt-5 inline-flex rounded-full border border-white/10 px-4 py-2 text-sm text-white transition hover:border-cyanGlow/40"
-                    >
-                      LinkedIn
-                    </a>
+                    <p className="system-label text-[10px] text-cyanGlow">{member.role}</p>
+                    <h3 className="terminal-heading mt-3 text-2xl font-black text-white">{member.name}</h3>
+                    <p className="mt-3 text-sm leading-7 text-textDim">
+                      Linked operator profile routed through the fest network.
+                    </p>
+                    <ActionButton href={member.linkedin} external variant="ghost" className="mt-6 w-full">
+                      Open LinkedIn
+                    </ActionButton>
                   </div>
                 </GlassCard>
               </FadeIn>
             ))
           ) : (
             <EmptyState
-              title="Team members will appear here"
-              description="Add members from admin to populate this page with names, roles, photos, and LinkedIn links."
+              title="Operator roster is offline"
+              description="Add team members from admin to broadcast their profiles here."
             />
           )}
         </div>

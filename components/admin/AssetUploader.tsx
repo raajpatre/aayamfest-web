@@ -47,11 +47,11 @@ export function AssetUploader({
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <input
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        placeholder="Paste an image URL or upload below"
+        placeholder="Paste image URL or upload file"
         className={inputStyles()}
       />
       <div className="flex flex-wrap items-center gap-3">
@@ -70,17 +70,22 @@ export function AssetUploader({
         <button
           type="button"
           onClick={() => fileRef.current?.click()}
-          className="rounded-full bg-slate-950 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800"
+          className="command-btn bg-pinkGlow px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-[#510051]"
         >
           {isUploading ? "Uploading..." : `Upload ${label}`}
         </button>
         {value ? (
-          <a href={value} target="_blank" rel="noreferrer" className="text-sm text-sky-700 hover:underline">
+          <a
+            href={value}
+            target="_blank"
+            rel="noreferrer"
+            className="system-label text-[10px] text-cyanGlow hover:text-white"
+          >
             Preview asset
           </a>
         ) : null}
       </div>
-      {error ? <p className="text-sm text-rose-600">{error}</p> : null}
+      {error ? <p className="text-sm text-rose-400">{error}</p> : null}
     </div>
   );
 }

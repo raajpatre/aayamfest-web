@@ -7,26 +7,10 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getSiteConfig, getSponsors } from "@/lib/data";
 
 const sponsorCategories = [
-  {
-    title: "Title Sponsor",
-    key: "Title",
-    cardClass: "min-h-[320px] items-center justify-center text-center"
-  },
-  {
-    title: "Concert Sponsors",
-    key: "Concert",
-    cardClass: "min-h-[220px]"
-  },
-  {
-    title: "Associate Sponsors",
-    key: "Associate",
-    cardClass: "min-h-[180px]"
-  },
-  {
-    title: "In-Kind Sponsors",
-    key: "In-Kind",
-    cardClass: "min-h-[140px]"
-  }
+  { title: "Title Sponsor", key: "Title", size: "xl:col-span-3 min-h-[300px]" },
+  { title: "Concert Sponsors", key: "Concert", size: "md:min-h-[220px]" },
+  { title: "Associate Sponsors", key: "Associate", size: "min-h-[180px]" },
+  { title: "In-Kind Sponsors", key: "In-Kind", size: "min-h-[140px]" }
 ] as const;
 
 export default async function SponsorsPage() {
@@ -36,43 +20,38 @@ export default async function SponsorsPage() {
   ]);
 
   return (
-    <main className="pb-10">
-      <section className="container-shell py-14 sm:py-20">
+    <main>
+      <section className="container-shell py-16">
         <FadeIn>
           <SectionHeading
-            eyebrow="Sponsors"
-            title="A sponsor hierarchy with presence"
-            description="Sponsor visibility is structured by category so premium partners feel clearly distinguished."
+            eyebrow="Strategic Alliance Network"
+            title="Sponsor hierarchy in full signal"
+            description="Each sponsor category holds a distinct amount of space and visual energy so the partnership hierarchy is obvious at a glance."
           />
         </FadeIn>
       </section>
 
-      <div className="container-shell space-y-14 pb-16">
+      <div className="container-shell space-y-16 pb-16">
         {sponsorCategories.map((category, categoryIndex) => {
           const items = sponsors.filter((sponsor) => sponsor.category === category.key);
 
           return (
             <section key={category.key}>
               <FadeIn delay={categoryIndex * 0.04}>
-                <h2 className="font-display text-2xl uppercase tracking-[0.16em] text-white">
-                  {category.title}
-                </h2>
+                <div className="mb-6 flex items-center gap-4">
+                  <div className="h-[2px] w-12 bg-pinkGlow" />
+                  <h2 className="terminal-heading text-3xl font-black text-white">{category.title}</h2>
+                </div>
               </FadeIn>
-              <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                {items.length ? (
-                  items.map((sponsor, index) => (
+              {items.length ? (
+                <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                  {items.map((sponsor, index) => (
                     <FadeIn key={sponsor._id} delay={index * 0.05}>
-                      <a href={sponsor.websiteLink} target="_blank" rel="noreferrer" className="block">
+                      <a href={sponsor.websiteLink} target="_blank" rel="noreferrer" className="block h-full">
                         <GlassCard
-                          className={`flex p-8 ${category.cardClass} ${
-                            category.key === "Title"
-                              ? "border-cyanGlow/25 shadow-glow xl:col-span-3"
-                              : category.key === "Concert"
-                                ? "shadow-neon md:min-h-[240px]"
-                                : ""
-                          }`}
+                          className={`flex h-full flex-col justify-center p-8 text-center transition-colors hover:border-pinkGlow/35 ${category.size}`}
                         >
-                          <div className="relative h-24 w-full">
+                          <div className="relative mx-auto h-24 w-full max-w-[320px]">
                             <Image
                               src={sponsor.logo}
                               alt={sponsor.name}
@@ -81,18 +60,19 @@ export default async function SponsorsPage() {
                               sizes="(max-width: 768px) 100vw, 33vw"
                             />
                           </div>
-                          <p className="mt-5 text-lg font-semibold text-white">{sponsor.name}</p>
+                          <p className="terminal-heading mt-6 text-2xl font-black text-white">{sponsor.name}</p>
+                          <p className="system-label mt-3 text-[10px] text-cyanGlow">{sponsor.category}</p>
                         </GlassCard>
                       </a>
                     </FadeIn>
-                  ))
-                ) : (
-                  <EmptyState
-                    title={`No ${category.title.toLowerCase()} added yet`}
-                    description="Add sponsors from admin and assign the correct category to control layout hierarchy here."
-                  />
-                )}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <EmptyState
+                  title={`No ${category.title.toLowerCase()} in network`}
+                  description="Assign sponsors to this category from the admin dashboard to light up this section."
+                />
+              )}
             </section>
           );
         })}
