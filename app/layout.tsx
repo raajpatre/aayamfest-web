@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import { AppFrame } from "@/components/layout/AppFrame";
 
@@ -17,6 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="font-sans antialiased">
         <AppFrame>{children}</AppFrame>
+        <Analytics />
       </body>
     </html>
   );
