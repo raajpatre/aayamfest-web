@@ -194,6 +194,21 @@ body::after {
     linear-gradient(180deg, #111114 0%, #131315 100%);
 }
 
+.card-swap-sponsor-shell .card-swap-container {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  transform: none !important;
+  margin: 0 auto;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.card-swap-sponsor-shell .card {
+  width: 100% !important;
+  height: 100% !important;
+}
+
 @keyframes audio-controller-pulse {
   0%,
   100% {

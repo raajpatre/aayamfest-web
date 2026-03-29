@@ -10,23 +10,35 @@ const socialLinks = [
   }
 ];
 
-export function HomeTerminalFooter() {
+export function HomeTerminalFooter({ lightLinks = false }: { lightLinks?: boolean }) {
   return (
     <footer className="mt-24 border-t border-white/10 bg-black/80">
       <div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-6 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
-        <p className="font-mono text-sm text-white/75">AAYAM 2026 // Step into the unknown.</p>
+        <p
+          className={`font-mono text-sm ${
+            lightLinks
+              ? "text-cyan-100/95 drop-shadow-[0_0_12px_rgba(34,211,238,0.22)]"
+              : "text-white/75"
+          }`}
+        >
+          AAYAM 2026 // Step into the unknown.
+        </p>
 
         <div className="flex items-center gap-2 font-mono text-sm uppercase tracking-[0.2em] text-cyan-300/90">
           <span className="inline-block h-2.5 w-2.5 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.85)] animate-pulse" />
           <span className="drop-shadow-[0_0_10px_rgba(34,211,238,0.35)]">SYSTEM ONLINE_</span>
         </div>
 
-        <div className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-sm text-white/65">
+        <div className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-sm">
           {socialLinks.map((link) => (
             <Link
               key={link.label}
               href={link.href}
-              className={`transition-all duration-300 ${link.accent}`}
+              className={`transition-all duration-300 ${
+                lightLinks
+                  ? "text-cyan-200/95 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]"
+                  : "text-white/65"
+              } ${link.accent}`}
             >
               {link.label}
             </Link>

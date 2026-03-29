@@ -42,8 +42,8 @@ const config: Config = {
           "50%": { transform: "translateY(-16px)" }
         },
         shine: {
-          from: { backgroundPosition: "0% 50%" },
-          to: { backgroundPosition: "200% 50%" }
+          from: { transform: "translateX(-100%) skewX(-45deg)" },
+          to: { transform: "translateX(200%) skewX(-45deg)" }
         },
         marquee: {
           from: { transform: "translateX(0)" },

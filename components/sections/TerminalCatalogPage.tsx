@@ -1,7 +1,8 @@
 "use client";
 
+import DecryptedText from "@/components/DecryptedText";
 import ScrollFloat from "@/components/ScrollFloat";
-import ScrollStack, { ScrollStackItem } from "@/components/ScrollStack";
+import { TerminalBackground } from "@/components/sections/TerminalBackground";
 
 const EVENT_CATALOG = [
   {
@@ -52,65 +53,83 @@ const EVENT_CATALOG = [
   }
 ] as const;
 
+const CATEGORY_DECRYPT_PROPS = {
+  animateOn: "view" as const,
+  sequential: true,
+  speed: 62,
+  maxIterations: 20,
+  characters: "X@#$01&*!"
+};
+
+const BODY_DECRYPT_PROPS = {
+  animateOn: "view" as const,
+  sequential: true,
+  speed: 20,
+  maxIterations: 10,
+  characters: "X@#$01&*!"
+};
+
 export function TerminalCatalogPage() {
   return (
-    <div className="pb-12 pt-14 text-white">
+    <div className="relative isolate pb-12 pt-14 text-white">
+      <TerminalBackground />
+
       <section className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
         <div className="border-l-4 border-cyan-300/70 pl-6">
           <p className="font-mono text-[11px] uppercase tracking-[0.34em] text-cyan-300/80">
             Terminal // Event Catalog
           </p>
           <h1 className="mt-4 text-5xl font-black uppercase tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl">
-            Scroll Through
-            <span className="ml-3 bg-gradient-to-r from-cyan-300 via-white to-fuchsia-400 bg-clip-text text-transparent">
-              Mission Streams
+            Scan
+            <span className="ml-3 text-cyan-300">Mission</span>
+            <span className="ml-3 bg-gradient-to-r from-fuchsia-200 via-fuchsia-300 to-fuchsia-500 bg-clip-text text-transparent">
+              Streams
             </span>
           </h1>
-          <p className="mt-6 max-w-3xl text-base leading-8 text-white/68 sm:text-lg">
-            Each category unfolds as a live terminal stream. Scroll deeper to pin, stack, and
-            inspect every mission module in sequence before locking into registration.
-          </p>
+          <div className="mt-6 max-w-3xl text-lg leading-8 sm:text-[1.27rem]">
+            <DecryptedText
+              text="The category streams are actively rendering. Scroll deeper to decrypt individual mission cards, analyze the prize drops, and override the terminal gate to secure your slot."
+              className="text-white/88"
+              encryptedClassName="text-cyan-300/75"
+              parentClassName="block"
+              {...BODY_DECRYPT_PROPS}
+            />
+          </div>
         </div>
       </section>
 
       {EVENT_CATALOG.map((category) => (
         <section
           key={category.title}
-          className="relative min-h-screen py-20"
+          className="relative py-16 md:py-20"
         >
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-10">
-              <ScrollFloat
-                containerClassName="terminal-category-float"
-                textClassName={`font-mono uppercase ${category.accent}`}
-                scrollStart="top bottom-=10%"
-                scrollEnd="bottom center+=10%"
-                stagger={0.018}
-                animationDuration={1.15}
-              >
-                {category.label}
-              </ScrollFloat>
-              <div className="mt-5 h-px w-full bg-gradient-to-r from-transparent via-white/12 to-transparent" />
+            <div className="mx-auto max-w-6xl">
+              <h2 className="block w-full border-b border-white/10 pb-5 font-mono text-[1.7rem] font-black uppercase tracking-[0.28em] sm:text-[2.1rem] md:text-[2.8rem]">
+                <DecryptedText
+                  text={category.label}
+                  className={category.accent}
+                  encryptedClassName="text-cyan-400/70"
+                  parentClassName="inline-block"
+                  {...CATEGORY_DECRYPT_PROPS}
+                />
+              </h2>
             </div>
 
-            <ScrollStack
-              useWindowScroll
-              className="terminal-scroll-stack !h-auto !overflow-visible"
-              itemDistance={90}
-              itemScale={0.04}
-              itemStackDistance={26}
-              stackPosition="18%"
-              scaleEndPosition="12%"
-              baseScale={0.9}
-              rotationAmount={-0.6}
-              blurAmount={0}
-            >
+            <div className="mt-12 grid grid-cols-1 gap-10 px-4 md:grid-cols-2 max-w-6xl mx-auto">
               {category.events.map((event) => (
-                <ScrollStackItem
+                <ScrollFloat
                   key={event.name}
-                  itemClassName="terminal-scroll-card !mx-auto !h-auto !w-full !max-w-md !bg-transparent !p-0 !shadow-none"
+                  as="div"
+                  containerClassName="w-full"
+                  scrollStart="top bottom-=8%"
+                  scrollEnd="center center+=18%"
+                  animationDuration={0.95}
+                  ease="power3.out"
+                  stagger={0}
                 >
-                  <article className="relative mx-auto flex aspect-[3/4] w-full max-w-md flex-col justify-between overflow-hidden rounded-[28px] border border-white/20 bg-black/60 p-6 backdrop-blur-md shadow-[0_24px_60px_rgba(0,0,0,0.32),inset_0_1px_0_0_rgba(255,255,255,0.08)]">
+                  <article className="group relative flex aspect-[3/4] w-full flex-col overflow-hidden rounded-[28px] border border-white/20 bg-black/60 backdrop-blur-md shadow-[0_24px_60px_rgba(0,0,0,0.32),inset_0_1px_0_0_rgba(255,255,255,0.08)]">
+                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.18),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(217,70,239,0.14),transparent_30%)]" />
                     <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-white/8 to-transparent" />
                     <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-cyan-300/8 via-fuchsia-400/6 to-transparent" />
                     <div className="pointer-events-none absolute left-4 top-4 h-5 w-5 border-l border-t border-cyan-300/55" />
@@ -118,31 +137,50 @@ export function TerminalCatalogPage() {
                     <div className="pointer-events-none absolute bottom-4 left-4 h-5 w-5 border-b border-l border-fuchsia-400/45" />
                     <div className="pointer-events-none absolute bottom-4 right-4 h-5 w-5 border-b border-r border-fuchsia-400/45" />
 
-                    <div className="relative">
-                      <p className="font-mono text-[11px] uppercase tracking-[0.32em] text-white/35">
-                        Poster uplink pending
-                      </p>
-                      <h3 className="mt-5 max-w-[16ch] font-mono text-3xl font-bold uppercase leading-tight text-white sm:text-4xl">
-                        {event.name}
-                      </h3>
+                    <div className="relative flex flex-1 flex-col p-6">
+                      <div>
+                        <p className="font-mono text-[11px] uppercase tracking-[0.32em] text-cyan-200/55">
+                          Poster uplink pending
+                        </p>
+                        <h3 className="mt-5 max-w-[16ch] font-mono text-3xl font-bold uppercase leading-tight text-white sm:text-4xl">
+                          {event.name}
+                        </h3>
+                      </div>
+
+                      <div className="relative mt-8 flex-1 overflow-hidden rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.015))]">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.16),transparent_38%),radial-gradient(circle_at_bottom_right,rgba(217,70,239,0.18),transparent_42%)]" />
+                        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),transparent_18%,transparent_82%,rgba(255,255,255,0.04))]" />
+                        <div className="absolute inset-0 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.08)_0px,rgba(255,255,255,0.08)_1px,transparent_1px,transparent_4px)] opacity-20 mix-blend-screen" />
+                        <div className="absolute inset-y-0 left-0 w-full bg-[linear-gradient(90deg,transparent,rgba(34,211,238,0.12),transparent)] opacity-60 blur-xl" />
+                        <div className="absolute inset-0 opacity-70 [background-image:linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:26px_26px]" />
+                        <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.28em] text-white/45">
+                          <span>Signal Feed</span>
+                          <span>CRT://ACTIVE</span>
+                        </div>
+                      </div>
                     </div>
 
-                    <div className="relative space-y-4">
-                      <div className="h-px w-full bg-gradient-to-r from-transparent via-white/12 to-transparent" />
-                      <div className="font-mono text-3xl font-bold text-orange-400 drop-shadow-[0_0_18px_rgba(251,146,60,0.32)] sm:text-4xl">
-                        {event.prize}
+                    <div className="relative border-t border-white/10 px-6 pb-0 pt-5">
+                      <div className="pb-5">
+                        <p className="font-mono text-[11px] uppercase tracking-[0.32em] text-white/35">
+                          Prize pool
+                        </p>
+                        <div className="mt-3 font-mono text-3xl font-bold text-orange-400 drop-shadow-[0_0_18px_rgba(251,146,60,0.38)] sm:text-4xl">
+                          {event.prize}
+                        </div>
                       </div>
+
                       <button
                         type="button"
-                        className="w-full rounded-2xl border border-white/15 bg-white/[0.03] px-5 py-3 font-mono text-xs font-bold uppercase tracking-[0.24em] text-white/70 transition-all duration-300 hover:border-cyan-300/40 hover:bg-cyan-300/10 hover:text-cyan-200"
+                        className="flex w-[calc(100%+3rem)] -translate-x-6 items-center justify-center border-t border-white/20 bg-transparent px-5 py-4 font-mono text-xs font-bold uppercase tracking-[0.24em] text-white/72 transition-all duration-300 hover:bg-white/10 hover:text-cyan-200"
                       >
                         [ REGISTER_VIA_TERMINAL ]
                       </button>
                     </div>
                   </article>
-                </ScrollStackItem>
+                </ScrollFloat>
               ))}
-            </ScrollStack>
+            </div>
           </div>
         </section>
       ))}

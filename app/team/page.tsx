@@ -1,17 +1,14 @@
 import Image from "next/image";
 import { EmptyState } from "@/components/sections/EmptyState";
-import { Footer } from "@/components/sections/Footer";
+import { HomeTerminalFooter } from "@/components/sections/HomeTerminalFooter";
 import { ActionButton } from "@/components/ui/ActionButton";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { getSiteConfig, getTeamMembers } from "@/lib/data";
+import { getTeamMembers } from "@/lib/data";
 
 export default async function TeamPage() {
-  const [teamMembers, siteConfig] = await Promise.all([
-    getTeamMembers().catch(() => []),
-    getSiteConfig().catch(() => null)
-  ]);
+  const teamMembers = await getTeamMembers().catch(() => []);
 
   return (
     <main>
@@ -60,7 +57,7 @@ export default async function TeamPage() {
           )}
         </div>
       </section>
-      <Footer siteConfig={siteConfig} />
+      <HomeTerminalFooter lightLinks />
     </main>
   );
 }

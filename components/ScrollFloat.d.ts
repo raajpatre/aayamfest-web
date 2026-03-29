@@ -1,8 +1,9 @@
 declare module "@/components/ScrollFloat" {
-  import type { MutableRefObject, ReactNode } from "react";
+  import type { ElementType, MutableRefObject, ReactNode } from "react";
 
   type ScrollFloatProps = {
     children: ReactNode;
+    as?: ElementType;
     scrollContainerRef?: MutableRefObject<HTMLElement | null>;
     containerClassName?: string;
     textClassName?: string;

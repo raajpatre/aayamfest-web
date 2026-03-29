@@ -1,129 +1,117 @@
 import Link from "next/link";
+import { FestLogo } from "@/components/ui/FestLogo";
 
-const terminalReadouts = ["> SYS.SCAN: EVENTS[3]", "> SIGNAL_LOCK_ON", "> ENCRYPT_V3_ACTIVE"] as const;
-
-const events = [
+const featuredEvents = [
   {
     title: "Robo Striker",
     description: "Build, battle, and outmaneuver rival machines inside a precision combat arena.",
     prize: "₹14,000+",
-    accent: "from-cyan-300 via-white to-fuchsia-400",
-    ring: "border-cyan-300/45 shadow-[0_0_24px_rgba(34,211,238,0.2)]",
-    icon: (
-      <svg viewBox="0 0 120 120" className="h-24 w-24" fill="none" aria-hidden="true">
-        <circle cx="60" cy="60" r="56" fill="url(#robo-bg)" opacity="0.16" />
-        <rect x="34" y="34" width="52" height="42" rx="12" stroke="#EAFBFF" strokeWidth="5" />
-        <path d="M48 28L54 16M72 28L78 16" stroke="#67E8F9" strokeWidth="5" strokeLinecap="round" />
-        <circle cx="50" cy="52" r="5" fill="#67E8F9" />
-        <circle cx="70" cy="52" r="5" fill="#F472B6" />
-        <path d="M46 66H74" stroke="#EAFBFF" strokeWidth="5" strokeLinecap="round" />
-        <path d="M28 52H34M86 52H92M44 78L38 96M76 78L82 96" stroke="#C4B5FD" strokeWidth="5" strokeLinecap="round" />
-        <defs>
-          <linearGradient id="robo-bg" x1="10" x2="110" y1="10" y2="110">
-            <stop stopColor="#22D3EE" />
-            <stop offset="1" stopColor="#F472B6" />
-          </linearGradient>
-        </defs>
-      </svg>
-    )
+    accent: "from-cyan-300/25 via-transparent to-fuchsia-400/20",
+    badge: "ROBOTICS // PRIME",
+    theme: "cyan"
   },
   {
     title: "FPV Drone Racing",
     description: "Pilot at full throttle through gate runs, sharp turns, and high-speed aerial laps.",
     prize: "₹30,000",
-    accent: "from-fuchsia-300 via-white to-cyan-300",
-    ring: "border-fuchsia-300/45 shadow-[0_0_24px_rgba(244,114,182,0.2)]",
-    icon: (
-      <svg viewBox="0 0 120 120" className="h-24 w-24" fill="none" aria-hidden="true">
-        <circle cx="26" cy="44" r="14" stroke="#67E8F9" strokeWidth="5" />
-        <circle cx="94" cy="44" r="14" stroke="#F472B6" strokeWidth="5" />
-        <circle cx="34" cy="84" r="14" stroke="#C4B5FD" strokeWidth="5" />
-        <circle cx="86" cy="84" r="14" stroke="#67E8F9" strokeWidth="5" />
-        <rect x="42" y="48" width="36" height="24" rx="8" stroke="#EAFBFF" strokeWidth="5" />
-        <path d="M40 52L26 44M80 52L94 44M44 72L34 84M76 72L86 84" stroke="#EAFBFF" strokeWidth="5" strokeLinecap="round" />
-        <path d="M50 60H70" stroke="#EAFBFF" strokeWidth="5" strokeLinecap="round" />
-      </svg>
-    )
-  },
-  {
-    title: "Free Fire MAX",
-    description: "Drop with your squad, control the zone, and survive the final blazing showdown.",
-    prize: "₹5,000+",
-    accent: "from-orange-300 via-white to-fuchsia-300",
-    ring: "border-orange-300/45 shadow-[0_0_24px_rgba(251,146,60,0.22)]",
-    icon: (
-      <svg viewBox="0 0 120 120" className="h-24 w-24" fill="none" aria-hidden="true">
-        <path d="M60 18L76 30L72 52H48L44 30L60 18Z" stroke="#EAFBFF" strokeWidth="5" strokeLinejoin="round" />
-        <path d="M44 56L34 96M76 56L86 96" stroke="#67E8F9" strokeWidth="5" strokeLinecap="round" />
-        <path d="M36 64L24 82M84 64L96 82" stroke="#F472B6" strokeWidth="5" strokeLinecap="round" />
-        <path d="M48 74H72" stroke="#EAFBFF" strokeWidth="5" strokeLinecap="round" />
-        <circle cx="52" cy="38" r="4" fill="#67E8F9" />
-        <circle cx="68" cy="38" r="4" fill="#F472B6" />
-      </svg>
-    )
+    accent: "from-fuchsia-300/20 via-transparent to-cyan-300/25",
+    badge: "AERIAL // LIVE",
+    theme: "magenta"
   }
 ] as const;
 
-export function FeaturedEventsSection() {
-  return (
-    <section className="relative py-24">
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {terminalReadouts.map((line, index) => (
-          <div
-            key={line}
-            className="absolute font-mono text-[11px] uppercase tracking-[0.28em] text-white/22"
-            style={{
-              top: `${12 + index * 9}%`,
-              left: index % 2 === 0 ? "8%" : "unset",
-              right: index % 2 === 1 ? "10%" : "unset"
-            }}
-          >
-            {line}
-          </div>
-        ))}
-      </div>
+function EventBlueprintCard({
+  title,
+  description,
+  prize,
+  accent,
+  badge,
+  theme
+}: (typeof featuredEvents)[number]) {
+  const glow =
+    theme === "cyan"
+      ? "shadow-[0_0_24px_rgba(34,211,238,0.14)]"
+      : "shadow-[0_0_24px_rgba(217,70,239,0.14)]";
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-12 text-center">
-          <h2 className="font-mono text-2xl font-bold uppercase tracking-[0.24em] text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
-            Featured Events
-          </h2>
+  return (
+    <article className={`group relative overflow-hidden rounded-[28px] border border-white/10 bg-black/55 p-4 backdrop-blur-xl ${glow}`}>
+      <div className="relative z-0 overflow-hidden rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))]">
+        <div className={`absolute inset-0 bg-gradient-to-br ${accent}`} />
+        <div className="absolute inset-0 opacity-70 [background-image:linear-gradient(rgba(34,211,238,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.14)_1px,transparent_1px)] [background-size:44px_44px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,255,255,0.08),transparent_18%),radial-gradient(circle_at_82%_22%,rgba(255,255,255,0.08),transparent_16%),radial-gradient(circle_at_26%_78%,rgba(255,255,255,0.05),transparent_14%)]" />
+        <div className="absolute left-[12%] top-[18%] h-20 w-20 rounded-full border border-white/80" />
+        <div className="absolute right-[12%] top-[22%] h-10 w-10 border border-cyan-300/70 bg-cyan-300/10" />
+        <div className="absolute left-[18%] top-[42%] h-[2px] w-[58%] bg-gradient-to-r from-cyan-300/0 via-cyan-300/80 to-cyan-300/0" />
+        <div className="absolute right-[20%] top-[48%] h-[2px] w-[34%] bg-gradient-to-r from-fuchsia-400/0 via-fuchsia-400/80 to-fuchsia-400/0" />
+        <div className="absolute bottom-[26%] left-[12%] h-14 w-14 border border-fuchsia-400/70 bg-fuchsia-400/10" />
+        <div className="absolute bottom-[18%] right-[15%] h-16 w-16 rounded-full border border-white/70" />
+
+        <div className="relative z-0 flex min-h-[420px] flex-col justify-between p-8">
+          <div className="flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.32em] text-white/58">
+            <span>{badge}</span>
+            <span>PACKET // READY</span>
+          </div>
+
+          <div>
+            <h3 className="max-w-[10ch] font-mono text-4xl font-bold uppercase leading-[0.92] text-white sm:text-5xl">
+              {title}
+            </h3>
+          </div>
+
+          <div className="max-w-md">
+            <p className="font-mono text-sm leading-7 text-white/74">{description}</p>
+            <div className="mt-6 font-mono text-3xl font-black text-white drop-shadow-[0_0_18px_rgba(255,255,255,0.12)]">
+              {prize}
+            </div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {events.map((event) => (
-            <article
-              key={event.title}
-              className="group relative overflow-hidden rounded-xl border border-white/10 bg-black/40 p-7 backdrop-blur-md shadow-[0_24px_54px_rgba(0,0,0,0.28),inset_0_1px_0_0_rgba(255,255,255,0.08)]"
-            >
-              <div className="pointer-events-none absolute left-4 top-4 h-5 w-5 border-l border-t border-cyan-300/55" />
-              <div className="pointer-events-none absolute right-4 top-4 h-5 w-5 border-r border-t border-cyan-300/55" />
-              <div className="pointer-events-none absolute bottom-4 left-4 h-5 w-5 border-b border-l border-fuchsia-400/45" />
-              <div className="pointer-events-none absolute bottom-4 right-4 h-5 w-5 border-b border-r border-fuchsia-400/45" />
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <div className="pointer-events-none absolute inset-0 z-10 opacity-20">
+          <div className="absolute inset-0 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.12)_0px,rgba(255,255,255,0.12)_1px,transparent_1px,transparent_4px)] mix-blend-screen" />
+          <div className="absolute inset-0 animate-[sweep_4.5s_linear_infinite] bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.06)_18%,transparent_34%,transparent_60%,rgba(255,255,255,0.05)_72%,transparent_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(34,211,238,0.14),transparent_18%,transparent_78%,rgba(217,70,239,0.14))] mix-blend-screen" />
+          <div className="absolute inset-x-0 top-[33%] h-6 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent)]" />
+          <div className="absolute inset-x-0 top-[62%] h-4 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent)]" />
+        </div>
+      </div>
+    </article>
+  );
+}
 
-              <div className={`mx-auto flex h-32 w-32 items-center justify-center rounded-full border bg-black/45 backdrop-blur-sm ${event.ring}`}>
-                {event.icon}
-              </div>
+export function FeaturedEventsSection() {
+  return (
+    <section className="relative px-4 py-24 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl">
+        <div className="text-center">
+          <div className="flex justify-center">
+            <FestLogo className="h-20 w-[300px] sm:h-24 sm:w-[360px]" />
+          </div>
+          <p className="mt-8 font-mono text-xs uppercase tracking-[0.34em] text-cyan-300/82">
+            Featured Event Matrix
+          </p>
+          <h2 className="mx-auto mt-4 max-w-5xl text-4xl font-black uppercase tracking-[-0.04em] text-white [text-shadow:0_12px_36px_rgba(0,0,0,0.55)] sm:text-5xl lg:text-7xl">
+            NST&apos;S APEX TECH CONVERGENCE
+          </h2>
+          <p className="mx-auto mt-6 max-w-3xl text-base leading-8 text-white/80 sm:text-lg">
+            It&apos;s the ultimate nexus where code, hardware, and digital storytelling collide.
+            AAYAM is where the brightest minds lock into the grid and build the future in real
+            time.
+          </p>
+        </div>
 
-              <div className="mt-8 text-center">
-                <h3 className="font-mono text-lg font-bold text-white">{event.title}</h3>
-                <p className="mt-3 font-mono text-sm leading-7 text-white/70">{event.description}</p>
-                <div className={`mt-6 bg-gradient-to-r ${event.accent} bg-clip-text text-3xl font-black text-transparent drop-shadow-[0_0_22px_rgba(34,211,238,0.22)]`}>
-                  {event.prize}
-                </div>
-              </div>
-
-              <div className="mt-8 flex justify-center">
-                <Link
-                  href="/events"
-                  className="rounded-xl border border-orange-400/30 bg-orange-600 px-6 py-3 font-mono text-sm font-bold uppercase tracking-[0.18em] text-white shadow-[0_0_18px_rgba(234,88,12,0.18)] transition-all duration-300 hover:border-orange-300/70 hover:shadow-[0_0_30px_rgba(251,146,60,0.3)]"
-                >
-                  Register
-                </Link>
-              </div>
-            </article>
+        <div className="mx-auto mt-14 grid max-w-5xl grid-cols-1 gap-8 lg:grid-cols-2">
+          {featuredEvents.map((event) => (
+            <EventBlueprintCard key={event.title} {...event} />
           ))}
+        </div>
+
+        <div className="mt-10 flex justify-center">
+          <Link
+            href="/events"
+            className="rounded-xl border border-orange-400/30 bg-orange-600 px-6 py-3 font-mono text-sm font-bold uppercase tracking-[0.18em] text-white shadow-[0_0_18px_rgba(234,88,12,0.18)] transition-all duration-300 hover:border-orange-300/70 hover:shadow-[0_0_30px_rgba(251,146,60,0.3)]"
+          >
+            View All Events
+          </Link>
         </div>
       </div>
     </section>

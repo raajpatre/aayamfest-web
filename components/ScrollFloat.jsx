@@ -8,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const ScrollFloat = ({
   children,
+  as: Component = 'h2',
   scrollContainerRef,
   containerClassName = '',
   textClassName = '',
@@ -18,15 +19,16 @@ const ScrollFloat = ({
   stagger = 0.03
 }) => {
   const containerRef = useRef(null);
+  const isTextContent = typeof children === 'string';
 
   const splitText = useMemo(() => {
-    const text = typeof children === 'string' ? children : '';
+    const text = isTextContent ? children : '';
     return text.split('').map((char, index) => (
       <span className="char" key={index}>
         {char === ' ' ? '\u00A0' : char}
       </span>
     ));
-  }, [children]);
+  }, [children, isTextContent]);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -34,25 +36,39 @@ const ScrollFloat = ({
 
     const scroller = scrollContainerRef && scrollContainerRef.current ? scrollContainerRef.current : window;
 
-    const charElements = el.querySelectorAll('.char');
+    const targets = el.querySelectorAll(isTextContent ? '.char' : '.scroll-float-block');
+
+    if (!targets.length) return;
 
     gsap.fromTo(
-      charElements,
-      {
-        willChange: 'opacity, transform',
-        opacity: 0,
-        yPercent: 120,
-        scaleY: 2.3,
-        scaleX: 0.7,
-        transformOrigin: '50% 0%'
-      },
+      targets,
+      isTextContent
+        ? {
+            willChange: 'opacity, transform',
+            opacity: 0,
+            yPercent: 120,
+            scaleY: 2.3,
+            scaleX: 0.7,
+            transformOrigin: '50% 0%'
+          }
+        : {
+            willChange: 'opacity, transform, filter',
+            opacity: 0,
+            y: 100,
+            scale: 0.9,
+            filter: 'blur(10px)',
+            transformOrigin: '50% 100%'
+          },
       {
         duration: animationDuration,
         ease: ease,
         opacity: 1,
-        yPercent: 0,
-        scaleY: 1,
-        scaleX: 1,
+        yPercent: isTextContent ? 0 : undefined,
+        y: isTextContent ? undefined : 0,
+        scaleY: isTextContent ? 1 : undefined,
+        scaleX: isTextContent ? 1 : undefined,
+        scale: isTextContent ? undefined : 1,
+        filter: isTextContent ? undefined : 'blur(0px)',
         stagger: stagger,
         scrollTrigger: {
           trigger: el,
@@ -63,12 +79,16 @@ const ScrollFloat = ({
         }
       }
     );
-  }, [scrollContainerRef, animationDuration, ease, scrollStart, scrollEnd, stagger]);
+  }, [scrollContainerRef, animationDuration, ease, scrollStart, scrollEnd, stagger, isTextContent]);
 
   return (
-    <h2 ref={containerRef} className={`scroll-float ${containerClassName}`}>
-      <span className={`scroll-float-text ${textClassName}`}>{splitText}</span>
-    </h2>
+    <Component ref={containerRef} className={`scroll-float ${containerClassName}`}>
+      {isTextContent ? (
+        <span className={`scroll-float-text ${textClassName}`}>{splitText}</span>
+      ) : (
+        <div className="scroll-float-block">{children}</div>
+      )}
+    </Component>
   );
 };
 

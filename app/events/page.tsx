@@ -1,14 +1,11 @@
-import { Footer } from "@/components/sections/Footer";
+import { HomeTerminalFooter } from "@/components/sections/HomeTerminalFooter";
 import { TerminalCatalogPage } from "@/components/sections/TerminalCatalogPage";
-import { getSiteConfig } from "@/lib/data";
 
-export default async function EventsPage() {
-  const siteConfig = await getSiteConfig().catch(() => null);
-
+export default function EventsPage() {
   return (
     <main>
       <TerminalCatalogPage />
-      <Footer siteConfig={siteConfig} />
+      <HomeTerminalFooter lightLinks />
     </main>
   );
 }
