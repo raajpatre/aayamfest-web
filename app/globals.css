@@ -188,12 +188,6 @@ body::after {
   background-color: #1c1b1e;
 }
 
-.admin-bg {
-  background:
-    linear-gradient(180deg, rgba(255, 0, 255, 0.05), transparent 20%),
-    linear-gradient(180deg, #111114 0%, #131315 100%);
-}
-
 .card-swap-sponsor-shell .card-swap-container {
   position: relative;
   right: auto;

@@ -18,17 +18,7 @@ const links = [
 
 export function AppFrame({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const isAdmin = pathname.startsWith("/admin");
   const isHome = pathname === "/";
-
-  if (isAdmin) {
-    return (
-      <>
-        {children}
-        <AudioController />
-      </>
-    );
-  }
 
   return (
     <>

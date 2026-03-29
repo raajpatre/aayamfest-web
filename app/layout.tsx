@@ -5,7 +5,7 @@ import { AppFrame } from "@/components/layout/AppFrame";
 
 export const metadata: Metadata = {
   title: "AAYAM Tech Fest",
-  description: "Modern futuristic college fest website with dynamic admin dashboard."
+  description: "Modern futuristic college fest website."
 };
 
 export default function RootLayout({

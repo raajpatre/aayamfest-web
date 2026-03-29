@@ -66,6 +66,13 @@ const squadMembers = [
     role: "TECH TEAM",
     image: "/team/shaaz-hemani.jpg",
     linkedin: "https://www.linkedin.com/in/shaaz-hemani-229150276/"
+  },
+  {
+    id: "member-12",
+    name: "SAI SRIJA",
+    role: "EVENTS LEAD",
+    image: "/team/sai-srija.jpg",
+    linkedin: "https://www.linkedin.com/in/sai-srija-chakramahanti-9a85a13a1/"
   }
 ];
 
