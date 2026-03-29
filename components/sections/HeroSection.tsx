@@ -47,7 +47,7 @@ export function HeroSection({
             <p className="data-line">ID: AAYAM_CORE_P01</p>
             <div className="mt-8">
               <FestLogo
-                className="h-[72px] w-[272px] drop-shadow-[0_0_22px_rgba(255,255,255,0.12)] sm:h-[104px] sm:w-[390px] lg:h-[134px] lg:w-[500px]"
+                className="h-[82px] w-[360px] drop-shadow-[0_0_22px_rgba(255,255,255,0.12)] sm:h-[116px] sm:w-[560px] lg:h-[148px] lg:w-[760px]"
                 priority
               />
             </div>

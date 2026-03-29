@@ -25,12 +25,22 @@
 
 @media (max-width: 768px) {
   .card-swap-container {
-    transform: scale(0.75) translate(25%, 25%);
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%) scale(0.62);
+    transform-origin: top center;
   }
 }
 
 @media (max-width: 480px) {
   .card-swap-container {
-    transform: scale(0.55) translate(25%, 25%);
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%) scale(0.43);
+    transform-origin: top center;
   }
 }

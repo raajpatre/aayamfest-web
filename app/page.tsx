@@ -1,14 +1,15 @@
 "use client";
 
+import { useState } from "react";
+import Image from "next/image";
 import { AnimatedAboutStatsSection } from "@/components/sections/AnimatedAboutStatsSection";
-import { FeaturedEventsSection } from "@/components/sections/FeaturedEventsSection";
 import { HomeTerminalFooter } from "@/components/sections/HomeTerminalFooter";
 import { InitializeRegistrationCTA } from "@/components/sections/InitializeRegistrationCTA";
 import { SponsorsPreviewSection } from "@/components/sections/SponsorsPreviewSection";
 import { CountdownTimer } from "@/components/ui/CountdownTimer";
-import { FestLogo } from "@/components/ui/FestLogo";
 import Hyperspeed from "@/components/ui/Hyperspeed";
 import { hyperspeedPresets } from "@/components/ui/HyperspeedPresets";
+import { WarpSpeedIntro } from "@/components/ui/WarpSpeedIntro";
 
 const glassCardClass =
   "border border-white/5 bg-gradient-to-br from-black/60 to-black/30 backdrop-blur-lg shadow-[0_12px_40px_rgba(0,0,0,0.28),inset_0_1px_0_0_rgba(255,255,255,0.1)] transition-all duration-300 hover:border-fuchsia-500/50 hover:shadow-[0_18px_55px_rgba(0,0,0,0.38),0_0_24px_rgba(217,70,239,0.16),inset_0_1px_0_0_rgba(255,255,255,0.1)]";
@@ -64,37 +65,55 @@ const borderStreaks = [
 ] as const;
 
 export default function HomePage() {
+  const [introComplete, setIntroComplete] = useState(false);
+
   return (
     <main className="relative min-h-screen">
-      <div className="fixed inset-0 -z-30 h-full w-full bg-black" />
-      <div className="fixed inset-0 -z-20 h-full w-full bg-cover bg-center" style={galaxyBackdropStyle}>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_52%_50%,rgba(255,255,255,0.05),transparent_18%),linear-gradient(180deg,rgba(0,0,0,0.1),rgba(0,0,0,0.35))]" />
-      </div>
-      <div className="fixed inset-0 -z-10 h-full w-full">
-        <Hyperspeed effectOptions={hyperspeedEffect} />
-      </div>
-      <div className="pointer-events-none fixed inset-0 -z-[5] overflow-hidden">
-        {borderStreaks.map((streak) => (
-          <div
-            key={streak}
-            className={`absolute bg-gradient-to-b blur-[1px] opacity-90 mix-blend-screen ${streak}`}
-          />
-        ))}
-        <div className="absolute left-0 top-0 h-full w-32 bg-[radial-gradient(circle_at_left_center,rgba(34,211,238,0.12),transparent_62%)]" />
-        <div className="absolute right-0 top-0 h-full w-32 bg-[radial-gradient(circle_at_right_center,rgba(217,70,239,0.12),transparent_62%)]" />
-      </div>
+      {!introComplete && <WarpSpeedIntro onComplete={() => setIntroComplete(true)} />}
+      <div className={`transition-opacity duration-500 ${introComplete ? "opacity-100" : "pointer-events-none opacity-0"}`}>
+        <div className="fixed inset-0 -z-30 h-full w-full bg-black" />
+        <div className="fixed inset-0 -z-20 h-full w-full bg-cover bg-center" style={galaxyBackdropStyle}>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_52%_50%,rgba(255,255,255,0.05),transparent_18%),linear-gradient(180deg,rgba(0,0,0,0.1),rgba(0,0,0,0.35))]" />
+        </div>
+        <div className="fixed inset-0 -z-10 h-full w-full">
+          <Hyperspeed effectOptions={hyperspeedEffect} />
+        </div>
+        <div className="pointer-events-none fixed inset-0 -z-[5] overflow-hidden">
+          {borderStreaks.map((streak) => (
+            <div
+              key={streak}
+              className={`absolute bg-gradient-to-b blur-[1px] opacity-90 mix-blend-screen ${streak}`}
+            />
+          ))}
+          <div className="absolute left-0 top-0 h-full w-32 bg-[radial-gradient(circle_at_left_center,rgba(34,211,238,0.12),transparent_62%)]" />
+          <div className="absolute right-0 top-0 h-full w-32 bg-[radial-gradient(circle_at_right_center,rgba(217,70,239,0.12),transparent_62%)]" />
+        </div>
 
-      <div className="relative z-10 py-20 text-white">
+        <div className="relative z-10 py-20 text-white">
         <section className="flex min-h-[calc(100vh-11rem)] items-start px-4 pt-8 sm:px-6 lg:px-8">
           <div className="mx-auto flex w-full max-w-6xl flex-col items-center">
             <div className="relative">
               <div className="pointer-events-none absolute inset-0 translate-y-8 scale-[1.03] opacity-35 blur-2xl">
-                <FestLogo className="h-36 w-[400px] sm:h-44 sm:w-[560px] lg:h-64 lg:w-[860px]" />
+                <div className="relative h-36 w-[400px] sm:h-44 sm:w-[560px] lg:h-64 lg:w-[860px]">
+                  <Image
+                    src="/aayam-logo.png"
+                    alt="AAYAM Tech Fest official logo"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 640px) 400px, (max-width: 1024px) 560px, 860px"
+                  />
+                </div>
               </div>
-                <FestLogo
-                className="relative h-36 w-[400px] sm:h-44 sm:w-[560px] lg:h-64 lg:w-[860px]"
-                priority
-              />
+              <div className="relative h-36 w-[400px] sm:h-44 sm:w-[560px] lg:h-64 lg:w-[860px]">
+                <Image
+                  src="/aayam-logo.png"
+                  alt="AAYAM Tech Fest official logo"
+                  fill
+                  priority
+                  className="object-contain"
+                  sizes="(max-width: 640px) 400px, (max-width: 1024px) 560px, 860px"
+                />
+              </div>
             </div>
 
             <div className="mt-10 w-full">
@@ -117,11 +136,11 @@ export default function HomePage() {
           </div>
         </section>
 
-        <FeaturedEventsSection />
         <SponsorsPreviewSection />
         <InitializeRegistrationCTA />
 
         <HomeTerminalFooter />
+        </div>
       </div>
     </main>
   );

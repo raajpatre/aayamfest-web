@@ -109,32 +109,32 @@ export function SponsorWhySection() {
   const [swapTick, setSwapTick] = useState(0);
 
   return (
-    <section className="mx-auto max-w-7xl py-24">
-      <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
+    <section className="mx-auto max-w-7xl py-16 sm:py-24">
+      <div className="grid grid-cols-1 items-start gap-8 sm:gap-12 lg:grid-cols-2">
         <div className="lg:pt-8">
           <DecryptedText
             text="WHY SPONSOR AAYAM?"
             animateOn="view"
             sequential
             speed={40}
-            className="text-5xl font-bold font-mono tracking-tight text-white md:text-7xl"
+            className="text-4xl font-bold font-mono tracking-tight text-white sm:text-5xl md:text-7xl"
             encryptedClassName="text-cyan-300/70"
             parentClassName="block"
           />
-          <p className="mt-6 font-mono text-sm uppercase leading-relaxed tracking-[0.28em] text-gray-400">
+          <p className="mt-4 font-mono text-xs uppercase leading-relaxed tracking-[0.2em] text-gray-400 sm:mt-6 sm:text-sm sm:tracking-[0.28em]">
             REACH 3000+ DEVELOPERS, ENGINEERS, AND STUDENTS AT NEWTON SCHOOL OF TECHNOLOGY
           </p>
           <button
             type="button"
             onClick={() => setSwapTick((current) => current + 1)}
-            className="mt-8 rounded-xl border border-cyan-400/30 bg-black/65 px-6 py-3 font-mono text-sm font-bold uppercase tracking-[0.22em] text-cyan-200 shadow-[0_0_20px_rgba(34,211,238,0.16),inset_0_1px_0_0_rgba(255,255,255,0.08)] transition-all duration-300 hover:border-cyan-300/55 hover:bg-black/80 hover:text-white"
+            className="mt-6 rounded-xl border border-cyan-400/30 bg-black/65 px-5 py-3 font-mono text-xs font-bold uppercase tracking-[0.18em] text-cyan-200 shadow-[0_0_20px_rgba(34,211,238,0.16),inset_0_1px_0_0_rgba(255,255,255,0.08)] transition-all duration-300 hover:border-cyan-300/55 hover:bg-black/80 hover:text-white sm:mt-8 sm:px-6 sm:text-sm sm:tracking-[0.22em]"
           >
             [ INITIALIZE_SWAP ]
           </button>
         </div>
 
-        <div className="relative flex min-h-[560px] flex-col items-center justify-start gap-8">
-          <div className="card-swap-sponsor-shell relative h-[450px] w-full max-w-[520px]">
+        <div className="relative flex min-h-[320px] flex-col items-center justify-start gap-6 sm:min-h-[560px] sm:gap-8">
+          <div className="card-swap-sponsor-shell relative mt-8 h-[260px] w-full max-w-[320px] sm:mt-0 sm:h-[450px] sm:max-w-[520px]">
             <CardSwap
               width={520}
               height={450}

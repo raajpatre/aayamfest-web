@@ -672,6 +672,7 @@ class App {
     this.renderer.setSize(initW, initH, false);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.composer = new EffectComposer(this.renderer);
+    this.useComposer = true;
     container.append(this.renderer.domElement);
 
     this.camera = new THREE.PerspectiveCamera(options.fov, initW / initH, 0.1, 10000);
@@ -740,26 +741,34 @@ class App {
     this.renderer.setSize(width, height);
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
-    this.composer.setSize(width, height);
+    this.composer?.setSize(width, height);
     this.hasValidSize = true;
   }
 
   initPasses() {
-    this.renderPass = new RenderPass(this.scene, this.camera);
-    this.bloomPass = new EffectPass(
-      this.camera,
-      new BloomEffect({
-        luminanceThreshold: 0.2,
-        luminanceSmoothing: 0,
-        resolutionScale: 1
-      })
-    );
+    try {
+      this.renderPass = new RenderPass(this.scene, this.camera);
+      this.bloomPass = new EffectPass(
+        this.camera,
+        new BloomEffect({
+          luminanceThreshold: 0.2,
+          luminanceSmoothing: 0,
+          resolutionScale: 1
+        })
+      );
 
-    const smaaEffect = new SMAAEffect(this.assets.smaa.search, this.assets.smaa.area, SMAAPreset.MEDIUM);
-    this.smaaPass = new EffectPass(this.camera, smaaEffect);
-    this.composer.addPass(this.renderPass);
-    this.composer.addPass(this.bloomPass);
-    this.composer.addPass(this.smaaPass);
+      this.composer.addPass(this.renderPass);
+      this.composer.addPass(this.bloomPass);
+
+      if (this.assets?.smaa?.search && this.assets?.smaa?.area) {
+        const smaaEffect = new SMAAEffect(this.assets.smaa.search, this.assets.smaa.area, SMAAPreset.MEDIUM);
+        this.smaaPass = new EffectPass(this.camera, smaaEffect);
+        this.composer.addPass(this.smaaPass);
+      }
+    } catch (error) {
+      this.useComposer = false;
+      console.warn("Hyperspeed postprocessing disabled:", error);
+    }
   }
 
   loadAssets() {
@@ -873,7 +882,11 @@ class App {
   }
 
   render(delta) {
-    this.composer.render(delta);
+    if (this.useComposer) {
+      this.composer.render(delta);
+      return;
+    }
+    this.renderer.render(this.scene, this.camera);
   }
 
   dispose() {
@@ -911,7 +924,7 @@ class App {
       this.hasValidSize = false;
       return;
     }
-    this.composer.setSize(width, height, updateStyles);
+    this.composer?.setSize(width, height, updateStyles);
     this.hasValidSize = true;
   }
 
@@ -925,7 +938,7 @@ class App {
         this.renderer.setSize(w, h, false);
         this.camera.aspect = w / h;
         this.camera.updateProjectionMatrix();
-        this.composer.setSize(w, h);
+        this.composer?.setSize(w, h);
         this.hasValidSize = true;
       } else {
         requestAnimationFrame(this.tick);

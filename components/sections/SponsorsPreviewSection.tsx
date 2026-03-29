@@ -2,8 +2,7 @@
 
 import { motion } from "framer-motion";
 
-const sponsorLine =
-  "NST  •  SVYASA  •  VAJRA-X  •  SILVER SCREEN SYNDICATE  •  DJI  •  ASYNC API";
+const sponsorLine = "???  •  ???  •  ???  •  ???  •  ???  •  ???";
 
 const sponsorStream = `${sponsorLine}  •  ${sponsorLine}  •  ${sponsorLine}`;
 
@@ -19,7 +18,27 @@ export function SponsorsPreviewSection() {
         </div>
 
         <div className="relative mt-8">
-          <div className="relative overflow-hidden py-6">
+          <div className="relative space-y-2 py-4 md:hidden">
+            <div className="relative overflow-hidden">
+              <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#0a0b12] to-transparent" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#0a0b12] to-transparent" />
+              <div className="flex min-w-max animate-marquee whitespace-nowrap font-mono text-lg font-semibold uppercase tracking-[0.22em] text-white/70 [text-shadow:0_0_12px_rgba(255,255,255,0.12)]">
+                <span className="px-6">{sponsorStream}</span>
+                <span className="px-6">{sponsorStream}</span>
+              </div>
+            </div>
+
+            <div className="relative overflow-hidden">
+              <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#0a0b12] to-transparent" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#0a0b12] to-transparent" />
+              <div className="flex min-w-max animate-marquee whitespace-nowrap font-mono text-lg font-semibold uppercase tracking-[0.22em] text-white/55 [animation-direction:reverse] [text-shadow:0_0_12px_rgba(255,255,255,0.08)]">
+                <span className="px-6">{sponsorStream}</span>
+                <span className="px-6">{sponsorStream}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative hidden overflow-hidden py-6 md:block">
             <svg
               viewBox="0 0 1000 220"
               className="relative z-10 h-[210px] w-full overflow-visible"
