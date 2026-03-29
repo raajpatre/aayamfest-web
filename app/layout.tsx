@@ -4,7 +4,7 @@ import "./globals.css";
 import { AppFrame } from "@/components/layout/AppFrame";
 
 export const metadata: Metadata = {
-  title: "AAYAM Tech Fest",
+  title: "Aayam-Tech Fest",
   description: "Modern futuristic college fest website."
 };
 

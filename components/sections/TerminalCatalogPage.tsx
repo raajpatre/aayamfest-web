@@ -1,5 +1,6 @@
 "use client";
 
+import { type CSSProperties, useEffect, useState } from "react";
 import DecryptedText from "@/components/DecryptedText";
 import ScrollFloat from "@/components/ScrollFloat";
 import { TerminalBackground } from "@/components/sections/TerminalBackground";
@@ -57,7 +58,13 @@ const EVENT_CATALOG: CatalogCategory[] = [
         registrationLink:
           "https://unstop.com/workshops-webinars/the-fast-the-furry-aayam-newton-school-of-technology-bengaluru-karnataka-1661911"
       },
-      { name: "CAD modelling", prize: "₹5,000" }
+      {
+        name: "CAD modelling",
+        prize: "₹5,000",
+        poster: "/events/cad-modeling.png",
+        registrationLink:
+          "https://unstop.com/competitions/cad-design-aayam-newton-school-of-technology-bengaluru-karnataka-1662293"
+      }
     ]
   },
   {
@@ -65,9 +72,15 @@ const EVENT_CATALOG: CatalogCategory[] = [
     label: "02 // HACKATHONS",
     accent: "text-fuchsia-300 drop-shadow-[0_0_18px_rgba(217,70,239,0.45)]",
     events: [
-      { name: "BugBash (24 hr Hackathon)", prize: "₹65,000" },
       {
-        name: "CodeStorm (12 hr women only hackathon)",
+        name: "BugBash (24 hr Hackathon)",
+        prize: "₹65,000",
+        poster: "/events/bugbash.jpeg",
+        registrationLink:
+          "https://unstop.com/hackathons/bugbash-aayam-newton-school-of-technology-bengaluru-karnataka-1658793"
+      },
+      {
+        name: "She builds (12 hr hackathon)",
         prize: "₹30,000",
         poster: "/events/codestorm-shebuilds.png",
         registrationLink:
@@ -80,8 +93,20 @@ const EVENT_CATALOG: CatalogCategory[] = [
     label: "03 // COMPETITIVE PROGRAMMING",
     accent: "text-cyan-200 drop-shadow-[0_0_18px_rgba(103,232,249,0.42)]",
     events: [
-      { name: "Next Turing CP Individuals", prize: "₹10,000" },
-      { name: "Next Turing blindfolded CP Individuals", prize: "₹20,000" }
+      {
+        name: "Next Turing CP Individuals",
+        prize: "₹10,000",
+        poster: "/events/next-turing-cp-individuals.jpeg",
+        registrationLink:
+          "https://unstop.com/hackathons/nextturing-aayam-newton-school-of-technology-bengaluru-karnataka-1661493"
+      },
+      {
+        name: "Next Turing blindfolded CP Individuals",
+        prize: "₹20,000",
+        poster: "/events/next-turing-blindfolded-cp-individuals.png",
+        registrationLink:
+          "https://unstop.com/hackathons/nextturing-blindfolded-aayam-newton-school-of-technology-bengaluru-karnataka-1667199"
+      }
     ]
   },
   {
@@ -89,15 +114,35 @@ const EVENT_CATALOG: CatalogCategory[] = [
     label: "04 // GAMING",
     accent: "text-fuchsia-200 drop-shadow-[0_0_18px_rgba(244,114,182,0.42)]",
     events: [
-      { name: "BGMI", prize: "₹50,000" },
-      { name: "Free Fire", prize: "₹10,000" }
+      {
+        name: "BGMI",
+        prize: "₹50,000",
+        poster: "/events/bgmi.png",
+        registrationLink:
+          "https://unstop.com/events/bgmi-esports-tournament-aayam-newton-school-of-technology-bengaluru-karnataka-1662088"
+      },
+      {
+        name: "Free Fire",
+        prize: "₹10,000",
+        poster: "/events/free-fire.jpeg",
+        registrationLink:
+          "https://unstop.com/events/free-fire-max-esports-tournament-aayam-newton-school-of-technology-bengaluru-karnataka-1661948"
+      }
     ]
   },
   {
     title: "Non-tech",
     label: "05 // NON-TECH",
     accent: "text-orange-300 drop-shadow-[0_0_18px_rgba(251,146,60,0.4)]",
-    events: [{ name: "Scripted Timelines (Reel making and photography)", prize: "₹5,000" }]
+    events: [
+      {
+        name: "Scripted Timelines (Reel making and photography)",
+        prize: "₹5,000",
+        poster: "/events/scripted-timelines.png",
+        registrationLink:
+          "https://unstop.com/events/chronocapture-aayam-newton-school-of-technology-bengaluru-karnataka-1661017"
+      }
+    ]
   }
 ];
 
@@ -116,6 +161,157 @@ const BODY_DECRYPT_PROPS = {
   maxIterations: 10,
   characters: "X@#$01&*!"
 };
+
+const PIXEL_CELL_STYLES = Array.from({ length: 96 }, (_, index) => {
+  const delay = (index * 17) % 220;
+  const duration = 180 + (index % 5) * 24;
+  const colors = [
+    "rgba(2, 6, 23, 0.96)",
+    "rgba(7, 18, 35, 0.92)",
+    "rgba(18, 24, 38, 0.88)",
+    "rgba(34, 211, 238, 0.14)",
+    "rgba(217, 70, 239, 0.12)"
+  ] as const;
+
+  return {
+    background: colors[index % colors.length],
+    transitionDelay: `${delay}ms`,
+    transitionDuration: `${duration}ms`
+  } satisfies CSSProperties;
+});
+
+function EventPosterCard({ event }: { event: CatalogEvent }) {
+  const isInteractive = Boolean(event.registrationLink);
+  const [touchRevealActive, setTouchRevealActive] = useState(false);
+  const sharedClassName =
+    "group relative block aspect-[10/16] w-full overflow-hidden rounded-[30px] border border-white/14 bg-black shadow-[0_24px_80px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.04),0_0_36px_rgba(34,211,238,0.08)] transition-transform duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_28px_90px_rgba(0,0,0,0.52),0_0_0_1px_rgba(255,255,255,0.08),0_0_44px_rgba(217,70,239,0.14)] focus-visible:-translate-y-1 focus-visible:outline-none focus-visible:shadow-[0_28px_90px_rgba(0,0,0,0.52),0_0_0_1px_rgba(255,255,255,0.08),0_0_44px_rgba(217,70,239,0.14)]";
+
+  useEffect(() => {
+    if (!touchRevealActive) {
+      return;
+    }
+
+    const handlePointerDown = (eventTarget: PointerEvent) => {
+      const target = eventTarget.target;
+      if (target instanceof Element && target.closest(`[data-event-card="${event.name}"]`)) {
+        return;
+      }
+      setTouchRevealActive(false);
+    };
+
+    window.addEventListener("pointerdown", handlePointerDown);
+    return () => window.removeEventListener("pointerdown", handlePointerDown);
+  }, [event.name, touchRevealActive]);
+
+  const cardContent = (
+    <>
+      {event.poster ? (
+        <img
+          src={event.poster}
+          alt={`${event.name} poster`}
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] group-focus-visible:scale-[1.03]"
+        />
+      ) : (
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.22),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(217,70,239,0.18),transparent_32%),linear-gradient(160deg,rgba(5,10,18,0.96),rgba(14,22,36,0.94))]" />
+      )}
+
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08),transparent_22%,transparent_65%,rgba(0,0,0,0.86)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.14),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(217,70,239,0.18),transparent_38%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.06)_0px,rgba(255,255,255,0.06)_1px,transparent_1px,transparent_4px)] opacity-15 mix-blend-screen" />
+      <div className="pointer-events-none absolute left-4 top-4 h-5 w-5 border-l border-t border-cyan-300/65" />
+      <div className="pointer-events-none absolute right-4 top-4 h-5 w-5 border-r border-t border-cyan-300/65" />
+      <div className="pointer-events-none absolute bottom-4 left-4 h-5 w-5 border-b border-l border-fuchsia-400/55" />
+      <div className="pointer-events-none absolute bottom-4 right-4 h-5 w-5 border-b border-r border-fuchsia-400/55" />
+
+      <div className="pointer-events-none absolute inset-0 z-10 grid grid-cols-8 grid-rows-12 opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100 group-data-[touch-reveal=true]:opacity-100">
+        {PIXEL_CELL_STYLES.map((style, index) => (
+          <span
+            key={`${event.name}-${index}`}
+            style={style}
+            className="scale-0 opacity-0 transition-all ease-out group-hover:scale-100 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100 group-data-[touch-reveal=true]:scale-100 group-data-[touch-reveal=true]:opacity-100"
+          />
+        ))}
+      </div>
+
+      <div className="pointer-events-none absolute inset-0 z-[15] overflow-hidden opacity-0 transition-opacity duration-200 delay-75 group-hover:opacity-100 group-focus-visible:opacity-100 group-data-[touch-reveal=true]:opacity-100">
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(1,4,12,0.18)_0%,rgba(1,6,18,0.62)_40%,rgba(1,4,12,0.92)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.07),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(217,70,239,0.1),transparent_34%)]" />
+        <div className="absolute inset-0 opacity-45 mix-blend-screen [background-image:repeating-linear-gradient(to_bottom,rgba(255,255,255,0.08)_0px,rgba(255,255,255,0.08)_1px,transparent_1px,transparent_3px)]" />
+        <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(circle_at_20%_30%,rgba(255,255,255,0.9)_0_1px,transparent_1.5px),radial-gradient(circle_at_72%_52%,rgba(255,255,255,0.6)_0_1px,transparent_1.5px),radial-gradient(circle_at_44%_78%,rgba(255,255,255,0.7)_0_1px,transparent_1.5px),radial-gradient(circle_at_86%_18%,rgba(255,255,255,0.5)_0_1px,transparent_1.5px)]" />
+        <div className="absolute inset-y-0 left-[-20%] w-[40%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.14),transparent)] opacity-0 blur-sm transition-all duration-500 group-hover:left-[100%] group-hover:opacity-35 group-focus-visible:left-[100%] group-focus-visible:opacity-35 group-data-[touch-reveal=true]:left-[100%] group-data-[touch-reveal=true]:opacity-35" />
+        <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent_0px,transparent_10px,rgba(34,211,238,0.1)_10px,rgba(34,211,238,0.1)_11px,transparent_11px,transparent_24px)] opacity-35" />
+      </div>
+
+      <div className="absolute inset-0 z-20 flex flex-col justify-end bg-[linear-gradient(180deg,rgba(2,6,23,0.05)_0%,rgba(2,6,23,0.42)_36%,rgba(2,6,23,0.98)_100%)] px-5 pb-5 pt-10 opacity-0 transition-all duration-300 delay-150 group-hover:opacity-100 group-focus-visible:opacity-100 group-data-[touch-reveal=true]:opacity-100">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.1),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(217,70,239,0.14),transparent_34%)] opacity-75" />
+        <div className="relative">
+          <p className="font-mono text-[10px] uppercase tracking-[0.34em] text-cyan-300/84">
+            [ MISSION_POSTER // ACTIVE ]
+          </p>
+          <h3 className="mt-3 max-w-[14ch] font-mono text-2xl font-black uppercase leading-tight text-white sm:text-[2rem]">
+            {event.name}
+          </h3>
+          <div className="mt-4 flex items-end justify-between gap-4 border-t border-cyan-200/14 pt-4">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-cyan-100/42">
+                Prize Pool
+              </p>
+              <p className="mt-2 font-mono text-3xl font-bold text-orange-300 drop-shadow-[0_0_16px_rgba(253,186,116,0.35)]">
+                {event.prize}
+              </p>
+            </div>
+            <p className="max-w-[12ch] text-right font-mono text-[10px] uppercase tracking-[0.28em] text-cyan-100/78">
+              {isInteractive ? "[ OPEN_LINK ]" : "[ LINK_PENDING ]"}
+            </p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+
+  if (!isInteractive) {
+    return (
+      <article
+        className={sharedClassName}
+        aria-label={`${event.name} poster card`}
+        data-event-card={event.name}
+        data-touch-reveal={touchRevealActive}
+        onClick={() => setTouchRevealActive((current) => !current)}
+      >
+        {cardContent}
+      </article>
+    );
+  }
+
+  return (
+    <a
+      href={event.registrationLink}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={sharedClassName}
+      aria-label={`Open registration for ${event.name}`}
+      data-event-card={event.name}
+      data-touch-reveal={touchRevealActive}
+      onClick={(eventClick) => {
+        if (eventClick.detail !== 0) {
+          const coarsePointer =
+            typeof window !== "undefined" &&
+            window.matchMedia("(hover: none), (pointer: coarse)").matches;
+
+          if (coarsePointer && !touchRevealActive) {
+            eventClick.preventDefault();
+            setTouchRevealActive(true);
+            return;
+          }
+        }
+
+        setTouchRevealActive(false);
+      }}
+    >
+      {cardContent}
+    </a>
+  );
+}
 
 export function TerminalCatalogPage() {
   return (
@@ -176,69 +372,7 @@ export function TerminalCatalogPage() {
                   ease="power3.out"
                   stagger={0}
                 >
-                  <article className="group relative mx-auto flex aspect-[3/4] w-full max-w-sm flex-col overflow-hidden rounded-[28px] border border-white/20 bg-black/60 backdrop-blur-md shadow-[0_24px_60px_rgba(0,0,0,0.32),inset_0_1px_0_0_rgba(255,255,255,0.08)] md:max-w-none">
-                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.18),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(217,70,239,0.14),transparent_30%)]" />
-                    <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-white/8 to-transparent" />
-                    <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-cyan-300/8 via-fuchsia-400/6 to-transparent" />
-                    <div className="pointer-events-none absolute left-4 top-4 h-5 w-5 border-l border-t border-cyan-300/55" />
-                    <div className="pointer-events-none absolute right-4 top-4 h-5 w-5 border-r border-t border-cyan-300/55" />
-                    <div className="pointer-events-none absolute bottom-4 left-4 h-5 w-5 border-b border-l border-fuchsia-400/45" />
-                    <div className="pointer-events-none absolute bottom-4 right-4 h-5 w-5 border-b border-r border-fuchsia-400/45" />
-
-                    <div className="relative flex flex-1 flex-col p-6">
-                      <div>
-                        <p className="font-mono text-[11px] uppercase tracking-[0.32em] text-cyan-200/55">
-                          {event.poster ? "Poster uplink active" : "Poster uplink pending"}
-                        </p>
-                        <h3 className="mt-5 max-w-[16ch] font-mono text-3xl font-bold uppercase leading-tight text-white sm:text-4xl">
-                          {event.name}
-                        </h3>
-                      </div>
-
-                      <div className="relative mt-8 flex-1 overflow-hidden rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.015))]">
-                        {event.poster ? (
-                          <img
-                            src={event.poster}
-                            alt={`${event.name} poster`}
-                            className="absolute inset-0 h-full w-full object-cover"
-                          />
-                        ) : null}
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.16),transparent_38%),radial-gradient(circle_at_bottom_right,rgba(217,70,239,0.18),transparent_42%)]" />
-                        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),transparent_18%,transparent_82%,rgba(255,255,255,0.04))]" />
-                        <div className="absolute inset-0 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.08)_0px,rgba(255,255,255,0.08)_1px,transparent_1px,transparent_4px)] opacity-20 mix-blend-screen" />
-                        {!event.poster ? (
-                          <>
-                            <div className="absolute inset-y-0 left-0 w-full bg-[linear-gradient(90deg,transparent,rgba(34,211,238,0.12),transparent)] opacity-60 blur-xl" />
-                            <div className="absolute inset-0 opacity-70 [background-image:linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:26px_26px]" />
-                          </>
-                        ) : null}
-                        <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.28em] text-white/45">
-                          <span>Signal Feed</span>
-                          <span>CRT://ACTIVE</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="relative border-t border-white/10 px-6 pb-0 pt-5">
-                      <div className="pb-5">
-                        <p className="font-mono text-[11px] uppercase tracking-[0.32em] text-white/35">
-                          Prize pool
-                        </p>
-                        <div className="mt-3 font-mono text-3xl font-bold text-orange-400 drop-shadow-[0_0_18px_rgba(251,146,60,0.38)] sm:text-4xl">
-                          {event.prize}
-                        </div>
-                      </div>
-
-                      <a
-                        href={event.registrationLink ?? "#"}
-                        target={event.registrationLink ? "_blank" : undefined}
-                        rel={event.registrationLink ? "noopener noreferrer" : undefined}
-                        className="flex w-[calc(100%+3rem)] -translate-x-6 items-center justify-center border-t border-white/20 bg-transparent px-5 py-4 font-mono text-xs font-bold uppercase tracking-[0.24em] text-white/72 transition-all duration-300 hover:bg-white/10 hover:text-cyan-200"
-                      >
-                        [ REGISTER_VIA_TERMINAL ]
-                      </a>
-                    </div>
-                  </article>
+                  <EventPosterCard event={event} />
                 </ScrollFloat>
               ))}
             </div>

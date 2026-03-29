@@ -139,10 +139,10 @@ export default function AmbassadorApplyPage() {
               <p className="font-mono text-xs uppercase tracking-[0.34em] text-cyan-400">
                 [ APPLICATION_RECEIVED ]
               </p>
-              <h2 className="mt-4 font-mono text-3xl font-black uppercase text-white sm:text-4xl">
+              <h2 className="mt-4 bg-gradient-to-r from-cyan-300 via-white to-fuchsia-300 bg-clip-text font-mono text-3xl font-black uppercase text-transparent sm:text-4xl">
                 Signal Captured
               </h2>
-              <p className="mx-auto mt-5 max-w-2xl font-mono text-sm leading-8 text-white/78 sm:text-base">
+              <p className="mx-auto mt-5 max-w-2xl bg-gradient-to-r from-cyan-200 via-cyan-100 to-fuchsia-200 bg-clip-text font-mono text-sm leading-8 text-transparent sm:text-base">
                 Your ambassador application has been submitted successfully. Watch your inbox for the confirmation mail and next-step instructions from Team AAYAM.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-4">

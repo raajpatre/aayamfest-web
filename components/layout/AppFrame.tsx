@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -19,9 +19,21 @@ const links: Array<{ href: string; label: string; external?: boolean }> = [
 export function AppFrame({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   return (
     <>
+      <div
+        className={cn(
+          "pointer-events-none fixed inset-0 z-40 bg-black/20 opacity-0 backdrop-blur-none transition-all duration-300 md:hidden",
+          mobileMenuOpen && "pointer-events-auto opacity-100 backdrop-blur-md"
+        )}
+        onClick={() => setMobileMenuOpen(false)}
+      />
       <header className="fixed inset-x-0 top-4 z-50 sm:top-6">
         <div className="container-shell flex justify-center">
           <div
@@ -71,16 +83,29 @@ export function AppFrame({ children }: { children: ReactNode }) {
             })}
           </nav>
 
-          <details className={cn("relative md:hidden", isHome && "absolute right-4")}>
-            <summary className="list-none cursor-pointer rounded-full border border-white/10 bg-black/35 p-3 text-cyanGlow backdrop-blur-md transition-all duration-300 hover:border-cyanGlow/40 hover:text-white">
+          <div className={cn("relative md:hidden", isHome && "absolute right-4")}>
+            <button
+              type="button"
+              aria-expanded={mobileMenuOpen}
+              aria-label="Toggle menu"
+              onClick={() => setMobileMenuOpen((open) => !open)}
+              className="list-none cursor-pointer rounded-full border border-white/10 bg-black p-3 text-cyanGlow backdrop-blur-md transition-all duration-300 hover:border-cyanGlow/40 hover:text-white"
+            >
               <span className="sr-only">Open menu</span>
               <span className="flex h-5 w-5 flex-col items-center justify-center gap-[3px]">
                 {[0, 1, 2].map((line) => (
                   <span key={line} className="block h-[1.5px] w-4 rounded-full bg-current" />
                 ))}
               </span>
-            </summary>
-            <div className="absolute right-0 mt-3 min-w-52 rounded-[28px] border border-white/15 bg-black/82 p-3 shadow-[0_12px_44px_rgba(0,0,0,0.62),inset_0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur-xl">
+            </button>
+            <div
+              className={cn(
+                "absolute right-0 mt-3 min-w-52 rounded-[28px] border border-white/15 bg-black p-3 shadow-[0_12px_44px_rgba(0,0,0,0.62),inset_0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur-xl transition-all duration-300",
+                mobileMenuOpen
+                  ? "pointer-events-auto translate-y-0 opacity-100"
+                  : "pointer-events-none -translate-y-2 opacity-0"
+              )}
+            >
               <div className="space-y-2">
                 {links.map((link) => (
                   <Link
@@ -88,14 +113,15 @@ export function AppFrame({ children }: { children: ReactNode }) {
                     href={link.href}
                     target={link.external ? "_blank" : undefined}
                     rel={link.external ? "noopener noreferrer" : undefined}
-                    className="block rounded-2xl border border-white/8 bg-black/55 px-3 py-2 text-sm uppercase tracking-[0.18em] text-white/88 transition-all duration-300 hover:border-cyan-400/35 hover:bg-cyan-300/10 hover:text-cyan-300 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block rounded-2xl border border-white/8 bg-black px-3 py-2 text-sm uppercase tracking-[0.18em] text-white/92 transition-all duration-300 hover:border-cyan-400/35 hover:bg-black hover:text-cyan-300 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]"
                   >
                     {link.label}
                   </Link>
                 ))}
               </div>
             </div>
-          </details>
+          </div>
         </div>
         </div>
       </header>
