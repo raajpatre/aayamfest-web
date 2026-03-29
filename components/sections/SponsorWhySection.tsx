@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import CardSwap, { Card } from "@/components/CardSwap";
 import DecryptedText from "@/components/DecryptedText";
 
@@ -35,10 +36,7 @@ const sponsorReasons = [
   }
 ] as const;
 
-function RobotBadge({ tint = "cyan" }: { tint?: "cyan" | "orange" }) {
-  const stroke = tint === "cyan" ? "#67E8F9" : "#FB923C";
-  const accent = tint === "cyan" ? "#F472B6" : "#22D3EE";
-
+function LogoBadge({ tint = "cyan" }: { tint?: "cyan" | "orange" }) {
   return (
     <div className="relative flex h-28 w-28 items-center justify-center rounded-full border border-white/10 bg-black/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]">
       <div
@@ -48,42 +46,38 @@ function RobotBadge({ tint = "cyan" }: { tint?: "cyan" | "orange" }) {
             : "bg-orange-400/10 shadow-[0_0_40px_rgba(251,146,60,0.18)]"
         }`}
       />
-      <svg viewBox="0 0 120 120" className="relative z-10 h-16 w-16" fill="none" aria-hidden="true">
-        <rect x="28" y="32" width="64" height="44" rx="12" stroke={stroke} strokeWidth="5" />
-        <path d="M46 28L52 16M68 28L74 16" stroke={stroke} strokeWidth="5" strokeLinecap="round" />
-        <circle cx="48" cy="52" r="5" fill={stroke} />
-        <circle cx="72" cy="52" r="5" fill={accent} />
-        <path d="M46 66H74" stroke="#F8FAFC" strokeWidth="5" strokeLinecap="round" />
-        <path d="M22 52H28M92 52H98M42 76L36 96M78 76L84 96" stroke={accent} strokeWidth="5" strokeLinecap="round" />
-      </svg>
+      <div className="relative z-10 h-16 w-16 drop-shadow-[0_0_12px_rgba(255,255,255,0.3)]">
+        <Image
+          src="/aayam-mark.png"
+          alt="AAYAM logo mark"
+          fill
+          className="object-contain"
+          sizes="64px"
+        />
+      </div>
     </div>
   );
 }
 
 function BenefitBadge({ title }: { title: string }) {
-  if (title === "TALENT PIPELINE") {
-    return (
-      <div className="relative flex h-28 w-28 items-center justify-center rounded-full border border-white/10 bg-black/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]">
-        <div className="absolute inset-3 rounded-full bg-orange-400/10 shadow-[0_0_40px_rgba(251,146,60,0.18)]" />
-        <div className="relative z-10 text-5xl text-orange-400 drop-shadow-[0_0_10px_rgba(251,146,60,0.8)]">
-          ⚡
-        </div>
-      </div>
-    );
-  }
+  const tint = title === "3000+ ATTENDEES" ? "orange" : "cyan";
 
-  if (title === "INNOVATION PRESENCE") {
-    return (
-      <div className="relative flex h-28 w-28 items-center justify-center rounded-full border border-white/10 bg-black/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]">
-        <div className="absolute inset-3 rounded-full bg-orange-400/10 shadow-[0_0_40px_rgba(251,146,60,0.18)]" />
-        <div className="relative z-10 text-5xl text-orange-300 drop-shadow-[0_0_10px_rgba(251,146,60,0.8)]">
-          ✨
-        </div>
+  return (
+    <>
+      <div
+        className={`flex min-h-28 w-full items-center rounded-2xl border px-4 py-4 font-mono text-lg font-extrabold uppercase leading-tight tracking-[0.14em] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] sm:hidden ${
+          tint === "orange"
+            ? "border-orange-300/20 bg-orange-400/10 text-orange-200"
+            : "border-cyan-300/20 bg-cyan-400/10 text-cyan-100"
+        }`}
+      >
+        {title}
       </div>
-    );
-  }
-
-  return <RobotBadge tint={title === "3000+ ATTENDEES" ? "orange" : "cyan"} />;
+      <div className="hidden sm:block">
+        <LogoBadge tint={tint} />
+      </div>
+    </>
+  );
 }
 
 function chunkDescription(text: string) {
@@ -160,7 +154,7 @@ export function SponsorWhySection() {
                   <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.08),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(217,70,239,0.08),transparent_32%)]" />
                   <div className="pointer-events-none absolute inset-0 opacity-15 bg-[repeating-linear-gradient(to_bottom,rgba(255,255,255,0.12)_0px,rgba(255,255,255,0.12)_1px,transparent_1px,transparent_4px)] mix-blend-screen" />
 
-                  <div className="relative z-10 grid h-full grid-cols-[160px_1fr] gap-8">
+                  <div className="relative z-10 grid h-full grid-cols-1 gap-6 sm:grid-cols-[160px_1fr] sm:gap-8">
                     <div className="flex flex-col items-start justify-between">
                       <BenefitBadge title={item.title} />
                       <div className="space-y-3 font-mono text-[11px] uppercase tracking-[0.28em] text-cyan-300/60">
@@ -181,7 +175,7 @@ export function SponsorWhySection() {
                                 ? "MEMORY CHIP // TALENT PIPE"
                                 : "MEMORY CHIP // INNOVATION"}
                         </div>
-                        <h3 className="mb-6 font-mono text-3xl font-extrabold tracking-tight text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]">
+                        <h3 className="mb-6 hidden font-mono text-3xl font-extrabold tracking-tight text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.7)] sm:block">
                           {item.title}
                         </h3>
                         <div className="space-y-2">
