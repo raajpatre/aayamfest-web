@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatedAboutStatsSection } from "@/components/sections/AnimatedAboutStatsSection";
 import { HomeTerminalFooter } from "@/components/sections/HomeTerminalFooter";
@@ -64,13 +64,31 @@ const borderStreaks = [
   "right-[3%] top-[18%] h-[22vh] w-[1px] rotate-[74deg] from-transparent via-cyan-200/35 to-transparent"
 ] as const;
 
+const INTRO_STORAGE_KEY = "aayam-intro-complete";
+
 export default function HomePage() {
   const [introComplete, setIntroComplete] = useState(false);
+  const [introReady, setIntroReady] = useState(false);
+
+  useEffect(() => {
+    const hasSeenIntro = window.sessionStorage.getItem(INTRO_STORAGE_KEY) === "true";
+    setIntroComplete(hasSeenIntro);
+    setIntroReady(true);
+  }, []);
+
+  const handleIntroComplete = () => {
+    window.sessionStorage.setItem(INTRO_STORAGE_KEY, "true");
+    setIntroComplete(true);
+  };
 
   return (
     <main className="relative min-h-screen">
-      {!introComplete && <WarpSpeedIntro onComplete={() => setIntroComplete(true)} />}
-      <div className={`transition-opacity duration-500 ${introComplete ? "opacity-100" : "pointer-events-none opacity-0"}`}>
+      {introReady && !introComplete ? <WarpSpeedIntro onComplete={handleIntroComplete} /> : null}
+      <div
+        className={`transition-opacity duration-500 ${
+          introReady && introComplete ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+      >
         <div className="fixed inset-0 -z-30 h-full w-full bg-black" />
         <div className="fixed inset-0 -z-20 h-full w-full bg-cover bg-center" style={galaxyBackdropStyle}>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_52%_50%,rgba(255,255,255,0.05),transparent_18%),linear-gradient(180deg,rgba(0,0,0,0.1),rgba(0,0,0,0.35))]" />
