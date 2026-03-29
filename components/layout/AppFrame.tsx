@@ -7,12 +7,12 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/format";
 import { AudioController } from "@/components/ui/AudioController";
 
-const links = [
+const links: Array<{ href: string; label: string; external?: boolean }> = [
   { href: "/", label: "Program" },
   { href: "/events", label: "Terminal" },
   { href: "/sponsors", label: "Archive" },
   { href: "/team", label: "Squad" },
-  { href: "https://www.aayamfest.com/ambassador.html", label: "Ambassador", external: true },
+  { href: "/ambassador", label: "Ambassador" },
   { href: "/contact", label: "Uplink" }
 ];
 
