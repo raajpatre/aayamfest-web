@@ -1,10 +1,34 @@
 "use client";
 
-import { motion } from "framer-motion";
+import Image from "next/image";
+import { SponsorRecord } from "@/lib/types";
 
-const sponsorLine = "???  •  ???  •  ???  •  ???  •  ???  •  ???";
+const previewSponsors: SponsorRecord[] = [
+  {
+    _id: "preview-canva",
+    name: "Canva",
+    category: "In-Kind",
+    logo: "/sponsors/canva.png",
+    websiteLink: "https://www.canva.com/"
+  },
+  {
+    _id: "preview-truscholar",
+    name: "TruScholar",
+    category: "In-Kind",
+    logo: "/sponsors/truscholar.png",
+    websiteLink: "https://truscholar.io/"
+  },
+  {
+    _id: "preview-prera",
+    name: "Prera",
+    category: "In-Kind",
+    logo: "/sponsors/prera.png",
+    websiteLink: "https://prera.co.in/"
+  }
+];
 
-const sponsorStream = `${sponsorLine}  •  ${sponsorLine}  •  ${sponsorLine}`;
+const marqueeSponsors = [...previewSponsors, ...previewSponsors, ...previewSponsors];
+const arcSponsors = [...previewSponsors, ...previewSponsors, ...previewSponsors, ...previewSponsors];
 
 export function SponsorsPreviewSection() {
   return (
@@ -17,59 +41,73 @@ export function SponsorsPreviewSection() {
           </h2>
         </div>
 
-        <div className="relative mt-8">
-          <div className="relative space-y-2 py-4 md:hidden">
+        <div className="relative mt-10">
+          <div className="relative space-y-3 py-4 md:hidden">
             <div className="relative overflow-hidden">
-              <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#0a0b12] to-transparent" />
-              <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#0a0b12] to-transparent" />
-              <div className="flex min-w-max animate-marquee whitespace-nowrap font-mono text-lg font-semibold uppercase tracking-[0.22em] text-white/70 [text-shadow:0_0_12px_rgba(255,255,255,0.12)]">
-                <span className="px-6">{sponsorStream}</span>
-                <span className="px-6">{sponsorStream}</span>
+              <div className="flex min-w-max animate-marquee items-center gap-8 px-2 py-3">
+                {marqueeSponsors.map((sponsor, index) => (
+                  <a
+                    key={`${sponsor._id}-${index}`}
+                    href={sponsor.websiteLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex h-20 w-36 shrink-0 items-center justify-center"
+                  >
+                    <Image
+                      src={sponsor.logo}
+                      alt={sponsor.name}
+                      width={160}
+                      height={64}
+                      className={`${sponsor.name === "Canva" ? "max-h-16" : "max-h-10"} w-auto object-contain`}
+                    />
+                  </a>
+                ))}
               </div>
             </div>
 
             <div className="relative overflow-hidden">
-              <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#0a0b12] to-transparent" />
-              <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#0a0b12] to-transparent" />
-              <div className="flex min-w-max animate-marquee whitespace-nowrap font-mono text-lg font-semibold uppercase tracking-[0.22em] text-white/55 [animation-direction:reverse] [text-shadow:0_0_12px_rgba(255,255,255,0.08)]">
-                <span className="px-6">{sponsorStream}</span>
-                <span className="px-6">{sponsorStream}</span>
+              <div className="flex min-w-max animate-marquee items-center gap-8 px-2 py-3 [animation-direction:reverse]">
+                {marqueeSponsors.map((sponsor, index) => (
+                  <a
+                    key={`${sponsor._id}-reverse-${index}`}
+                    href={sponsor.websiteLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex h-20 w-36 shrink-0 items-center justify-center"
+                  >
+                    <Image
+                      src={sponsor.logo}
+                      alt={sponsor.name}
+                      width={160}
+                      height={64}
+                      className={`${sponsor.name === "Canva" ? "max-h-16" : "max-h-10"} w-auto object-contain`}
+                    />
+                  </a>
+                ))}
               </div>
             </div>
           </div>
 
           <div className="relative hidden overflow-hidden py-6 md:block">
-            <svg
-              viewBox="0 0 1000 220"
-              className="relative z-10 h-[210px] w-full overflow-visible"
-              preserveAspectRatio="none"
-              aria-hidden="true"
-            >
-              <defs>
-                <path id="sponsor-curve" d="M 0 190 Q 500 -10 1000 190" fill="transparent" />
-                <filter id="sponsor-glow" x="-20%" y="-80%" width="140%" height="260%">
-                  <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#ffffff" floodOpacity="0.18" />
-                  <feDropShadow dx="0" dy="0" stdDeviation="10" floodColor="#22d3ee" floodOpacity="0.22" />
-                  <feDropShadow dx="0" dy="0" stdDeviation="16" floodColor="#d946ef" floodOpacity="0.14" />
-                </filter>
-              </defs>
-
-              <text
-                className="font-mono text-[31px] font-bold uppercase tracking-[0.28em]"
-                fill="rgba(255,255,255,0.5)"
-                filter="url(#sponsor-glow)"
-                style={{ letterSpacing: "0.28em" }}
-              >
-                <motion.textPath
-                  href="#sponsor-curve"
-                  startOffset="0%"
-                  animate={{ startOffset: ["0%", "-50%"] }}
-                  transition={{ duration: 18, ease: "linear", repeat: Infinity }}
+            <div className="sponsors-arc-track flex min-w-max items-center gap-14 px-6">
+              {arcSponsors.map((sponsor, index) => (
+                <a
+                  key={`${sponsor._id}-arc-${index}`}
+                  href={sponsor.websiteLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="sponsors-arc-item flex h-24 w-44 items-center justify-center"
                 >
-                  {sponsorStream}
-                </motion.textPath>
-              </text>
-            </svg>
+                  <Image
+                    src={sponsor.logo}
+                    alt={sponsor.name}
+                    width={176}
+                    height={72}
+                    className={`${sponsor.name === "Canva" ? "max-h-20" : "max-h-12"} w-auto object-contain`}
+                  />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -299,26 +299,26 @@ body::after {
   align-items: center;
   justify-content: center;
   min-width: max-content;
-  transform: translateY(0) scale(0.94);
-  opacity: 0.35;
+  transform: none;
+  opacity: 1;
 }
 
 .sponsors-arc-item:nth-child(6n + 1),
 .sponsors-arc-item:nth-child(6n + 6) {
-  transform: translateY(18px) scale(0.88);
-  opacity: 0.2;
+  transform: none;
+  opacity: 1;
 }
 
 .sponsors-arc-item:nth-child(6n + 2),
 .sponsors-arc-item:nth-child(6n + 5) {
-  transform: translateY(10px) scale(0.91);
-  opacity: 0.26;
+  transform: none;
+  opacity: 1;
 }
 
 .sponsors-arc-item:nth-child(6n + 3),
 .sponsors-arc-item:nth-child(6n + 4) {
-  transform: translateY(-4px) scale(1);
-  opacity: 0.42;
+  transform: none;
+  opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {

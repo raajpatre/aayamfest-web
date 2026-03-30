@@ -3,31 +3,70 @@ import DecryptedText from "@/components/DecryptedText";
 import { HomeTerminalFooter } from "@/components/sections/HomeTerminalFooter";
 import { SponsorWhySection } from "@/components/sections/SponsorWhySection";
 import { TerminalBackground } from "@/components/sections/TerminalBackground";
+import { SponsorMarquee } from "@/components/ui/SponsorMarquee";
 import { getSponsors } from "@/lib/data";
+import { SponsorRecord } from "@/lib/types";
 
-const cardBaseClass =
+const FEATURED_IN_KIND_SPONSORS: SponsorRecord[] = [
+  {
+    _id: "featured-inkind-canva",
+    name: "Canva",
+    category: "In-Kind",
+    logo: "/sponsors/canva.png",
+    websiteLink: "https://www.canva.com/"
+  },
+  {
+    _id: "featured-inkind-truscholar",
+    name: "TruScholar",
+    category: "In-Kind",
+    logo: "/sponsors/truscholar.png",
+    websiteLink: "https://truscholar.io/"
+  },
+  {
+    _id: "featured-inkind-prera",
+    name: "Prera",
+    category: "In-Kind",
+    logo: "/sponsors/prera.png",
+    websiteLink: "https://prera.co.in/"
+  }
+];
+
+const framedCardClass =
   "bg-black/40 backdrop-blur-md border border-white/10 rounded-xl flex items-center justify-center transition-all duration-300 hover:border-cyan-400/50 hover:bg-black/60 relative overflow-hidden group";
+
+const framelessCardClass =
+  "relative flex items-center justify-center transition-all duration-300 group";
 
 function SponsorCard({
   sponsor,
   heightClass,
   logoClass,
-  showName = true
+  showName = true,
+  framed = true
 }: {
   sponsor: { _id: string; name: string; logo: string; websiteLink: string; category: string };
   heightClass: string;
   logoClass: string;
   showName?: boolean;
+  framed?: boolean;
 }) {
+  const isFeaturedInKindSponsor = FEATURED_IN_KIND_SPONSORS.some(
+    (featuredSponsor) => featuredSponsor._id === sponsor._id
+  );
+
   return (
     <a
       href={sponsor.websiteLink}
       target="_blank"
       rel="noreferrer"
-      className={`${cardBaseClass} ${heightClass}`}
+      className={`${framed ? framedCardClass : framelessCardClass} ${heightClass}`}
     >
-      <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-45deg] group-hover:animate-[shine_1.5s_ease-in-out_infinite]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.08),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(217,70,239,0.08),transparent_30%)]" />
+      {framed ? (
+        <>
+          <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-45deg] group-hover:animate-[shine_1.5s_ease-in-out_infinite]" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.08),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(217,70,239,0.08),transparent_30%)]" />
+        </>
+      ) : null}
       <div className="relative z-10 flex h-full w-full flex-col items-center justify-center px-6 py-8 text-center">
         <div className="flex h-full w-full items-center justify-center">
           <Image
@@ -35,7 +74,7 @@ function SponsorCard({
             alt={sponsor.name}
             width={320}
             height={160}
-            className={`${logoClass} h-auto max-w-full object-contain`}
+            className={`${logoClass} ${isFeaturedInKindSponsor ? "max-h-16 md:max-h-20" : ""} h-auto max-w-full object-contain`}
             sizes="(max-width: 768px) 100vw, 33vw"
           />
         </div>
@@ -54,7 +93,8 @@ function TierSection({
   cardHeightClass,
   emptyLabel,
   logoClass,
-  showName = true
+  showName = true,
+  framed = true
 }: {
   title: string;
   sponsors: { _id: string; name: string; logo: string; websiteLink: string; category: string }[];
@@ -63,6 +103,7 @@ function TierSection({
   emptyLabel: string;
   logoClass: string;
   showName?: boolean;
+  framed?: boolean;
 }) {
   return (
     <section className="space-y-6">
@@ -76,11 +117,12 @@ function TierSection({
               heightClass={cardHeightClass}
               logoClass={logoClass}
               showName={showName}
+              framed={framed}
             />
           ))}
         </div>
       ) : (
-        <div className={`${cardBaseClass} mx-auto min-h-[140px] max-w-3xl px-8 text-center font-mono text-sm uppercase tracking-[0.22em] text-white/55`}>
+        <div className={`${framedCardClass} mx-auto min-h-[140px] max-w-3xl px-8 text-center font-mono text-sm uppercase tracking-[0.22em] text-white/55`}>
           {emptyLabel}
         </div>
       )}
@@ -93,7 +135,10 @@ export default async function SponsorsPage() {
   const titleSponsors = sponsors.filter((sponsor) => sponsor.category === "Title");
   const goldSponsors = sponsors.filter((sponsor) => sponsor.category === "Concert");
   const silverSponsors = sponsors.filter((sponsor) => sponsor.category === "Associate");
-  const communityPartners = sponsors.filter((sponsor) => sponsor.category === "In-Kind");
+  const communityPartners = [
+    ...FEATURED_IN_KIND_SPONSORS,
+    ...sponsors.filter((sponsor) => sponsor.category === "In-Kind")
+  ];
 
   return (
     <main className="relative isolate min-h-screen overflow-hidden text-white">
@@ -151,15 +196,14 @@ export default async function SponsorsPage() {
           logoClass="max-h-14 w-auto object-contain"
         />
 
-        <TierSection
-          title="[ COMMUNITY PARTNERS ]"
-          sponsors={communityPartners}
-          containerClassName="mx-auto grid max-w-6xl grid-cols-2 gap-4 md:grid-cols-4"
-          cardHeightClass="h-24 w-full"
-          emptyLabel="COMMUNITY CHANNELS OFFLINE"
-          logoClass="max-h-8 w-auto object-contain opacity-70 transition-opacity duration-300 group-hover:opacity-100"
-          showName={false}
-        />
+        <section className="space-y-6">
+          <h2 className="mb-6 text-center font-mono uppercase tracking-[0.34em] text-orange-500">
+            [ IN-KINDS SPONSORS ]
+          </h2>
+          <div className="mx-auto w-full max-w-6xl">
+            <SponsorMarquee sponsors={communityPartners} />
+          </div>
+        </section>
 
         <SponsorWhySection />
 
