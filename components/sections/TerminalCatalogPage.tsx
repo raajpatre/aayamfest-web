@@ -84,7 +84,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
         prize: "₹30,000",
         poster: "/events/codestorm-shebuilds.png",
         registrationLink:
-          "https://unstop.com/hackathons/code-storm-aayam-newton-school-of-technology-bengaluru-karnataka-1661210"
+          "https://unstop.com/hackathons/shebuilds-aayam-newton-school-of-technology-bengaluru-karnataka-1667183"
       }
     ]
   },
@@ -138,7 +138,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "Scripted Timelines (Reel making and photography)",
         prize: "₹5,000",
-        poster: "/events/scripted-timelines.png",
+        poster: "/events/scripted-timelines.jpg",
         registrationLink:
           "https://unstop.com/events/chronocapture-aayam-newton-school-of-technology-bengaluru-karnataka-1661017"
       }
