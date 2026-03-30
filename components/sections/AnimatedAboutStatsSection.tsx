@@ -38,33 +38,11 @@ export function AnimatedAboutStatsSection() {
       <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-black/35 p-8 backdrop-blur-lg shadow-[0_24px_60px_rgba(0,0,0,0.28),inset_0_1px_0_0_rgba(255,255,255,0.08)]">
         <div className="pointer-events-none absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-orange-500/10 to-transparent blur-xl" />
         <div className="relative">
-          <div className="font-mono text-sm tracking-[0.32em]">
-            <DecryptedText
-              text={ABOUT_LABEL}
-              className="text-orange-500"
-              encryptedClassName="text-cyan-400 opacity-70"
-              parentClassName="inline-block"
-              {...decryptProps}
-            />
-          </div>
+          <div className="font-mono text-sm tracking-[0.32em] text-orange-500">{ABOUT_LABEL}</div>
           <h2 className="mt-5 text-4xl font-black text-white [text-shadow:0_6px_20px_rgba(255,255,255,0.08),0_8px_28px_rgba(0,0,0,0.75)] sm:text-5xl">
-            <DecryptedText
-              text={ABOUT_HEADING}
-              className="text-white"
-              encryptedClassName="text-cyan-400 opacity-70"
-              parentClassName="inline-block"
-              {...slowHeadingDecryptProps}
-            />
+            {ABOUT_HEADING}
           </h2>
-          <div className="mt-6 max-w-2xl text-base leading-8 sm:text-lg">
-            <DecryptedText
-              text={ABOUT_BODY}
-              className="text-gray-300"
-              encryptedClassName="text-cyan-400 opacity-70"
-              parentClassName="block"
-              {...fastParagraphDecryptProps}
-            />
-          </div>
+          <div className="mt-6 max-w-2xl text-base leading-8 text-gray-300 sm:text-lg">{ABOUT_BODY}</div>
         </div>
       </div>
 
