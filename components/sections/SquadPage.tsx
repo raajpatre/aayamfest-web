@@ -28,16 +28,23 @@ const squadMembers = [
   {
     id: "member-5",
     name: "ARUNIKA CHANDA",
-    role: "DESIGN TEAM",
+    role: "DESIGN LEAD",
     image: "/team/arunika-chanda.jpg",
     linkedin: "https://www.linkedin.com/in/arunika-chanda-4859272b9/"
   },
   {
     id: "member-6",
-    name: "PAHELI CHOUDHARI",
-    role: "DESIGN TEAM",
+    name: "PAHELI CHOUDHURI",
+    role: "DESIGN LEAD",
     image: "/team/paheli-choudhari.jpeg",
     linkedin: "https://www.linkedin.com/in/paheli-choudhuri-1025hsuya/"
+  },
+  {
+    id: "member-8",
+    name: "ARCHITA SINGH",
+    role: "DESIGN TEAM",
+    image: "/team/archita-singh.jpg",
+    linkedin: "https://www.linkedin.com/in/archita-singh-668193380?utm_source=share_via&utm_content=profile&utm_medium=member_android"
   },
   {
     id: "member-7",
