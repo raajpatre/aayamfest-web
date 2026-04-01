@@ -35,7 +35,9 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "RC Racing",
         prize: "₹50,000",
-        poster: "/events/rc-racing.png"
+        poster: "/events/rc-racing.png",
+        registrationLink:
+          "https://unstop.com/competitions/rc-racing-aayam-newton-school-of-technology-bengaluru-karnataka-1667510"
       },
       {
         name: "FPV drone",
@@ -123,7 +125,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       },
       {
         name: "Free Fire",
-        prize: "₹10,000",
+        prize: "₹5,000",
         poster: "/events/free-fire.jpeg",
         registrationLink:
           "https://unstop.com/events/free-fire-max-esports-tournament-aayam-newton-school-of-technology-bengaluru-karnataka-1661948"
