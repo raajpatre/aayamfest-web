@@ -125,7 +125,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       },
       {
         name: "Free Fire",
-        prize: "₹5,000",
+        prize: "₹15,000 + Goodies",
         poster: "/events/free-fire.jpeg",
         registrationLink:
           "https://unstop.com/events/free-fire-max-esports-tournament-aayam-newton-school-of-technology-bengaluru-karnataka-1661948"
