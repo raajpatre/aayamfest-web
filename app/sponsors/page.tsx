@@ -9,11 +9,11 @@ import { SponsorRecord } from "@/lib/types";
 
 const FEATURED_IN_KIND_SPONSORS: SponsorRecord[] = [
   {
-    _id: "featured-inkind-canva",
-    name: "Canva",
+    _id: "featured-inkind-f-community-india",
+    name: "F Community India",
     category: "In-Kind",
-    logo: "/sponsors/canva.png",
-    websiteLink: "https://www.canva.com/"
+    logo: "/sponsors/f-community-india.png",
+    websiteLink: "#"
   },
   {
     _id: "featured-inkind-truscholar",

@@ -23,14 +23,14 @@ export function SponsorMarquee({ sponsors }: { sponsors: SponsorRecord[] }) {
             href={sponsor.websiteLink}
             target="_blank"
             rel="noreferrer"
-            className="flex h-24 w-44 shrink-0 items-center justify-center p-4 transition duration-300"
+            className={`${sponsor.name === "F Community India" ? "w-64" : "w-44"} flex h-24 shrink-0 items-center justify-center p-4 transition duration-300`}
           >
             <Image
               src={sponsor.logo}
               alt={sponsor.name}
               width={124}
               height={52}
-              className={`${sponsor.name === "Canva" ? "max-h-16" : "max-h-12"} w-auto object-contain`}
+              className={`${sponsor.name === "F Community India" ? "max-h-32" : "max-h-12"} w-auto object-contain`}
             />
           </a>
         ))}

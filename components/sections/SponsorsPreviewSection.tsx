@@ -5,11 +5,11 @@ import { SponsorRecord } from "@/lib/types";
 
 const previewSponsors: SponsorRecord[] = [
   {
-    _id: "preview-canva",
-    name: "Canva",
+    _id: "preview-f-community-india",
+    name: "F Community India",
     category: "In-Kind",
-    logo: "/sponsors/canva.png",
-    websiteLink: "https://www.canva.com/"
+    logo: "/sponsors/f-community-india.png",
+    websiteLink: "#"
   },
   {
     _id: "preview-truscholar",
@@ -51,14 +51,14 @@ export function SponsorsPreviewSection() {
                     href={sponsor.websiteLink}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex h-20 w-36 shrink-0 items-center justify-center"
+                    className={`${sponsor.name === "F Community India" ? "w-56" : "w-36"} flex h-20 shrink-0 items-center justify-center`}
                   >
                     <Image
                       src={sponsor.logo}
                       alt={sponsor.name}
                       width={160}
                       height={64}
-                      className={`${sponsor.name === "Canva" ? "max-h-16" : "max-h-10"} w-auto object-contain`}
+                      className={`${sponsor.name === "F Community India" ? "max-h-32" : "max-h-10"} w-auto object-contain`}
                     />
                   </a>
                 ))}
@@ -73,14 +73,14 @@ export function SponsorsPreviewSection() {
                     href={sponsor.websiteLink}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex h-20 w-36 shrink-0 items-center justify-center"
+                    className={`${sponsor.name === "F Community India" ? "w-56" : "w-36"} flex h-20 shrink-0 items-center justify-center`}
                   >
                     <Image
                       src={sponsor.logo}
                       alt={sponsor.name}
                       width={160}
                       height={64}
-                      className={`${sponsor.name === "Canva" ? "max-h-16" : "max-h-10"} w-auto object-contain`}
+                      className={`${sponsor.name === "F Community India" ? "max-h-32" : "max-h-10"} w-auto object-contain`}
                     />
                   </a>
                 ))}
@@ -96,14 +96,14 @@ export function SponsorsPreviewSection() {
                   href={sponsor.websiteLink}
                   target="_blank"
                   rel="noreferrer"
-                  className="sponsors-arc-item flex h-24 w-44 items-center justify-center"
+                  className={`${sponsor.name === "F Community India" ? "w-72" : "w-44"} sponsors-arc-item flex h-24 items-center justify-center`}
                 >
                   <Image
                     src={sponsor.logo}
                     alt={sponsor.name}
                     width={176}
                     height={72}
-                    className={`${sponsor.name === "Canva" ? "max-h-20" : "max-h-12"} w-auto object-contain`}
+                    className={`${sponsor.name === "F Community India" ? "max-h-36" : "max-h-12"} w-auto object-contain`}
                   />
                 </a>
               ))}
