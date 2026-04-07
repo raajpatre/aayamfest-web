@@ -28,6 +28,13 @@ const FEATURED_IN_KIND_SPONSORS: SponsorRecord[] = [
     category: "In-Kind",
     logo: "/sponsors/prera.png",
     websiteLink: "https://prera.co.in/"
+  },
+  {
+    _id: "featured-inkind-abhibus",
+    name: "AbhiBus",
+    category: "In-Kind",
+    logo: "/sponsors/abhibus.png",
+    websiteLink: "#"
   }
 ];
 

@@ -3,6 +3,10 @@
 import Image from "next/image";
 import { SponsorRecord } from "@/lib/types";
 
+function isWideSponsor(name: string) {
+  return name === "F Community India" || name === "AbhiBus";
+}
+
 export function SponsorMarquee({ sponsors }: { sponsors: SponsorRecord[] }) {
   if (!sponsors.length) {
     return (
@@ -23,14 +27,14 @@ export function SponsorMarquee({ sponsors }: { sponsors: SponsorRecord[] }) {
             href={sponsor.websiteLink}
             target="_blank"
             rel="noreferrer"
-            className={`${sponsor.name === "F Community India" ? "w-64" : "w-44"} flex h-24 shrink-0 items-center justify-center p-4 transition duration-300`}
+            className={`${isWideSponsor(sponsor.name) ? "w-64" : "w-44"} flex h-24 shrink-0 items-center justify-center p-4 transition duration-300`}
           >
             <Image
               src={sponsor.logo}
               alt={sponsor.name}
               width={124}
               height={52}
-              className={`${sponsor.name === "F Community India" ? "max-h-32" : "max-h-12"} w-auto object-contain`}
+              className={`${isWideSponsor(sponsor.name) ? "max-h-32" : "max-h-12"} w-auto object-contain`}
             />
           </a>
         ))}

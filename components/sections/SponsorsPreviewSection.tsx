@@ -24,11 +24,42 @@ const previewSponsors: SponsorRecord[] = [
     category: "In-Kind",
     logo: "/sponsors/prera.png",
     websiteLink: "https://prera.co.in/"
+  },
+  {
+    _id: "preview-abhibus",
+    name: "AbhiBus",
+    category: "In-Kind",
+    logo: "/sponsors/abhibus.png",
+    websiteLink: "#"
   }
 ];
 
 const marqueeSponsors = [...previewSponsors, ...previewSponsors, ...previewSponsors];
 const arcSponsors = [...previewSponsors, ...previewSponsors, ...previewSponsors, ...previewSponsors];
+
+function isWideSponsor(name: string) {
+  return name === "F Community India" || name === "AbhiBus";
+}
+
+function getPreviewSlotClass(name: string) {
+  if (name === "AbhiBus") {
+    return "w-72";
+  }
+  if (name === "F Community India") {
+    return "w-64";
+  }
+  return "w-56";
+}
+
+function getPreviewLogoClass(name: string, isDesktop: boolean) {
+  if (name === "AbhiBus") {
+    return isDesktop ? "max-h-36" : "max-h-32";
+  }
+  if (name === "F Community India") {
+    return isDesktop ? "max-h-30" : "max-h-24";
+  }
+  return isDesktop ? "max-h-24" : "max-h-20";
+}
 
 export function SponsorsPreviewSection() {
   return (
@@ -51,14 +82,14 @@ export function SponsorsPreviewSection() {
                     href={sponsor.websiteLink}
                     target="_blank"
                     rel="noreferrer"
-                    className={`${sponsor.name === "F Community India" ? "w-56" : "w-36"} flex h-20 shrink-0 items-center justify-center`}
+                    className={`${getPreviewSlotClass(sponsor.name)} flex h-20 shrink-0 items-center justify-center`}
                   >
                     <Image
                       src={sponsor.logo}
                       alt={sponsor.name}
                       width={160}
                       height={64}
-                      className={`${sponsor.name === "F Community India" ? "max-h-32" : "max-h-10"} w-auto object-contain`}
+                      className={`${getPreviewLogoClass(sponsor.name, false)} w-auto object-contain`}
                     />
                   </a>
                 ))}
@@ -73,14 +104,14 @@ export function SponsorsPreviewSection() {
                     href={sponsor.websiteLink}
                     target="_blank"
                     rel="noreferrer"
-                    className={`${sponsor.name === "F Community India" ? "w-56" : "w-36"} flex h-20 shrink-0 items-center justify-center`}
+                    className={`${getPreviewSlotClass(sponsor.name)} flex h-20 shrink-0 items-center justify-center`}
                   >
                     <Image
                       src={sponsor.logo}
                       alt={sponsor.name}
                       width={160}
                       height={64}
-                      className={`${sponsor.name === "F Community India" ? "max-h-32" : "max-h-10"} w-auto object-contain`}
+                      className={`${getPreviewLogoClass(sponsor.name, false)} w-auto object-contain`}
                     />
                   </a>
                 ))}
@@ -96,14 +127,14 @@ export function SponsorsPreviewSection() {
                   href={sponsor.websiteLink}
                   target="_blank"
                   rel="noreferrer"
-                  className={`${sponsor.name === "F Community India" ? "w-72" : "w-44"} sponsors-arc-item flex h-24 items-center justify-center`}
+                  className={`${getPreviewSlotClass(sponsor.name)} sponsors-arc-item flex h-24 items-center justify-center`}
                 >
                   <Image
                     src={sponsor.logo}
                     alt={sponsor.name}
                     width={176}
                     height={72}
-                    className={`${sponsor.name === "F Community India" ? "max-h-36" : "max-h-12"} w-auto object-contain`}
+                    className={`${getPreviewLogoClass(sponsor.name, true)} w-auto object-contain`}
                   />
                 </a>
               ))}
