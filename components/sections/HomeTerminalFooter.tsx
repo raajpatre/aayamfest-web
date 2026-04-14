@@ -4,7 +4,17 @@ import Link from "next/link";
 const socialLinks = [
   {
     href: "https://www.instagram.com/aayamfest?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
-    label: "> connect --ig",
+    label: "> connect --instagram",
+    accent: "hover:text-cyan-400 hover:drop-shadow-[0_0_10px_rgba(34,211,238,0.7)]"
+  },
+  {
+    href: "https://www.linkedin.com/company/aayam-tech-fest/",
+    label: "> connect --linkedin",
+    accent: "hover:text-cyan-400 hover:drop-shadow-[0_0_10px_rgba(34,211,238,0.7)]"
+  },
+  {
+    href: "https://x.com/aayamfest",
+    label: "> connect --X",
     accent: "hover:text-cyan-400 hover:drop-shadow-[0_0_10px_rgba(34,211,238,0.7)]"
   }
 ];
@@ -26,11 +36,10 @@ export function HomeTerminalFooter({ lightLinks = false }: { lightLinks?: boolea
         </div>
 
         <p
-          className={`text-center font-mono text-xs leading-6 lg:text-left lg:text-sm ${
-            lightLinks
-              ? "text-cyan-100/95 drop-shadow-[0_0_12px_rgba(34,211,238,0.22)]"
-              : "text-white/75"
-          }`}
+          className={`text-center font-mono text-xs leading-6 lg:text-left lg:text-sm ${lightLinks
+            ? "text-cyan-100/95 drop-shadow-[0_0_12px_rgba(34,211,238,0.22)]"
+            : "text-white/75"
+            }`}
         >
           AAYAM 2026 // Step into the unknown.
         </p>
@@ -47,11 +56,10 @@ export function HomeTerminalFooter({ lightLinks = false }: { lightLinks?: boolea
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`transition-all duration-300 ${
-                lightLinks
-                  ? "text-cyan-200/95 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]"
-                  : "text-white/65"
-              } ${link.accent}`}
+              className={`transition-all duration-300 ${lightLinks
+                ? "text-cyan-200/95 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]"
+                : "text-white/65"
+                } ${link.accent}`}
             >
               {link.label}
             </Link>

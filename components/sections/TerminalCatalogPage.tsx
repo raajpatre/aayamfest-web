@@ -8,6 +8,7 @@ import { TerminalBackground } from "@/components/sections/TerminalBackground";
 type CatalogEvent = {
   name: string;
   prize: string;
+  date?: string;
   poster?: string;
   registrationLink?: string;
 };
@@ -28,6 +29,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "Robosoccer",
         prize: "₹60,000",
+        date: "24 Apr 2026",
         poster: "/events/robosoccer.jpg",
         registrationLink:
           "https://unstop.com/competitions/robo-striker-aayam-newton-school-of-technology-bengaluru-karnataka-1661801"
@@ -35,6 +37,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "RC Racing",
         prize: "₹50,000",
+        date: "24 Apr 2026",
         poster: "/events/rc-racing.png",
         registrationLink:
           "https://unstop.com/competitions/rc-racing-aayam-newton-school-of-technology-bengaluru-karnataka-1667510"
@@ -42,6 +45,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "FPV drone",
         prize: "₹70,000",
+        date: "24 Apr 2026",
         poster: "/events/fpv-drone-race.png",
         registrationLink:
           "https://unstop.com/competitions/fpv-drone-racing-challenge-aayam-newton-school-of-technology-bengaluru-karnataka-1661904"
@@ -49,6 +53,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "Line Maze solver",
         prize: "₹15,000",
+        date: "25 Apr 2026",
         poster: "/events/line-maze-solver.jpeg",
         registrationLink:
           "https://unstop.com/competitions/robo-maze-solver-aayam-newton-school-of-technology-bengaluru-karnataka-1662290"
@@ -56,6 +61,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "Robocar building workshop cum competition",
         prize: "₹10,000",
+        date: "Workshop: 22 Apr 2026 | Main event: 24-25 Apr 2026",
         poster: "/events/robocar-building-workshop.png",
         registrationLink:
           "https://unstop.com/workshops-webinars/the-fast-the-furry-aayam-newton-school-of-technology-bengaluru-karnataka-1661911"
@@ -77,6 +83,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "BugBash (24 hr Hackathon)",
         prize: "₹65,000",
+        date: "24 Apr 2026",
         poster: "/events/bugbash.jpeg",
         registrationLink:
           "https://unstop.com/hackathons/bugbash-aayam-newton-school-of-technology-bengaluru-karnataka-1658793"
@@ -84,6 +91,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "She builds (12 hr hackathon)",
         prize: "₹30,000",
+        date: "24 Apr 2026",
         poster: "/events/codestorm-shebuilds.png",
         registrationLink:
           "https://unstop.com/hackathons/shebuilds-aayam-newton-school-of-technology-bengaluru-karnataka-1667183"
@@ -98,6 +106,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "Next Turing CP Individuals",
         prize: "₹10,000",
+        date: "Qualifiers: 15 Apr 2026 | Finals: 24 Apr 2026",
         poster: "/events/next-turing-cp-individuals.jpeg",
         registrationLink:
           "https://unstop.com/hackathons/nextturing-aayam-newton-school-of-technology-bengaluru-karnataka-1661493"
@@ -105,6 +114,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "Next Turing blindfolded CP Individuals",
         prize: "₹20,000",
+        date: "Qualifiers: 15 Apr 2026 | Finals: 24 Apr 2026",
         poster: "/events/next-turing-blindfolded-cp-individuals.png",
         registrationLink:
           "https://unstop.com/hackathons/nextturing-blindfolded-aayam-newton-school-of-technology-bengaluru-karnataka-1667199"
@@ -119,6 +129,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "BGMI",
         prize: "₹50,000",
+        date: "24 Apr 2026",
         poster: "/events/bgmi.png",
         registrationLink:
           "https://unstop.com/events/bgmi-esports-tournament-aayam-newton-school-of-technology-bengaluru-karnataka-1662088"
@@ -126,6 +137,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "Free Fire",
         prize: "₹15,000 + Goodies",
+        date: "25 Apr 2026",
         poster: "/events/free-fire.jpeg",
         registrationLink:
           "https://unstop.com/events/free-fire-max-esports-tournament-aayam-newton-school-of-technology-bengaluru-karnataka-1661948"
@@ -140,6 +152,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "Scripted Timelines (Reel making and photography)",
         prize: "₹5,000",
+        date: "24 Apr 2026",
         poster: "/events/scripted-timelines.jpg",
         registrationLink:
           "https://unstop.com/events/chronocapture-aayam-newton-school-of-technology-bengaluru-karnataka-1661017"
@@ -253,6 +266,16 @@ function EventPosterCard({ event }: { event: CatalogEvent }) {
           <h3 className="mt-3 max-w-[14ch] font-mono text-2xl font-black uppercase leading-tight text-white sm:text-[2rem]">
             {event.name}
           </h3>
+          {event.date ? (
+            <div className="mt-4 rounded-2xl border border-cyan-200/14 bg-black/35 px-3 py-3">
+              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-cyan-100/42">
+                Event Date
+              </p>
+              <p className="mt-2 font-mono text-xs uppercase leading-5 tracking-[0.18em] text-cyan-50/90">
+                {event.date}
+              </p>
+            </div>
+          ) : null}
           <div className="mt-4 flex items-end justify-between gap-4 border-t border-cyan-200/14 pt-4">
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-cyan-100/42">
