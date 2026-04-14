@@ -80,7 +80,14 @@ const squadMembers = [
     role: "EVENTS LEAD",
     image: "/team/sai-srija.jpg",
     linkedin: "https://www.linkedin.com/in/sai-srija-chakramahanti-9a85a13a1/"
-  }
+  },
+  {
+    id: "member-13",
+    name: "PRANAV SINGH",
+    role: "SPONSORSHIP TEAM",
+    image: "/team/pranav-singh.jpg",
+    linkedin: "https://www.linkedin.com/in/pranav-choudhary5112/"
+  },
 ];
 
 function LinkedinIcon() {
