@@ -29,7 +29,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "Robosoccer",
         prize: "₹60,000",
-        date: "24 Apr 2026",
+        date: "25 Apr 2026",
         poster: "/events/robosoccer.jpg",
         registrationLink:
           "https://unstop.com/competitions/robo-striker-aayam-newton-school-of-technology-bengaluru-karnataka-1661801"
@@ -37,7 +37,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "RC Racing",
         prize: "₹50,000",
-        date: "24 Apr 2026",
+        date: "25 Apr 2026",
         poster: "/events/rc-racing.png",
         registrationLink:
           "https://unstop.com/competitions/rc-racing-aayam-newton-school-of-technology-bengaluru-karnataka-1667510"
@@ -45,7 +45,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "FPV drone",
         prize: "₹70,000",
-        date: "24 Apr 2026",
+        date: "25 Apr 2026 | 10 AM to 9 PM",
         poster: "/events/fpv-drone-race.png",
         registrationLink:
           "https://unstop.com/competitions/fpv-drone-racing-challenge-aayam-newton-school-of-technology-bengaluru-karnataka-1661904"
@@ -105,7 +105,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
     events: [
       {
         name: "Next Turing CP Individuals",
-        prize: "₹10,000",
+        prize: "₹23,000",
         date: "Qualifiers: 15 Apr 2026 | Finals: 24 Apr 2026",
         poster: "/events/next-turing-cp-individuals.jpeg",
         registrationLink:
@@ -113,7 +113,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       },
       {
         name: "Next Turing blindfolded CP Individuals",
-        prize: "₹20,000",
+        prize: "₹7,000",
         date: "Qualifiers: 15 Apr 2026 | Finals: 24 Apr 2026",
         poster: "/events/next-turing-blindfolded-cp-individuals.png",
         registrationLink:

@@ -321,6 +321,65 @@ body::after {
   opacity: 1;
 }
 
+@keyframes announcement-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.announcement-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: announcement-marquee 22s linear infinite;
+  will-change: transform;
+}
+
+.announcement-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.announcement-bar {
+  position: fixed;
+  inset-inline: 0;
+  z-index: 45;
+  overflow: hidden;
+  border-top: 1px solid rgba(34, 211, 238, 0.15);
+  border-bottom: 1px solid rgba(217, 70, 239, 0.15);
+  background: linear-gradient(
+    90deg,
+    rgba(6, 8, 18, 0.92) 0%,
+    rgba(12, 10, 22, 0.95) 50%,
+    rgba(6, 8, 18, 0.92) 100%
+  );
+  backdrop-filter: blur(12px);
+}
+
+.announcement-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(34, 211, 238, 0.06),
+    rgba(217, 70, 239, 0.06),
+    rgba(34, 211, 238, 0.06)
+  );
+}
+
+.announcement-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(255, 255, 255, 0.08) 50%);
+  background-size: 100% 2px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

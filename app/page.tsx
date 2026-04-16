@@ -143,7 +143,7 @@ export default function HomePage() {
                 First signal on your descent into AAYAM
               </h2>
               </div>
-              <CountdownTimer targetDate="2026-04-24T00:00:00" />
+              <CountdownTimer targetDate="2026-04-25T08:00:00" />
             </div>
           </div>
         </section>

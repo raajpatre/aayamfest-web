@@ -125,7 +125,30 @@ export function AppFrame({ children }: { children: ReactNode }) {
         </div>
         </div>
       </header>
-      <div className={isHome ? "pt-[64px] sm:pt-[104px]" : "pt-[104px]"}>{children}</div>
+
+      {/* ── Announcement Marquee ── */}
+      <div className="announcement-bar top-[90px] sm:top-[92px]" style={{ zIndex: 49 }}>
+        <div className="announcement-marquee-track">
+          {[0, 1].map((i) => (
+            <div key={i} className="flex shrink-0 items-center gap-6 px-6 py-2">
+              <span className="system-label whitespace-nowrap text-[10px] text-cyan-300/90 drop-shadow-[0_0_6px_rgba(34,211,238,0.5)] sm:text-[11px]">
+                🎵 Free Concert Passes on Paid Events Registrations
+              </span>
+              <span className="text-fuchsia-400/60">⬥</span>
+              <span className="system-label whitespace-nowrap text-[10px] text-fuchsia-300/90 drop-shadow-[0_0_6px_rgba(217,70,239,0.5)] sm:text-[11px]">
+                🎤 Artist reveal Soon
+              </span>
+              <span className="text-cyan-400/60">⬥</span>
+              <span className="system-label whitespace-nowrap text-[10px] text-cyan-300/90 drop-shadow-[0_0_6px_rgba(34,211,238,0.5)] sm:text-[11px]">
+                📸 Stay tuned on IG: @aayamfest
+              </span>
+              <span className="text-fuchsia-400/60">⬥</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className={isHome ? "pt-[126px] sm:pt-[140px]" : "pt-[140px]"}>{children}</div>
       <AudioController />
     </>
   );
