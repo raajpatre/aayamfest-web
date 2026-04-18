@@ -40,49 +40,42 @@ const squadMembers = [
     linkedin: "https://www.linkedin.com/in/paheli-choudhuri-1025hsuya/"
   },
   {
-    id: "member-8",
+    id: "member-7",
     name: "ARCHITA SINGH",
     role: "DESIGN TEAM",
     image: "/team/archita-singh.jpg",
     linkedin: "https://www.linkedin.com/in/archita-singh-668193380?utm_source=share_via&utm_content=profile&utm_medium=member_android"
   },
   {
-    id: "member-7",
-    name: "RACHANA ADHIKARY",
-    role: "SPONSORSHIP TEAM",
-    image: "/team/rachana-adhikary.jpg",
-    linkedin: "https://www.linkedin.com/in/rachana-adhikary-133a3b36b/"
-  },
-  {
-    id: "member-9",
+    id: "member-8",
     name: "RAAJ PATRE",
-    role: "MARKETING LEAD / TECH TEAM",
+    role: "MARKETING LEAD / TECH LEAD",
     image: "/team/raaj-patre.jpg",
     linkedin: "https://www.linkedin.com/in/raaj-patre-ba5494271/"
   },
   {
-    id: "member-10",
+    id: "member-9",
     name: "S K IZAZ AHMED",
     role: "TECH TEAM",
     image: "/team/sk-izaz-ahmed.jpeg",
     linkedin: "https://www.linkedin.com/in/sk-izaz-ahmed-2ba954378/"
   },
   {
-    id: "member-11",
+    id: "member-10",
     name: "SHAAZ HEMANI",
     role: "TECH TEAM",
     image: "/team/shaaz-hemani.jpg",
     linkedin: "https://www.linkedin.com/in/shaaz-hemani-229150276/"
   },
   {
-    id: "member-12",
+    id: "member-11",
     name: "SAI SRIJA",
     role: "EVENTS LEAD",
     image: "/team/sai-srija.jpg",
     linkedin: "https://www.linkedin.com/in/sai-srija-chakramahanti-9a85a13a1/"
   },
   {
-    id: "member-13",
+    id: "member-12",
     name: "PRANAV SINGH",
     role: "SPONSORSHIP TEAM",
     image: "/team/pranav-singh.jpg",
@@ -132,10 +125,22 @@ export function SquadPage() {
             <img
               src={member.image}
               alt={member.name}
-              className="absolute inset-0 h-full w-full object-cover brightness-[0.3] contrast-125 grayscale filter transition-all duration-700 group-hover:brightness-100 group-hover:grayscale-0 group-focus:brightness-100 group-focus:grayscale-0"
+              className="absolute inset-0 h-full w-full object-cover brightness-[0.6] contrast-125 grayscale filter transition-all duration-700 group-hover:brightness-100 group-hover:grayscale-0 group-focus:brightness-100 group-focus:grayscale-0"
             />
 
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.28),rgba(0,0,0,0.08)_36%,rgba(0,0,0,0.68)_100%)]" />
+
+            {/* Role Title (Visible by default, hides on hover) */}
+            <div className="absolute inset-x-0 top-8 z-10 flex flex-col items-center justify-center gap-1 opacity-100 transition-opacity duration-500 group-hover:opacity-0 group-focus:opacity-0">
+              {member.role.split("/").map((r, i) => (
+                <span
+                  key={i}
+                  className="font-mono text-lg font-bold uppercase tracking-[0.15em] text-white whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                >
+                  {r.trim()}
+                </span>
+              ))}
+            </div>
 
             <div className="absolute left-0 top-0 z-10 h-1 w-full bg-cyan-400 opacity-0 shadow-[0_0_20px_#22d3ee] transition-all duration-[1500ms] ease-in-out group-hover:top-full group-hover:opacity-100 group-focus:top-full group-focus:opacity-100" />
 

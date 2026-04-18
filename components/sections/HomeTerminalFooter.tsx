@@ -22,7 +22,7 @@ const socialLinks = [
 export function HomeTerminalFooter({ lightLinks = false }: { lightLinks?: boolean }) {
   return (
     <footer className="mt-16 border-t border-white/10 bg-black/80 sm:mt-24">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-3 px-4 py-4 sm:px-6 sm:py-6 lg:grid-cols-[minmax(260px,1.2fr)_minmax(260px,1fr)_minmax(240px,0.9fr)_minmax(180px,0.7fr)] lg:items-center lg:gap-8 lg:px-8">
+      <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 px-4 py-5 sm:px-6 sm:py-6 md:flex-row md:justify-between md:gap-8 lg:px-8">
         <div className="flex justify-center lg:justify-start">
           <div className="relative h-8 w-[190px] sm:h-12 sm:w-[300px]">
             <Image
@@ -36,7 +36,7 @@ export function HomeTerminalFooter({ lightLinks = false }: { lightLinks?: boolea
         </div>
 
         <p
-          className={`text-center font-mono text-xs leading-6 lg:text-left lg:text-sm ${lightLinks
+          className={`whitespace-nowrap text-center font-mono text-[10px] leading-6 sm:text-xs md:text-left lg:text-sm ${lightLinks
             ? "text-cyan-100/95 drop-shadow-[0_0_12px_rgba(34,211,238,0.22)]"
             : "text-white/75"
             }`}
@@ -44,12 +44,7 @@ export function HomeTerminalFooter({ lightLinks = false }: { lightLinks?: boolea
           AAYAM 2026 // Step into the unknown.
         </p>
 
-        <div className="flex items-center justify-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-cyan-300/90 lg:justify-center lg:text-sm lg:tracking-[0.2em]">
-          <span className="inline-block h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.85)] animate-pulse sm:h-2.5 sm:w-2.5" />
-          <span className="drop-shadow-[0_0_10px_rgba(34,211,238,0.35)]">SYSTEM ONLINE_</span>
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 font-mono text-xs lg:justify-end lg:text-sm">
+        <div className="flex flex-nowrap justify-center gap-x-5 font-mono text-[10px] whitespace-nowrap sm:text-xs md:justify-end lg:text-sm">
           {socialLinks.map((link) => (
             <Link
               key={link.label}

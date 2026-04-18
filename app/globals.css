@@ -380,12 +380,106 @@ body::after {
   background-size: 100% 2px;
 }
 
+/* ── Day Pass Nav CTA ───────────────────────────── */
+@keyframes daypass-glow {
+  0%, 100% {
+    color: #fbbf24;
+    text-shadow:
+      0 0 6px rgba(251, 191, 36, 0.6),
+      0 0 18px rgba(251, 146, 60, 0.3);
+    border-color: rgba(251, 191, 36, 0.5);
+  }
+  50% {
+    color: #f97316;
+    text-shadow:
+      0 0 10px rgba(249, 115, 22, 0.8),
+      0 0 28px rgba(251, 191, 36, 0.5),
+      0 0 48px rgba(249, 115, 22, 0.2);
+    border-color: rgba(249, 115, 22, 0.7);
+  }
+}
+
+@keyframes badge-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0.85;
+  }
+}
+
+.nav-daypass {
+  animation: daypass-glow 1.8s ease-in-out infinite;
+  border-bottom: 1px solid rgba(251, 191, 36, 0.5);
+  position: relative;
+}
+
+.nav-daypass:hover {
+  animation: none;
+  color: #fde68a !important;
+  text-shadow:
+    0 0 12px rgba(251, 191, 36, 0.9),
+    0 0 32px rgba(249, 115, 22, 0.5);
+  border-color: rgba(253, 230, 138, 0.7);
+}
+
+.nav-daypass-badge {
+  position: absolute;
+  top: -10px;
+  right: -18px;
+  font-family: "Space Grotesk", Inter, sans-serif;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 4px;
+  color: #0d0d10;
+  background: linear-gradient(135deg, #fbbf24, #f97316);
+  box-shadow:
+    0 0 6px rgba(251, 191, 36, 0.6),
+    0 0 14px rgba(249, 115, 22, 0.3);
+  animation: badge-pulse 1.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Mobile variant */
+.nav-daypass-mobile {
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  background: rgba(251, 191, 36, 0.08);
+  animation: daypass-glow 1.8s ease-in-out infinite;
+}
+
+.nav-daypass-mobile:hover {
+  border-color: rgba(253, 230, 138, 0.6);
+  background: rgba(251, 191, 36, 0.14);
+}
+
+.nav-daypass-mobile .nav-daypass-badge {
+  top: -6px;
+  right: -6px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
   .sponsors-arc-track {
+    animation: none;
+  }
+
+  .nav-daypass,
+  .nav-daypass-mobile {
+    animation: none;
+    color: #fbbf24;
+    border-color: rgba(251, 191, 36, 0.5);
+  }
+
+  .nav-daypass-badge {
     animation: none;
   }
 

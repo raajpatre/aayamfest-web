@@ -8,13 +8,19 @@ import { cn } from "@/lib/format";
 import { AudioController } from "@/components/ui/AudioController";
 
 const links: Array<{ href: string; label: string; external?: boolean }> = [
-  { href: "/", label: "Program" },
+  { href: "/", label: "Home" },
   { href: "/events", label: "Terminal" },
   { href: "/sponsors", label: "Archive" },
   { href: "/team", label: "Squad" },
   { href: "/ambassador", label: "Ambassador" },
   { href: "/contact", label: "Uplink" }
 ];
+
+const dayPassLink = {
+  href: "https://easebuzz.in/link/YQH9U",
+  label: "Day Pass",
+  external: true,
+};
 
 export function AppFrame({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -69,7 +75,7 @@ export function AppFrame({ children }: { children: ReactNode }) {
                   target={link.external ? "_blank" : undefined}
                   rel={link.external ? "noopener noreferrer" : undefined}
                   className={cn(
-                    "system-label group relative border-b border-transparent pb-1 text-[11px] text-white/65 transition-all duration-300 hover:border-cyan-400/50 hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]",
+                    "system-label group relative border-b border-transparent pb-1 text-[11px] text-white transition-all duration-300 hover:border-cyan-400/50 hover:text-cyan-400 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]",
                     active &&
                       "border-cyan-400/60 text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]"
                   )}
@@ -81,6 +87,20 @@ export function AppFrame({ children }: { children: ReactNode }) {
                 </Link>
               );
             })}
+
+            {/* Day Pass — highlighted CTA */}
+            <a
+              href={dayPassLink.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-daypass group relative system-label pb-1 text-[11px] transition-all duration-300"
+            >
+              <span className="pointer-events-none absolute inset-0 translate-y-[2px] scale-[1.04] blur-[6px] opacity-40">
+                {dayPassLink.label}
+              </span>
+              <span className="relative">{dayPassLink.label}</span>
+              <span className="nav-daypass-badge">New</span>
+            </a>
           </nav>
 
           <div className={cn("relative md:hidden", isHome && "absolute right-4")}>
@@ -119,6 +139,18 @@ export function AppFrame({ children }: { children: ReactNode }) {
                     {link.label}
                   </Link>
                 ))}
+
+                {/* Day Pass — mobile CTA */}
+                <a
+                  href={dayPassLink.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="nav-daypass-mobile relative block rounded-2xl px-3 py-2 text-sm uppercase tracking-[0.18em] transition-all duration-300"
+                >
+                  {dayPassLink.label}
+                  <span className="nav-daypass-badge">New</span>
+                </a>
               </div>
             </div>
           </div>
@@ -127,7 +159,7 @@ export function AppFrame({ children }: { children: ReactNode }) {
       </header>
 
       {/* ── Announcement Marquee ── */}
-      <div className="announcement-bar top-[90px] sm:top-[92px]" style={{ zIndex: 49 }}>
+      <div className="announcement-bar top-[90px] sm:top-[92px] md:top-[104px]" style={{ zIndex: 49 }}>
         <div className="announcement-marquee-track">
           {[0, 1].map((i) => (
             <div key={i} className="flex shrink-0 items-center gap-6 px-6 py-2">
