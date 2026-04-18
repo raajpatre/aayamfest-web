@@ -53,7 +53,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "Line Maze solver",
         prize: "₹15,000",
-        date: "25 Apr 2026",
+        date: "26 Apr 2026 | 11 AM to 2 PM",
         poster: "/events/line-maze-solver.jpeg",
         registrationLink:
           "https://unstop.com/competitions/robo-maze-solver-aayam-newton-school-of-technology-bengaluru-karnataka-1662290"
@@ -69,6 +69,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "CAD modelling",
         prize: "₹5,000",
+        date: "26 Apr 2026",
         poster: "/events/cad-modeling.png",
         registrationLink:
           "https://unstop.com/competitions/cad-design-aayam-newton-school-of-technology-bengaluru-karnataka-1662293"
@@ -83,7 +84,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "BugBash (24 hr Hackathon)",
         prize: "₹65,000",
-        date: "24 Apr 2026",
+        date: "25-26 Apr 2026",
         poster: "/events/bugbash.jpeg",
         registrationLink:
           "https://unstop.com/hackathons/bugbash-aayam-newton-school-of-technology-bengaluru-karnataka-1658793"
@@ -91,7 +92,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "She builds (12 hr hackathon)",
         prize: "₹30,000",
-        date: "24 Apr 2026",
+        date: "25 Apr 2026",
         poster: "/events/codestorm-shebuilds.png",
         registrationLink:
           "https://unstop.com/hackathons/shebuilds-aayam-newton-school-of-technology-bengaluru-karnataka-1667183"
@@ -106,7 +107,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "Next Turing CP Individuals",
         prize: "₹23,000",
-        date: "Qualifiers: 15 Apr 2026 | Finals: 24 Apr 2026",
+        date: "Qualifiers: 19 Apr 8 PM to 10 PM | Finals: 25 Apr 2:00 PM to 5:00 PM",
         poster: "/events/next-turing-cp-individuals.jpeg",
         registrationLink:
           "https://unstop.com/hackathons/nextturing-aayam-newton-school-of-technology-bengaluru-karnataka-1661493"
@@ -114,7 +115,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "Next Turing blindfolded CP Individuals",
         prize: "₹7,000",
-        date: "Qualifiers: 15 Apr 2026 | Finals: 24 Apr 2026",
+        date: "Qualifiers: 19 Apr 8 PM to 10 PM | Finals: 25 Apr 6:30 PM to 8:30 PM",
         poster: "/events/next-turing-blindfolded-cp-individuals.png",
         registrationLink:
           "https://unstop.com/hackathons/nextturing-blindfolded-aayam-newton-school-of-technology-bengaluru-karnataka-1667199"
@@ -129,7 +130,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "BGMI",
         prize: "₹50,000",
-        date: "24 Apr 2026",
+        date: "25 Apr 2026",
         poster: "/events/bgmi.png",
         registrationLink:
           "https://unstop.com/events/bgmi-esports-tournament-aayam-newton-school-of-technology-bengaluru-karnataka-1662088"
@@ -152,7 +153,7 @@ const EVENT_CATALOG: CatalogCategory[] = [
       {
         name: "Scripted Timelines (Reel making and photography)",
         prize: "₹5,000",
-        date: "24 Apr 2026",
+        date: "25 Apr 2026",
         poster: "/events/scripted-timelines.jpg",
         registrationLink:
           "https://unstop.com/events/chronocapture-aayam-newton-school-of-technology-bengaluru-karnataka-1661017"
