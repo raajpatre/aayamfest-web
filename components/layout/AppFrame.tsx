@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/format";
 import { AudioController } from "@/components/ui/AudioController";
+import { HelpButton } from "@/components/ui/HelpButton";
 
 const links: Array<{ href: string; label: string; external?: boolean; ariaLabel?: string }> = [
   { href: "/", label: "Home" },
@@ -183,6 +184,7 @@ export function AppFrame({ children }: { children: ReactNode }) {
       </div>
 
       <div className={isHome ? "pt-[126px] sm:pt-[140px]" : "pt-[140px]"}>{children}</div>
+      <HelpButton />
       <AudioController />
     </>
   );
