@@ -81,85 +81,128 @@ export default function HomePage() {
     setIntroComplete(true);
   };
 
-  return (
-    <main className="relative min-h-screen">
-      {introReady && !introComplete ? <WarpSpeedIntro onComplete={handleIntroComplete} /> : null}
-      <div
-        className={`transition-opacity duration-500 ${
-          introReady && introComplete ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
-      >
-        <div className="fixed inset-0 -z-30 h-full w-full bg-black" />
-        <div className="fixed inset-0 -z-20 h-full w-full bg-cover bg-center" style={galaxyBackdropStyle}>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_52%_50%,rgba(255,255,255,0.05),transparent_18%),linear-gradient(180deg,rgba(0,0,0,0.1),rgba(0,0,0,0.35))]" />
-        </div>
-        <div className="fixed inset-0 -z-10 h-full w-full">
-          <Hyperspeed effectOptions={hyperspeedEffect} />
-        </div>
-        <div className="pointer-events-none fixed inset-0 -z-[5] overflow-hidden">
-          {borderStreaks.map((streak) => (
-            <div
-              key={streak}
-              className={`absolute bg-gradient-to-b blur-[1px] opacity-90 mix-blend-screen ${streak}`}
-            />
-          ))}
-          <div className="absolute left-0 top-0 h-full w-32 bg-[radial-gradient(circle_at_left_center,rgba(34,211,238,0.12),transparent_62%)]" />
-          <div className="absolute right-0 top-0 h-full w-32 bg-[radial-gradient(circle_at_right_center,rgba(217,70,239,0.12),transparent_62%)]" />
-        </div>
+  const eventSchema = {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: "Aayam 2026",
+    description:
+      "Aayam is NST's flagship national tech fest featuring 13+ competitions across Robotics, Hackathons, Gaming, and Digital Media. ₹4,00,000+ prize pool.",
+    startDate: "2026-04-24",
+    endDate: "2026-04-25",
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    location: {
+      "@type": "Place",
+      name: "Newton School of Technology",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Bengaluru",
+        addressRegion: "Karnataka",
+        addressCountry: "IN",
+      },
+    },
+    organizer: {
+      "@type": "Organization",
+      name: "Newton School of Technology",
+      url: "https://www.newtonschool.co",
+    },
+    url: "https://aayamfest.com",
+    image: "https://aayamfest.com/aayam-logo.png",
+    offers: {
+      "@type": "Offer",
+      url: "https://unstop.com/college-fests/aayam-2026-newton-school-of-technology-nst-bangalore-karnataka-381187",
+      price: "0",
+      priceCurrency: "INR",
+      availability: "https://schema.org/InStock",
+      validFrom: "2026-01-01",
+    },
+  };
 
-        <div className="relative z-10 py-20 text-white">
-        <section className="flex min-h-[calc(100vh-11rem)] items-start px-4 pt-8 sm:px-6 lg:px-8">
-          <div className="mx-auto flex w-full max-w-6xl flex-col items-center">
-            <div className="relative">
-              <div className="pointer-events-none absolute inset-0 translate-y-8 scale-[1.03] opacity-35 blur-2xl">
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }}
+      />
+      <main className="relative min-h-screen">
+        {introReady && !introComplete ? <WarpSpeedIntro onComplete={handleIntroComplete} /> : null}
+        <div
+          className={`transition-opacity duration-500 ${
+            introReady && introComplete ? "opacity-100" : "pointer-events-none opacity-0"
+          }`}
+        >
+          <div className="fixed inset-0 -z-30 h-full w-full bg-black" />
+          <div className="fixed inset-0 -z-20 h-full w-full bg-cover bg-center" style={galaxyBackdropStyle}>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_52%_50%,rgba(255,255,255,0.05),transparent_18%),linear-gradient(180deg,rgba(0,0,0,0.1),rgba(0,0,0,0.35))]" />
+          </div>
+          <div className="fixed inset-0 -z-10 h-full w-full">
+            <Hyperspeed effectOptions={hyperspeedEffect} />
+          </div>
+          <div className="pointer-events-none fixed inset-0 -z-[5] overflow-hidden">
+            {borderStreaks.map((streak) => (
+              <div
+                key={streak}
+                className={`absolute bg-gradient-to-b blur-[1px] opacity-90 mix-blend-screen ${streak}`}
+              />
+            ))}
+            <div className="absolute left-0 top-0 h-full w-32 bg-[radial-gradient(circle_at_left_center,rgba(34,211,238,0.12),transparent_62%)]" />
+            <div className="absolute right-0 top-0 h-full w-32 bg-[radial-gradient(circle_at_right_center,rgba(217,70,239,0.12),transparent_62%)]" />
+          </div>
+
+          <div className="relative z-10 py-20 text-white">
+          <section className="flex min-h-[calc(100vh-11rem)] items-start px-4 pt-8 sm:px-6 lg:px-8">
+            <div className="mx-auto flex w-full max-w-6xl flex-col items-center">
+              <div className="relative">
+                <div className="pointer-events-none absolute inset-0 translate-y-8 scale-[1.03] opacity-35 blur-2xl">
+                  <div className="relative h-36 w-[400px] sm:h-44 sm:w-[560px] lg:h-64 lg:w-[860px]">
+                    <Image
+                      src="/aayam-logo.png"
+                      alt="AAYAM Tech Fest official logo"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 640px) 400px, (max-width: 1024px) 560px, 860px"
+                    />
+                  </div>
+                </div>
                 <div className="relative h-36 w-[400px] sm:h-44 sm:w-[560px] lg:h-64 lg:w-[860px]">
                   <Image
                     src="/aayam-logo.png"
                     alt="AAYAM Tech Fest official logo"
                     fill
+                    priority
                     className="object-contain"
                     sizes="(max-width: 640px) 400px, (max-width: 1024px) 560px, 860px"
                   />
                 </div>
               </div>
-              <div className="relative h-36 w-[400px] sm:h-44 sm:w-[560px] lg:h-64 lg:w-[860px]">
-                <Image
-                  src="/aayam-logo.png"
-                  alt="AAYAM Tech Fest official logo"
-                  fill
-                  priority
-                  className="object-contain"
-                  sizes="(max-width: 640px) 400px, (max-width: 1024px) 560px, 860px"
-                />
+
+              <div className="mt-10 w-full">
+                <div className="mx-auto mb-8 max-w-3xl text-center">
+                <p className="font-mono text-xs uppercase tracking-[0.34em] text-cyan-300/80">
+                  Countdown Sequence
+                </p>
+                <h2 className="mt-4 text-2xl font-bold uppercase tracking-[0.08em] text-white [text-shadow:0_4px_18px_rgba(0,0,0,0.85)] sm:text-3xl">
+                  First signal on your descent into AAYAM
+                </h2>
+                </div>
+                <CountdownTimer targetDate="2026-04-25T08:00:00" />
               </div>
             </div>
+          </section>
 
-            <div className="mt-10 w-full">
-              <div className="mx-auto mb-8 max-w-3xl text-center">
-              <p className="font-mono text-xs uppercase tracking-[0.34em] text-cyan-300/80">
-                Countdown Sequence
-              </p>
-              <h2 className="mt-4 text-2xl font-bold uppercase tracking-[0.08em] text-white [text-shadow:0_4px_18px_rgba(0,0,0,0.85)] sm:text-3xl">
-                First signal on your descent into AAYAM
-              </h2>
-              </div>
-              <CountdownTimer targetDate="2026-04-25T08:00:00" />
+          <section className="mt-4 px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-7xl lg:col-span-2">
+              <AnimatedAboutStatsSection />
             </div>
+          </section>
+
+          <SponsorsPreviewSection />
+          <InitializeRegistrationCTA />
+
+          <HomeTerminalFooter />
           </div>
-        </section>
-
-        <section className="mt-4 px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-7xl lg:col-span-2">
-            <AnimatedAboutStatsSection />
-          </div>
-        </section>
-
-        <SponsorsPreviewSection />
-        <InitializeRegistrationCTA />
-
-        <HomeTerminalFooter />
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }

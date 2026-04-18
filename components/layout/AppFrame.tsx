@@ -7,13 +7,13 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/format";
 import { AudioController } from "@/components/ui/AudioController";
 
-const links: Array<{ href: string; label: string; external?: boolean }> = [
+const links: Array<{ href: string; label: string; external?: boolean; ariaLabel?: string }> = [
   { href: "/", label: "Home" },
-  { href: "/events", label: "Terminal" },
-  { href: "/sponsors", label: "Archive" },
-  { href: "/team", label: "Squad" },
-  { href: "/ambassador", label: "Ambassador" },
-  { href: "/contact", label: "Uplink" }
+  { href: "/events", label: "Terminal", ariaLabel: "Events" },
+  { href: "/sponsors", label: "Archive", ariaLabel: "Sponsors" },
+  { href: "/team", label: "Squad", ariaLabel: "Team" },
+  { href: "/ambassador", label: "Ambassador", ariaLabel: "Ambassador Program" },
+  { href: "/contact", label: "Uplink", ariaLabel: "Contact" }
 ];
 
 const dayPassLink = {
@@ -72,6 +72,7 @@ export function AppFrame({ children }: { children: ReactNode }) {
                 <Link
                   key={link.href}
                   href={link.href}
+                  aria-label={link.ariaLabel}
                   target={link.external ? "_blank" : undefined}
                   rel={link.external ? "noopener noreferrer" : undefined}
                   className={cn(
@@ -131,6 +132,7 @@ export function AppFrame({ children }: { children: ReactNode }) {
                   <Link
                     key={link.href}
                     href={link.href}
+                    aria-label={link.ariaLabel}
                     target={link.external ? "_blank" : undefined}
                     rel={link.external ? "noopener noreferrer" : undefined}
                     onClick={() => setMobileMenuOpen(false)}

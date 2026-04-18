@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import Galaxy from "@/components/Galaxy";
 import { HomeTerminalFooter } from "@/components/sections/HomeTerminalFooter";
 import { ActionButton } from "@/components/ui/ActionButton";
+
+export const metadata: Metadata = {
+  title: "Campus Ambassador Program",
+  description:
+    "Become the face of Aayam 2026 on your campus. Drive registrations, unlock rewards, and represent NST's national tech fest.",
+};
 
 const responsibilities = [
   "Promote AAYAM events across your college networks.",

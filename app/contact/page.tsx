@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import Galaxy from "@/components/Galaxy";
 import DecryptedText from "@/components/DecryptedText";
 import { HomeTerminalFooter } from "@/components/sections/HomeTerminalFooter";
 import { GlobePulse } from "@/components/ui/cobe-globe-pulse";
+
+export const metadata: Metadata = {
+  title: "Contact Us",
+  description:
+    "Get in touch with the Aayam 2026 team for sponsorships, collaborations, or event queries.",
+};
 
 function InstagramIcon() {
   return (

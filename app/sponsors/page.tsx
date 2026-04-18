@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import DecryptedText from "@/components/DecryptedText";
 import { HomeTerminalFooter } from "@/components/sections/HomeTerminalFooter";
@@ -6,6 +7,12 @@ import { TerminalBackground } from "@/components/sections/TerminalBackground";
 import { SponsorMarquee } from "@/components/ui/SponsorMarquee";
 import { getSponsors } from "@/lib/data";
 import { SponsorRecord } from "@/lib/types";
+
+export const metadata: Metadata = {
+  title: "Sponsors",
+  description:
+    "Meet the sponsors powering Aayam 2026 — NST's national tech fest in Bengaluru. Partner with India's next-gen tech talent.",
+};
 
 const FEATURED_IN_KIND_SPONSORS: SponsorRecord[] = [
   {
