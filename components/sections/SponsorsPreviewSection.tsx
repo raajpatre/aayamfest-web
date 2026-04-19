@@ -31,6 +31,13 @@ const previewSponsors: SponsorRecord[] = [
     category: "In-Kind",
     logo: "/sponsors/abhibus.png",
     websiteLink: "#"
+  },
+  {
+    _id: "preview-unstop",
+    name: "Unstop",
+    category: "Concert",
+    logo: "/sponsors/Unstop.jpg",
+    websiteLink: "https://unstop.com/"
   }
 ];
 
@@ -38,11 +45,11 @@ const marqueeSponsors = [...previewSponsors, ...previewSponsors, ...previewSpons
 const arcSponsors = [...previewSponsors, ...previewSponsors, ...previewSponsors, ...previewSponsors];
 
 function isWideSponsor(name: string) {
-  return name === "F Community India" || name === "AbhiBus";
+  return name === "F Community India" || name === "AbhiBus" || name === "Unstop";
 }
 
 function getPreviewSlotClass(name: string) {
-  if (name === "AbhiBus") {
+  if (name === "AbhiBus" || name === "Unstop") {
     return "w-72";
   }
   if (name === "F Community India") {
@@ -52,7 +59,7 @@ function getPreviewSlotClass(name: string) {
 }
 
 function getPreviewLogoClass(name: string, isDesktop: boolean) {
-  if (name === "AbhiBus") {
+  if (name === "AbhiBus" || name === "Unstop") {
     return isDesktop ? "max-h-36" : "max-h-32";
   }
   if (name === "F Community India") {

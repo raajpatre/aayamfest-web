@@ -66,14 +66,14 @@ const EVENT_CATALOG: CatalogCategory[] = [
       //   registrationLink:
       //     "https://unstop.com/workshops-webinars/the-fast-the-furry-aayam-newton-school-of-technology-bengaluru-karnataka-1661911"
       // },
-      {
-        name: "CAD modelling",
-        prize: "₹5,000",
-        date: "26 Apr 2026",
-        poster: "/events/cad-modeling.png",
-        registrationLink:
-          "https://unstop.com/competitions/cad-design-aayam-newton-school-of-technology-bengaluru-karnataka-1662293"
-      }
+      // {
+      //   name: "CAD modelling",
+      //   prize: "₹5,000",
+      //   date: "26 Apr 2026",
+      //   poster: "/events/cad-modeling.png",
+      //   registrationLink:
+      //     "https://unstop.com/competitions/cad-design-aayam-newton-school-of-technology-bengaluru-karnataka-1662293"
+      // }
     ]
   },
   {

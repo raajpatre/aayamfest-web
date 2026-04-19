@@ -89,8 +89,22 @@ const squadCategories: SquadCategory[] = [
       },
       {
         id: "member-17",
+        name: "PRASHANT CG",
+        role: "FPV DRONE",
+        image: "/team/prashant.jpeg",
+        linkedin: "https://www.linkedin.com/in/prashant-c-g-appu5451/"
+      },
+      {
+        id: "member-18",
+        name: "SHAAZ HEMANI",
+        role: "MAZE SOLVER",
+        image: "/team/shaaz-hemani.jpg",
+        linkedin: "https://www.linkedin.com/in/shaaz-hemani-229150276/"
+      },
+      {
+        id: "member-19",
         name: "PRANAV SINGH",
-        role: "FF-MAX | BGMI",
+        role: "FREE FIRE MAX",
         image: "/team/pranav-singh.jpg",
         linkedin: "https://www.linkedin.com/in/pranav-choudhary5112/"
       }
@@ -227,6 +241,20 @@ const squadCategories: SquadCategory[] = [
         role: "MARKETING TEAM",
         image: "/team/ananya.jpeg",
         linkedin: "https://www.linkedin.com/in/ananya-chavan-94bb083a6/"
+      },
+      {
+        id: "member-20-marketing",
+        name: "JAIDEV BASANDRAI",
+        role: "MARKETING TEAM",
+        image: "/team/jaidev.jpeg",
+        linkedin: "https://www.linkedin.com/in/jaidev-basandrai-7b3448333/"
+      },
+      {
+        id: "member-21-marketing",
+        name: "PRASHANT CG",
+        role: "MARKETING TEAM",
+        image: "/team/prashant.jpeg",
+        linkedin: "https://www.linkedin.com/in/prashant-c-g-appu5451/"
       }
     ]
   },

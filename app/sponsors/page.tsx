@@ -45,6 +45,16 @@ const FEATURED_IN_KIND_SPONSORS: SponsorRecord[] = [
   }
 ];
 
+const FEATURED_GOLD_SPONSORS: SponsorRecord[] = [
+  {
+    _id: "featured-gold-unstop",
+    name: "Unstop",
+    category: "Concert",
+    logo: "/sponsors/Unstop.jpg",
+    websiteLink: "https://unstop.com/"
+  }
+];
+
 const framedCardClass =
   "bg-black/40 backdrop-blur-md border border-white/10 rounded-xl flex items-center justify-center transition-all duration-300 hover:border-cyan-400/50 hover:bg-black/60 relative overflow-hidden group";
 
@@ -147,7 +157,10 @@ function TierSection({
 export default async function SponsorsPage() {
   const sponsors = await getSponsors().catch(() => []);
   const titleSponsors = sponsors.filter((sponsor) => sponsor.category === "Title");
-  const goldSponsors = sponsors.filter((sponsor) => sponsor.category === "Concert");
+  const goldSponsors = [
+    ...FEATURED_GOLD_SPONSORS,
+    ...sponsors.filter((sponsor) => sponsor.category === "Concert")
+  ];
   const silverSponsors = sponsors.filter((sponsor) => sponsor.category === "Associate");
   const communityPartners = [
     ...FEATURED_IN_KIND_SPONSORS,
@@ -193,12 +206,14 @@ export default async function SponsorsPage() {
         />
 
         <TierSection
-          title="[ GOLD SPONSORS ]"
+          title="[ POWERED BY ]"
           sponsors={goldSponsors}
-          containerClassName="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-2"
-          cardHeightClass="h-48 w-full"
-          emptyLabel="GOLD TIER CHANNELS OFFLINE"
-          logoClass="max-h-20 w-auto object-contain"
+          containerClassName="mx-auto flex flex-wrap items-center justify-center gap-12"
+          cardHeightClass="h-48 w-full max-w-sm"
+          emptyLabel="POWERED BY CHANNELS OFFLINE"
+          logoClass="max-h-32 w-auto object-contain"
+          framed={false}
+          showName={false}
         />
 
         <TierSection
@@ -212,7 +227,7 @@ export default async function SponsorsPage() {
 
         <section className="space-y-6">
           <h2 className="mb-6 text-center font-mono uppercase tracking-[0.34em] text-orange-500">
-            [ IN-KINDS SPONSORS ]
+            [ BRONZE SPONSORS ]
           </h2>
           <div className="mx-auto w-full max-w-6xl">
             <SponsorMarquee sponsors={communityPartners} />
