@@ -58,14 +58,14 @@ const EVENT_CATALOG: CatalogCategory[] = [
         registrationLink:
           "https://unstop.com/competitions/robo-maze-solver-aayam-newton-school-of-technology-bengaluru-karnataka-1662290"
       },
-      {
-        name: "Robocar building workshop cum competition",
-        prize: "₹10,000",
-        date: "Workshop: 22 Apr 2026 | Main event: 24-25 Apr 2026",
-        poster: "/events/robocar-building-workshop.png",
-        registrationLink:
-          "https://unstop.com/workshops-webinars/the-fast-the-furry-aayam-newton-school-of-technology-bengaluru-karnataka-1661911"
-      },
+      // {
+      //   name: "Robocar building workshop cum competition",
+      //   prize: "₹10,000",
+      //   date: "Workshop: 22 Apr 2026 | Main event: 24-25 Apr 2026",
+      //   poster: "/events/robocar-building-workshop.png",
+      //   registrationLink:
+      //     "https://unstop.com/workshops-webinars/the-fast-the-furry-aayam-newton-school-of-technology-bengaluru-karnataka-1661911"
+      // },
       {
         name: "CAD modelling",
         prize: "₹5,000",
@@ -145,21 +145,21 @@ const EVENT_CATALOG: CatalogCategory[] = [
       }
     ]
   },
-  {
-    title: "Non-tech",
-    label: "05 // NON-TECH",
-    accent: "text-orange-300 drop-shadow-[0_0_18px_rgba(251,146,60,0.4)]",
-    events: [
-      {
-        name: "Scripted Timelines (Reel making and photography)",
-        prize: "₹5,000",
-        date: "25 Apr 2026",
-        poster: "/events/scripted-timelines.jpg",
-        registrationLink:
-          "https://unstop.com/events/chronocapture-aayam-newton-school-of-technology-bengaluru-karnataka-1661017"
-      }
-    ]
-  }
+  // {
+  //   title: "Non-tech",
+  //   label: "05 // NON-TECH",
+  //   accent: "text-orange-300 drop-shadow-[0_0_18px_rgba(251,146,60,0.4)]",
+  //   events: [
+  //     {
+  //       name: "Scripted Timelines (Reel making and photography)",
+  //       prize: "₹5,000",
+  //       date: "25 Apr 2026",
+  //       poster: "/events/scripted-timelines.jpg",
+  //       registrationLink:
+  //         "https://unstop.com/events/chronocapture-aayam-newton-school-of-technology-bengaluru-karnataka-1661017"
+  //     }
+  //   ]
+  // }
 ];
 
 const CATEGORY_DECRYPT_PROPS = {
@@ -199,6 +199,7 @@ const PIXEL_CELL_STYLES = Array.from({ length: 96 }, (_, index) => {
 function EventPosterCard({ event }: { event: CatalogEvent }) {
   const isInteractive = Boolean(event.registrationLink);
   const [touchRevealActive, setTouchRevealActive] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const sharedClassName =
     "group relative block aspect-[10/16] w-full overflow-hidden rounded-[30px] border border-white/14 bg-black shadow-[0_24px_80px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.04),0_0_36px_rgba(34,211,238,0.08)] transition-transform duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_28px_90px_rgba(0,0,0,0.52),0_0_0_1px_rgba(255,255,255,0.08),0_0_44px_rgba(217,70,239,0.14)] focus-visible:-translate-y-1 focus-visible:outline-none focus-visible:shadow-[0_28px_90px_rgba(0,0,0,0.52),0_0_0_1px_rgba(255,255,255,0.08),0_0_44px_rgba(217,70,239,0.14)]";
 
@@ -310,32 +311,83 @@ function EventPosterCard({ event }: { event: CatalogEvent }) {
   }
 
   return (
-    <a
-      href={event.registrationLink}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={sharedClassName}
-      aria-label={`Open registration for ${event.name}`}
-      data-event-card={event.name}
-      data-touch-reveal={touchRevealActive}
-      onClick={(eventClick) => {
-        if (eventClick.detail !== 0) {
-          const coarsePointer =
-            typeof window !== "undefined" &&
-            window.matchMedia("(hover: none), (pointer: coarse)").matches;
+    <>
+      <button
+        type="button"
+        className={`${sharedClassName} text-left`}
+        aria-label={`Open registration options for ${event.name}`}
+        data-event-card={event.name}
+        data-touch-reveal={touchRevealActive}
+        onClick={(eventClick) => {
+          if (eventClick.detail !== 0) {
+            const coarsePointer =
+              typeof window !== "undefined" &&
+              window.matchMedia("(hover: none), (pointer: coarse)").matches;
 
-          if (coarsePointer && !touchRevealActive) {
-            eventClick.preventDefault();
-            setTouchRevealActive(true);
-            return;
+            if (coarsePointer && !touchRevealActive) {
+              eventClick.preventDefault();
+              setTouchRevealActive(true);
+              return;
+            }
           }
-        }
 
-        setTouchRevealActive(false);
-      }}
-    >
-      {cardContent}
-    </a>
+          setTouchRevealActive(false);
+          setIsPopupOpen(true);
+        }}
+      >
+        {cardContent}
+      </button>
+
+      {isPopupOpen && isInteractive && (
+        <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/80 px-4 backdrop-blur-sm"
+          onClick={(e) => { e.stopPropagation(); setIsPopupOpen(false); }}>
+          <div className="relative w-full max-w-sm overflow-hidden border-y border-l-4 border-r border-cyan-500/50 bg-[#02040a] p-8 shadow-[0_0_40px_rgba(34,211,238,0.15)]"
+            onClick={(e) => e.stopPropagation()}>
+            {/* Terminal Scanline effect */}
+            <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(to_bottom,transparent_0px,transparent_2px,rgba(34,211,238,0.03)_2px,rgba(34,211,238,0.03)_4px)]" />
+
+            <div className="absolute left-0 top-0 flex w-full items-center justify-between border-b border-cyan-500/30 bg-cyan-500/10 px-4 py-2">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-cyan-400 opacity-80">[ ROUTING_SEQ_INIT ]</span>
+              <button
+                className="font-mono text-xs text-cyan-400 transition-colors hover:text-white"
+                onClick={() => setIsPopupOpen(false)}
+              >
+                [X]
+              </button>
+            </div>
+
+            <h3 className="mb-8 mt-6 font-mono text-lg font-bold uppercase tracking-widest text-white shadow-black drop-shadow-md">
+              <span className="text-cyan-400">{">"}</span> CHOOSE_ROUTE<span className="animate-pulse">_</span>
+            </h3>
+
+            <div className="flex flex-col gap-5">
+              <a
+                href={event.registrationLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsPopupOpen(false)}
+                className="group relative flex w-full items-center justify-between border border-cyan-500/30 bg-cyan-950/20 px-4 py-4 font-mono text-sm font-bold uppercase tracking-widest text-cyan-300 transition-all hover:border-cyan-400 hover:bg-cyan-400/20 hover:shadow-[0_0_20px_rgba(34,211,238,0.2)]"
+              >
+                <div className="absolute left-0 top-0 h-full w-1 bg-cyan-500 opacity-50 group-hover:opacity-100" />
+                <span>[ UNSTOP ]</span>
+                <span className="text-cyan-500/50 transition-colors group-hover:text-cyan-400">{"->"}</span>
+              </a>
+              <a
+                href="https://forms.gle/Jp2jPyZ2zSJXonK69"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsPopupOpen(false)}
+                className="group relative flex w-full items-center justify-between border border-fuchsia-500/30 bg-fuchsia-950/20 px-4 py-4 font-mono text-sm font-bold uppercase tracking-widest text-fuchsia-300 transition-all hover:border-fuchsia-400 hover:bg-fuchsia-400/20 hover:shadow-[0_0_20px_rgba(217,70,239,0.2)]"
+              >
+                <div className="absolute left-0 top-0 h-full w-1 bg-fuchsia-500 opacity-50 group-hover:opacity-100" />
+                <span>[ GOOGLE_FORM ]</span>
+                <span className="text-fuchsia-500/50 transition-colors group-hover:text-fuchsia-400">{"->"}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

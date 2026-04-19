@@ -43,12 +43,20 @@ const squadCategories: SquadCategory[] = [
       {
         id: "member-11",
         name: "SAI SRIJA",
-        role: "EVENTS LEAD",
+        role: "SHE BUILDS",
         image: "/team/sai-srija.jpg",
         linkedin: "https://www.linkedin.com/in/sai-srija-chakramahanti-9a85a13a1/",
       },
       {
         id: "member-12",
+        name: "NAYAN RAJ",
+        role: "BUGBASH",
+        image: "/team/nayanraj.jpeg",
+        linkedin: "https://www.linkedin.com/in/nayan-raj-4a6405380/",
+        whatsapp: "https://chat.whatsapp.com/HDrsXqxFXZ7LgIfwyyyNpk?mode=gi_t"
+      },
+      {
+        id: "member-13",
         name: "JOTHIN KUMAR",
         role: "CP INDIVIDUALS",
         image: "/team/Jothin.jpeg",
@@ -56,14 +64,31 @@ const squadCategories: SquadCategory[] = [
         whatsapp: "https://chat.whatsapp.com/G23Ag9MTgzYLbkjE6m7uBF"
       },
       {
-        id: "member-13",
+        id: "member-14",
+        name: "ARYAN CHAUHAN",
+        role: "CP BLINDFOLDED",
+        image: "/team/Aryan.jpeg",
+        linkedin: "https://www.linkedin.com/in/aryan-chauhan-5316a3366/",
+        whatsapp: "https://chat.whatsapp.com/CfqP9pr3l6m7R6JeevPRph?mode=gi_t"
+      },
+      {
+        id: "member-15",
+        name: "S K IZAZ AHMED",
+        role: "ROBO-SOCCER",
+        image: "/team/sk-izaz-ahmed.jpeg",
+        linkedin: "https://www.linkedin.com/in/sk-izaz-ahmed-2ba954378/",
+        whatsapp: "https://chat.whatsapp.com/LsmUT0PJumzK7Z6nLWRJFT?mode=gi_t"
+      },
+      {
+        id: "member-16",
         name: "Lay Shah",
         role: "RC RACING",
         image: "/team/LayShah.jpeg",
-        linkedin: "https://www.linkedin.com/in/lay-shah-0a777a380/"
+        linkedin: "https://www.linkedin.com/in/lay-shah-0a777a380/",
+        whatsapp: "https://chat.whatsapp.com/Hsre8RqBtZo0G3cxbtVLqE"
       },
       {
-        id: "member-14",
+        id: "member-17",
         name: "PRANAV SINGH",
         role: "FF-MAX | BGMI",
         image: "/team/pranav-singh.jpg",
@@ -128,7 +153,7 @@ const squadCategories: SquadCategory[] = [
       },
       {
         id: "member-9-marketing",
-        name: "Ashmita Kamat",
+        name: "Ashmita Kamath",
         role: "MARKETING TEAM",
         image: "/team/Ashmita.jpeg",
         linkedin: "https://www.linkedin.com/in/ashmita-kamath-5a06b02b6/"
@@ -142,31 +167,66 @@ const squadCategories: SquadCategory[] = [
       },
       {
         id: "member-11-marketing",
+        name: "SHUBHANGI KUMARI",
+        role: "MARKETING TEAM",
+        image: "/team/shubhangi.jpeg",
+        linkedin: "https://www.linkedin.com/in/shubhangi-kumari-1aa485366/"
+      },
+      {
+        id: "member-12-marketing",
         name: "ARUNIKA CHANDA",
         role: "MARKETING TEAM",
         image: "/team/arunika-chanda.jpg",
         linkedin: "https://www.linkedin.com/in/arunika-chanda-4859272b9/"
       },
       {
-        id: "member-12-marketing",
+        id: "member-13-marketing",
         name: "S K IZAZ AHMED",
         role: "MARKETING TEAM",
         image: "/team/sk-izaz-ahmed.jpeg",
         linkedin: "https://www.linkedin.com/in/sk-izaz-ahmed-2ba954378/"
       },
       {
-        id: "member-13-marketing",
+        id: "member-14-marketing",
         name: "SAINY VERMA",
         role: "MARKETING TEAM",
         image: "/team/sainy-verma.jpg",
         linkedin: "https://www.linkedin.com/in/sainy-verma-/"
       },
       {
-        id: "member-14-marketing",
-        name: "Lay Shah",
+        id: "member-15-marketing",
+        name: "LAY SHAH",
         role: "MARKETING TEAM",
         image: "/team/LayShah.jpeg",
         linkedin: "https://www.linkedin.com/in/lay-shah-0a777a380/"
+      },
+      {
+        id: "member-16-marketing",
+        name: "SHREYA AGRAWAL",
+        role: "MARKETING TEAM",
+        image: "/team/Shreya.jpeg",
+        linkedin: "https://www.linkedin.com/in/shreya-agrawal-9a61873b2/"
+      },
+      {
+        id: "member-17-marketing",
+        name: "ANUBHAV KUMARI",
+        role: "MARKETING TEAM",
+        image: "/team/Anubhav.jpeg",
+        linkedin: "https://www.linkedin.com/in/anubhav-kumari-79188337b/"
+      },
+      {
+        id: "member-18-marketing",
+        name: "PRANAV SAI",
+        role: "MARKETING TEAM",
+        image: "/team/pranav.jpeg",
+        linkedin: "https://www.linkedin.com/in/shanmuka-pranav-sai-2a4091388/"
+      },
+      {
+        id: "member-19-marketing",
+        name: "ANANYA CHAVAN",
+        role: "MARKETING TEAM",
+        image: "/team/ananya.jpeg",
+        linkedin: "https://www.linkedin.com/in/ananya-chavan-94bb083a6/"
       }
     ]
   },
