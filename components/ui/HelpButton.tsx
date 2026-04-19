@@ -29,19 +29,18 @@ export function HelpButton() {
       {/* Popup */}
       <div
         ref={popupRef}
-        className={`absolute bottom-[calc(100%+0.625rem)] right-0 min-w-[260px] rounded-2xl border border-cyan-400/25 bg-black/80 p-3 shadow-[0_8px_32px_rgba(0,0,0,0.6),0_0_20px_rgba(34,211,238,0.12)] backdrop-blur-xl transition-all duration-300 ${
-          isOpen
+        className={`absolute bottom-[calc(100%+0.625rem)] right-0 min-w-[260px] rounded-2xl border border-cyan-400/25 bg-black/80 p-3 shadow-[0_8px_32px_rgba(0,0,0,0.6),0_0_20px_rgba(34,211,238,0.12)] backdrop-blur-xl transition-all duration-300 ${isOpen
             ? "pointer-events-auto translate-y-0 scale-100 opacity-100"
             : "pointer-events-none translate-y-2 scale-95 opacity-0"
-        }`}
+          }`}
       >
         <p className="mb-2.5 px-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan-300/70"
-           style={{ fontFamily: "'Space Grotesk', Inter, sans-serif" }}>
+          style={{ fontFamily: "'Space Grotesk', Inter, sans-serif" }}>
           Need Help?
         </p>
         <div className="space-y-2">
           <a
-            href="https://easebuzz.in/link/B8EIK"
+            href="https://forms.gle/Jp2jPyZ2zSJXonK69"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setIsOpen(false)}
@@ -57,8 +56,8 @@ export function HelpButton() {
               </svg>
             </span>
             <span className="text-[11px] leading-tight text-white/90 transition-colors group-hover:text-cyan-200"
-                  style={{ fontFamily: "'Space Grotesk', Inter, sans-serif", letterSpacing: "0.04em" }}>
-              Facing issues registering on Unstop?<br />
+              style={{ fontFamily: "'Space Grotesk', Inter, sans-serif", letterSpacing: "0.04em" }}>
+              Facing issues registering?<br />
               <span className="text-cyan-400/80 group-hover:text-cyan-300">Register here →</span>
             </span>
           </a>
@@ -79,7 +78,7 @@ export function HelpButton() {
               </svg>
             </span>
             <span className="text-[11px] leading-tight text-white/90 transition-colors group-hover:text-fuchsia-200"
-                  style={{ fontFamily: "'Space Grotesk', Inter, sans-serif", letterSpacing: "0.04em" }}>
+              style={{ fontFamily: "'Space Grotesk', Inter, sans-serif", letterSpacing: "0.04em" }}>
               Other issues?<br />
               <span className="text-fuchsia-400/80 group-hover:text-fuchsia-300">Contact us on Instagram →</span>
             </span>
@@ -94,11 +93,10 @@ export function HelpButton() {
         onClick={() => setIsOpen((o) => !o)}
         aria-label="Help"
         aria-expanded={isOpen}
-        className={`inline-flex items-center justify-center rounded-full border px-3 py-3 backdrop-blur-md transition-all duration-300 ${
-          isOpen
+        className={`inline-flex items-center justify-center rounded-full border px-3 py-3 backdrop-blur-md transition-all duration-300 ${isOpen
             ? "border-cyan-300/90 bg-black/55 text-cyan-200 shadow-[0_0_18px_rgba(34,211,238,0.32),inset_0_1px_0_0_rgba(255,255,255,0.08)]"
             : "border-white/20 bg-black/55 text-white/70 shadow-[0_0_12px_rgba(255,255,255,0.06),inset_0_1px_0_0_rgba(255,255,255,0.06)] hover:border-cyan-400/50 hover:text-cyan-300 hover:shadow-[0_0_18px_rgba(34,211,238,0.2)]"
-        }`}
+          }`}
       >
         {/* Question-mark / help icon */}
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

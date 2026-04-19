@@ -87,8 +87,8 @@ export default function HomePage() {
     name: "Aayam 2026",
     description:
       "Aayam is NST's flagship national tech fest featuring 13+ competitions across Robotics, Hackathons, Gaming, and Digital Media. ₹4,00,000+ prize pool.",
-    startDate: "2026-04-24",
-    endDate: "2026-04-25",
+    startDate: "2026-04-25",
+    endDate: "2026-04-26",
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     location: {

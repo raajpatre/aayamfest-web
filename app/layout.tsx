@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     template: "%s | Aayam 2026",
   },
   description:
-    "Aayam 2026 is NST's flagship national tech fest on April 24–25 in Bengaluru. 13+ competitions across Robotics, Hackathons, Gaming & more. ₹4,00,000+ prize pool. Register now.",
+    "Aayam 2026 is NST's flagship national tech fest on 25–26 April in Bengaluru. 13+ competitions across Robotics, Hackathons, Gaming & more. ₹4,00,000+ prize pool. Register now.",
   keywords: [
     "Aayam 2026",
     "tech fest Bengaluru",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Aayam 2026 | National Tech Fest | Newton School of Technology",
     description:
-      "13+ competitions. ₹4,00,000+ prize pool. April 24–25, Bengaluru. Step Beyond the Known.",
+      "13+ competitions. ₹4,00,000+ prize pool. 25–26 April, Bengaluru. Step Beyond the Known.",
     url: "https://aayamfest.com",
     siteName: "Aayam 2026",
     images: [
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Aayam 2026 | National Tech Fest",
     description:
-      "13+ competitions. ₹4,00,000+ prize pool. April 24–25, Bengaluru.",
+      "13+ competitions. ₹4,00,000+ prize pool. 25–26 April, Bengaluru.",
     images: ["https://aayamfest.com/aayam-logo.png"],
     site: "@aayamfest",
   },
