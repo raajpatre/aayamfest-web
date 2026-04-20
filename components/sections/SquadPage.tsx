@@ -107,6 +107,13 @@ const squadCategories: SquadCategory[] = [
         role: "FREE FIRE MAX",
         image: "/team/pranav-singh.jpg",
         linkedin: "https://www.linkedin.com/in/pranav-choudhary5112/"
+      },
+      {
+        id: "member-20",
+        name: "ANANT SHARMA",
+        role: "BGMI",
+        image: "/team/anant.jpeg",
+        linkedin: "https://www.linkedin.com/in/anant-sharma-8119b837b/"
       }
     ]
   },
@@ -225,7 +232,7 @@ const squadCategories: SquadCategory[] = [
         id: "member-17-marketing",
         name: "ANUBHAV KUMARI",
         role: "MARKETING TEAM",
-        image: "/team/Anubhav.jpeg",
+        image: "/team/anubhav.jpeg",
         linkedin: "https://www.linkedin.com/in/anubhav-kumari-79188337b/"
       },
       {
