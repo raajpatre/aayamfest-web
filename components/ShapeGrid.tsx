@@ -422,5 +422,3 @@ const ShapeGrid: React.FC<ShapeGridProps> = ({
 };
 
 export default ShapeGrid;
-
-export default ShapeGrid;
