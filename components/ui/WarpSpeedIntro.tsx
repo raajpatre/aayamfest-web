@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+import Galaxy from "@/components/Galaxy";
 import { usePerformance } from "@/lib/hooks/usePerformance";
 import styles from "./WarpSpeedIntro.module.css";
 
