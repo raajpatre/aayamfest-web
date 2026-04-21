@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/format";
 import { AudioController } from "@/components/ui/AudioController";
 import { HelpButton } from "@/components/ui/HelpButton";
+import { usePerformance } from "@/lib/hooks/usePerformance";
 
 const links: Array<{ href: string; label: string; external?: boolean; ariaLabel?: string }> = [
   { href: "/", label: "Home" },
@@ -27,6 +28,7 @@ export function AppFrame({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { isLowPerf } = usePerformance();
 
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -37,7 +39,7 @@ export function AppFrame({ children }: { children: ReactNode }) {
       <div
         className={cn(
           "pointer-events-none fixed inset-0 z-40 bg-black/20 opacity-0 backdrop-blur-none transition-all duration-300 md:hidden",
-          mobileMenuOpen && "pointer-events-auto opacity-100 backdrop-blur-md"
+          mobileMenuOpen && (isLowPerf ? "pointer-events-auto opacity-100" : "pointer-events-auto opacity-100 backdrop-blur-md")
         )}
         onClick={() => setMobileMenuOpen(false)}
       />
@@ -122,7 +124,8 @@ export function AppFrame({ children }: { children: ReactNode }) {
             </button>
             <div
               className={cn(
-                "absolute right-0 mt-3 min-w-52 rounded-[28px] border border-white/15 bg-black p-3 shadow-[0_12px_44px_rgba(0,0,0,0.62),inset_0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur-xl transition-all duration-300",
+                "absolute right-0 mt-3 min-w-52 rounded-[28px] border border-white/15 bg-black p-3 shadow-[0_12px_44px_rgba(0,0,0,0.62),inset_0_1px_0_0_rgba(255,255,255,0.08)] transition-all duration-300",
+                !isLowPerf && "backdrop-blur-xl",
                 mobileMenuOpen
                   ? "pointer-events-auto translate-y-0 opacity-100"
                   : "pointer-events-none -translate-y-2 opacity-0"

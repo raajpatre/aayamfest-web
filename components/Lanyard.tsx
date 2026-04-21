@@ -1,6 +1,3 @@
-/* eslint-disable react/no-unknown-property */
-"use client";
-
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, extend, useFrame } from "@react-three/fiber";
 import { Environment, Lightformer } from "@react-three/drei";
@@ -14,6 +11,7 @@ import {
 } from "@react-three/rapier";
 import { MeshLineGeometry, MeshLineMaterial } from "meshline";
 import * as THREE from "three";
+import { usePerformance } from "@/lib/hooks/usePerformance";
 import "./Lanyard.css";
 
 extend({ MeshLineGeometry, MeshLineMaterial });
@@ -59,6 +57,7 @@ export default function Lanyard({
   transparent?: boolean;
 }) {
   const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.innerWidth < 768);
+  const { isLowPerf } = usePerformance();
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -70,44 +69,46 @@ export default function Lanyard({
     <div className="lanyard-wrapper">
       <Canvas
         camera={{ position, fov }}
-        dpr={[1, isMobile ? 1.5 : 2]}
-        gl={{ alpha: transparent }}
+        dpr={isLowPerf ? 1 : [1, isMobile ? 1.5 : 2]}
+        gl={{ alpha: transparent, antialias: !isLowPerf }}
         onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
       >
         <ambientLight intensity={Math.PI} />
-        <Physics gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>
-          <Band isMobile={isMobile} />
+        <Physics gravity={gravity} timeStep={isLowPerf ? 1 / 24 : (isMobile ? 1 / 30 : 1 / 60)}>
+          <Band isMobile={isMobile} isLowPerf={isLowPerf} />
         </Physics>
-        <Environment blur={0.75}>
-          <Lightformer
-            intensity={2}
-            color="white"
-            position={[0, -1, 5]}
-            rotation={[0, 0, Math.PI / 3]}
-            scale={[100, 0.1, 1]}
-          />
-          <Lightformer
-            intensity={3}
-            color="white"
-            position={[-1, -1, 1]}
-            rotation={[0, 0, Math.PI / 3]}
-            scale={[100, 0.1, 1]}
-          />
-          <Lightformer
-            intensity={3}
-            color="white"
-            position={[1, 1, 1]}
-            rotation={[0, 0, Math.PI / 3]}
-            scale={[100, 0.1, 1]}
-          />
-          <Lightformer
-            intensity={10}
-            color="white"
-            position={[-10, 0, 14]}
-            rotation={[0, Math.PI / 2, Math.PI / 3]}
-            scale={[100, 10, 1]}
-          />
-        </Environment>
+        {!isLowPerf && (
+          <Environment blur={0.75}>
+            <Lightformer
+              intensity={2}
+              color="white"
+              position={[0, -1, 5]}
+              rotation={[0, 0, Math.PI / 3]}
+              scale={[100, 0.1, 1]}
+            />
+            <Lightformer
+              intensity={3}
+              color="white"
+              position={[-1, -1, 1]}
+              rotation={[0, 0, Math.PI / 3]}
+              scale={[100, 0.1, 1]}
+            />
+            <Lightformer
+              intensity={3}
+              color="white"
+              position={[1, 1, 1]}
+              rotation={[0, 0, Math.PI / 3]}
+              scale={[100, 0.1, 1]}
+            />
+            <Lightformer
+              intensity={10}
+              color="white"
+              position={[-10, 0, 14]}
+              rotation={[0, Math.PI / 2, Math.PI / 3]}
+              scale={[100, 10, 1]}
+            />
+          </Environment>
+        )}
       </Canvas>
     </div>
   );
@@ -157,11 +158,13 @@ function BadgeFace() {
 function Band({
   maxSpeed = 50,
   minSpeed = 0,
-  isMobile = false
+  isMobile = false,
+  isLowPerf = false
 }: {
   maxSpeed?: number;
   minSpeed?: number;
   isMobile?: boolean;
+  isLowPerf?: boolean;
 }) {
   const band = useRef<any>(null);
   const fixed = useRef<any>(null);
@@ -251,7 +254,7 @@ function Band({
       curve.points[1].copy(j2.current.lerped);
       curve.points[2].copy(j1.current.lerped);
       curve.points[3].copy(fixed.current.translation());
-      lineGeometry.setPoints(curve.getPoints(isMobile ? 16 : 32));
+      lineGeometry.setPoints(curve.getPoints(isLowPerf ? 8 : (isMobile ? 16 : 32)));
 
       ang.copy(card.current.angvel());
       rot.copy(card.current.rotation());
@@ -296,7 +299,7 @@ function Band({
               <boxGeometry args={[1.45, 2.08, 0.08]} />
               <meshPhysicalMaterial
                 color="#1c2229"
-                clearcoat={isMobile ? 0 : 1}
+                clearcoat={isLowPerf || isMobile ? 0 : 1}
                 clearcoatRoughness={0.15}
                 roughness={0.78}
                 metalness={0.7}
@@ -311,7 +314,7 @@ function Band({
             <BadgeFace />
 
             <mesh position={[0, 1.2, 0]}>
-              <cylinderGeometry args={[0.11, 0.11, 0.08, 32]} />
+              <cylinderGeometry args={[0.11, 0.11, 0.08, isLowPerf ? 8 : 32]} />
               <meshStandardMaterial color="#090b0f" emissive="#22d3ee" emissiveIntensity={0.28} />
             </mesh>
 

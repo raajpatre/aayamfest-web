@@ -10,6 +10,7 @@ import { CountdownTimer } from "@/components/ui/CountdownTimer";
 import Hyperspeed from "@/components/ui/Hyperspeed";
 import { hyperspeedPresets } from "@/components/ui/HyperspeedPresets";
 import { WarpSpeedIntro } from "@/components/ui/WarpSpeedIntro";
+import { usePerformance } from "@/lib/hooks/usePerformance";
 
 const glassCardClass =
   "border border-white/5 bg-gradient-to-br from-black/60 to-black/30 backdrop-blur-lg shadow-[0_12px_40px_rgba(0,0,0,0.28),inset_0_1px_0_0_rgba(255,255,255,0.1)] transition-all duration-300 hover:border-fuchsia-500/50 hover:shadow-[0_18px_55px_rgba(0,0,0,0.38),0_0_24px_rgba(217,70,239,0.16),inset_0_1px_0_0_rgba(255,255,255,0.1)]";
@@ -69,6 +70,7 @@ const INTRO_STORAGE_KEY = "aayam-intro-complete";
 export default function HomePage() {
   const [introComplete, setIntroComplete] = useState(false);
   const [introReady, setIntroReady] = useState(false);
+  const { isLowPerf } = usePerformance();
 
   useEffect(() => {
     const hasSeenIntro = window.sessionStorage.getItem(INTRO_STORAGE_KEY) === "true";
@@ -132,11 +134,13 @@ export default function HomePage() {
           }`}
         >
           <div className="fixed inset-0 -z-30 h-full w-full bg-black" />
-          <div className="fixed inset-0 -z-20 h-full w-full bg-cover bg-center" style={galaxyBackdropStyle}>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_52%_50%,rgba(255,255,255,0.05),transparent_18%),linear-gradient(180deg,rgba(0,0,0,0.1),rgba(0,0,0,0.35))]" />
+          <div className="fixed inset-0 -z-20 h-full w-full bg-cover bg-center" style={isLowPerf ? { backgroundColor: "#020308" } : galaxyBackdropStyle}>
+            {!isLowPerf && (
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_52%_50%,rgba(255,255,255,0.05),transparent_18%),linear-gradient(180deg,rgba(0,0,0,0.1),rgba(0,0,0,0.35))]" />
+            )}
           </div>
           <div className="fixed inset-0 -z-10 h-full w-full">
-            <Hyperspeed effectOptions={hyperspeedEffect} />
+            <Hyperspeed effectOptions={hyperspeedEffect} performanceMode={isLowPerf} />
           </div>
           <div className="pointer-events-none fixed inset-0 -z-[5] overflow-hidden">
             {borderStreaks.map((streak) => (

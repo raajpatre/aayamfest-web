@@ -510,3 +510,37 @@ body::after {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── Low Performance Mode Overrides ──────────────── */
+.low-perf {
+  scroll-behavior: auto !important;
+}
+
+.low-perf .terminal-panel,
+.low-perf .announcement-bar {
+  backdrop-filter: none !important;
+  background: rgba(20, 20, 22, 0.98) !important;
+}
+
+.low-perf .audio-controller-attention,
+.low-perf .audio-eq-bar,
+.low-perf .nav-daypass,
+.low-perf .nav-daypass-mobile,
+.low-perf .nav-daypass-badge,
+.low-perf .sponsors-arc-track,
+.low-perf .announcement-marquee-track {
+  animation: none !important;
+}
+
+.low-perf .glitch-text {
+  text-shadow: none !important;
+}
+
+.low-perf body::before,
+.low-perf body::after {
+  display: none !important; /* Hide overlay grids/scanned lines */
+}
+
+.low-perf .terminal-grid {
+  background-image: none !important; /* Save background rendering */
+}

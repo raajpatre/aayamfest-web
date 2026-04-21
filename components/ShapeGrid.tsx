@@ -1,7 +1,6 @@
-"use client";
-
 import React, { useRef, useEffect } from 'react';
 import './ShapeGrid.css';
+import { usePerformance } from "@/lib/hooks/usePerformance";
 
 type CanvasStrokeStyle = string | CanvasGradient | CanvasPattern;
 
@@ -37,11 +36,13 @@ const ShapeGrid: React.FC<ShapeGridProps> = ({
   const hoveredSquareRef = useRef<GridOffset | null>(null);
   const trailCells = useRef<GridOffset[]>([]);
   const cellOpacities = useRef<Map<string, number>>(new Map());
+  const { isLowPerf } = usePerformance();
+  const frameCount = useRef(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
 
     const isHex = shape === 'hexagon';
     const isTri = shape === 'triangle';
@@ -210,23 +211,34 @@ const ShapeGrid: React.FC<ShapeGridProps> = ({
         }
       }
 
-      const gradient = ctx.createRadialGradient(
-        canvas.width / 2,
-        canvas.height / 2,
-        0,
-        canvas.width / 2,
-        canvas.height / 2,
-        Math.sqrt(canvas.width ** 2 + canvas.height ** 2) / 2
-      );
-      gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
-      gradient.addColorStop(1, '#060010');
+      // Expensive radial gradient - disable in low perf mode
+      if (!isLowPerf) {
+        const gradient = ctx.createRadialGradient(
+          canvas.width / 2,
+          canvas.height / 2,
+          0,
+          canvas.width / 2,
+          canvas.height / 2,
+          Math.sqrt(canvas.width ** 2 + canvas.height ** 2) / 2
+        );
+        gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+        gradient.addColorStop(1, '#060010');
 
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
     };
 
     const updateAnimation = () => {
-      const effectiveSpeed = Math.max(speed, 0.1);
+      frameCount.current++;
+      
+      // In low performance mode, only update at 30fps (every other frame)
+      if (isLowPerf && frameCount.current % 2 !== 0) {
+        requestRef.current = requestAnimationFrame(updateAnimation);
+        return;
+      }
+
+      const effectiveSpeed = Math.max(speed, 0.1) * (isLowPerf ? 2 : 1); // Compensate for skipped frames
       const wrapX = isHex ? hexHoriz * 2 : squareSize;
       const wrapY = isHex ? hexVert : isTri ? squareSize * 2 : squareSize;
 
@@ -263,7 +275,7 @@ const ShapeGrid: React.FC<ShapeGridProps> = ({
         targets.set(`${hoveredSquareRef.current.x},${hoveredSquareRef.current.y}`, 1);
       }
 
-      if (hoverTrailAmount > 0) {
+      if (hoverTrailAmount > 0 && !isLowPerf) { // No trail in low perf
         for (let i = 0; i < trailCells.current.length; i++) {
           const t = trailCells.current[i];
           const key = `${t.x},${t.y}`;
@@ -279,9 +291,10 @@ const ShapeGrid: React.FC<ShapeGridProps> = ({
         }
       }
 
+      const decaySpeed = isLowPerf ? 0.3 : 0.15; // Faster decay in low perf
       for (const [key, opacity] of cellOpacities.current) {
         const target = targets.get(key) || 0;
-        const next = opacity + (target - opacity) * 0.15;
+        const next = opacity + (target - opacity) * decaySpeed;
         if (next < 0.005) {
           cellOpacities.current.delete(key);
         } else {
@@ -291,6 +304,7 @@ const ShapeGrid: React.FC<ShapeGridProps> = ({
     };
 
     const handleMouseMove = (event: MouseEvent) => {
+      if (isLowPerf) return; // Disable hover effects on low-end processors to save CPU
       const rect = canvas.getBoundingClientRect();
       const mouseX = event.clientX - rect.left;
       const mouseY = event.clientY - rect.top;
@@ -402,9 +416,11 @@ const ShapeGrid: React.FC<ShapeGridProps> = ({
       canvas.removeEventListener('mousemove', handleMouseMove);
       canvas.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [direction, speed, borderColor, hoverFillColor, squareSize, shape, hoverTrailAmount]);
+  }, [direction, speed, borderColor, hoverFillColor, squareSize, shape, hoverTrailAmount, isLowPerf]);
 
   return <canvas ref={canvasRef} className="shapegrid-canvas"></canvas>;
 };
+
+export default ShapeGrid;
 
 export default ShapeGrid;

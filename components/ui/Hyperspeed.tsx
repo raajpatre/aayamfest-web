@@ -668,11 +668,14 @@ class App {
     const initW = Math.max(1, container.offsetWidth);
     const initH = Math.max(1, container.offsetHeight);
 
-    this.renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
+    this.renderer = new THREE.WebGLRenderer({ 
+      antialias: !!options.performanceMode, // Antialias is cheaper than postprocessing SMAA
+      alpha: true 
+    });
     this.renderer.setSize(initW, initH, false);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.composer = new EffectComposer(this.renderer);
-    this.useComposer = true;
+    this.useComposer = !options.performanceMode; // Disable postprocessing in performance mode
     container.append(this.renderer.domElement);
 
     this.camera = new THREE.PerspectiveCamera(options.fov, initW / initH, 0.1, 10000);
@@ -970,9 +973,10 @@ type HyperspeedProps = {
     distortion?: keyof typeof distortions | string;
     colors?: Record<string, unknown>;
   };
+  performanceMode?: boolean;
 };
 
-const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }: HyperspeedProps) => {
+const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS, performanceMode = false }: HyperspeedProps) => {
   const hyperspeed = useRef<HTMLDivElement | null>(null);
   const appRef = useRef<App | null>(null);
 
@@ -992,8 +996,15 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }: HyperspeedProps)
     const options = {
       ...DEFAULT_EFFECT_OPTIONS,
       ...effectOptions,
-      colors: { ...DEFAULT_EFFECT_OPTIONS.colors, ...effectOptions.colors }
+      colors: { ...DEFAULT_EFFECT_OPTIONS.colors, ...effectOptions.colors },
+      performanceMode
     };
+
+    if (performanceMode) {
+      // Significantly reduce counts for low-performance devices
+      options.totalSideLightSticks = Math.floor((options.totalSideLightSticks || 20) * 0.4);
+      options.lightPairsPerRoadWay = Math.floor((options.lightPairsPerRoadWay || 40) * 0.4);
+    }
 
     options.distortion = distortions[options.distortion || "turbulentDistortion"];
 

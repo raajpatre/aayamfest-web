@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Galaxy from "@/components/Galaxy";
+import { usePerformance } from "@/lib/hooks/usePerformance";
 import styles from "./WarpSpeedIntro.module.css";
 
 type IntroPhase = "prompt" | "blackout" | "warp" | "flash" | "done";
 const DURATION = 3600;
 const BLACKOUT_DURATION = 550;
-const PARTICLE_COUNT = 280;
+const DEFAULT_PARTICLE_COUNT = 280;
+const LOW_PERF_PARTICLE_COUNT = 100;
 const COLORS = [
   [244, 124, 233],
   [131, 245, 255],
@@ -29,6 +29,9 @@ export function WarpSpeedIntro({ onComplete }: { onComplete?: () => void }) {
   const animationRef = useRef<number | null>(null);
   const startTimeRef = useRef<number | null>(null);
   const particlesRef = useRef<Particle[]>([]);
+  const { isLowPerf } = usePerformance();
+
+  const particleCount = isLowPerf ? LOW_PERF_PARTICLE_COUNT : DEFAULT_PARTICLE_COUNT;
 
   useEffect(() => {
     if (phase === "done") {
@@ -102,11 +105,15 @@ export function WarpSpeedIntro({ onComplete }: { onComplete?: () => void }) {
       const speed = 2 + (48 - 2) * intensity;
       const streakLength = intensity * 150;
 
-      const glow = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 240);
-      glow.addColorStop(0, `rgba(244,124,233,${0.12 + intensity * 0.12})`);
-      glow.addColorStop(0.45, `rgba(131,245,255,${0.06 + intensity * 0.08})`);
-      glow.addColorStop(1, "rgba(0,0,0,0)");
-      ctx.fillStyle = glow;
+      const glowFill = isLowPerf ? "#000" : (() => {
+        const glow = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 240);
+        glow.addColorStop(0, `rgba(244,124,233,${0.12 + intensity * 0.12})`);
+        glow.addColorStop(0.45, `rgba(131,245,255,${0.06 + intensity * 0.08})`);
+        glow.addColorStop(1, "rgba(0,0,0,0)");
+        return glow;
+      })();
+      
+      ctx.fillStyle = glowFill;
       ctx.fillRect(0, 0, width, height);
 
       particlesRef.current.forEach((particle, index) => {
@@ -156,7 +163,7 @@ export function WarpSpeedIntro({ onComplete }: { onComplete?: () => void }) {
     };
 
     resize();
-    particlesRef.current = Array.from({ length: PARTICLE_COUNT }, createParticle);
+    particlesRef.current = Array.from({ length: particleCount }, createParticle);
     startTimeRef.current = null;
     window.addEventListener("resize", resize);
     animationRef.current = requestAnimationFrame(render);
@@ -168,7 +175,7 @@ export function WarpSpeedIntro({ onComplete }: { onComplete?: () => void }) {
         animationRef.current = null;
       }
     };
-  }, [phase]);
+  }, [phase, particleCount, isLowPerf]);
 
   useEffect(() => {
     if (phase !== "flash") return;

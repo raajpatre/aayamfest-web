@@ -1,7 +1,6 @@
-"use client"
-
-import { useEffect, useRef, useCallback } from "react"
+import { useEffect, useRef, useCallback, useState } from "react"
 import createGlobe from "cobe"
+import { usePerformance } from "@/lib/hooks/usePerformance"
 
 interface PulseMarker {
   id: string
@@ -31,6 +30,7 @@ export function GlobePulse({
   const phiOffsetRef = useRef(0)
   const thetaOffsetRef = useRef(0)
   const isPausedRef = useRef(false)
+  const { isLowPerf } = usePerformance()
   
   // 🛡️ Smart Click Detector (To prevent opening link while dragging)
   const isDraggingRef = useRef(false)
@@ -90,10 +90,11 @@ export function GlobePulse({
       if (width === 0 || globe) return
 
       globe = createGlobe(canvas, {
-      devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+      devicePixelRatio: 1, // Fix pixel ratio to 1 for performance on large TVs
       width, height: width,
       phi: 0, theta: 0.2, dark: 1, diffuse: 1.5,
-      mapSamples: 16000, mapBrightness: 10,
+      mapSamples: isLowPerf ? 6000 : 16000, 
+      mapBrightness: 10,
       baseColor: [0.5, 0.5, 0.5],
       markerColor: [0.2, 0.8, 0.9],
       glowColor: [0.05, 0.05, 0.05],
@@ -130,7 +131,7 @@ export function GlobePulse({
       if (animationId) cancelAnimationFrame(animationId)
       if (globe) globe.destroy()
     }
-  }, [markers, speed])
+  }, [markers, speed, isLowPerf])
 
   // 🌍 The Click Handler
   const handleGlobeClick = () => {
@@ -141,12 +142,14 @@ export function GlobePulse({
 
   return (
     <div className={`relative aspect-square select-none ${className}`}>
-      <style>{`
-        @keyframes pulse-expand {
-          0% { transform: scaleX(0.3) scaleY(0.3); opacity: 0.8; }
-          100% { transform: scaleX(1.5) scaleY(1.5); opacity: 0; }
-        }
-      `}</style>
+      {!isLowPerf && (
+        <style>{`
+          @keyframes pulse-expand {
+            0% { transform: scaleX(0.3) scaleY(0.3); opacity: 0.8; }
+            100% { transform: scaleX(1.5) scaleY(1.5); opacity: 0; }
+          }
+        `}</style>
+      )}
       <canvas
         ref={canvasRef}
         onPointerDown={handlePointerDown}
@@ -172,20 +175,24 @@ export function GlobePulse({
             justifyContent: "center",
             pointerEvents: "none" as const,
             opacity: `var(--cobe-visible-${m.id}, 0)`,
-            filter: `blur(calc((1 - var(--cobe-visible-${m.id}, 0)) * 8px))`,
+            filter: isLowPerf ? "none" : `blur(calc((1 - var(--cobe-visible-${m.id}, 0)) * 8px))`,
             transition: "opacity 0.4s, filter 0.4s",
           }}
         >
-          <span style={{
-            position: "absolute", inset: 0,
-            border: "2px solid #33ccdd", borderRadius: "50%", opacity: 0,
-            animation: `pulse-expand 2s ease-out infinite ${m.delay}s`,
-          }} />
-          <span style={{
-            position: "absolute", inset: 0,
-            border: "2px solid #33ccdd", borderRadius: "50%", opacity: 0,
-            animation: `pulse-expand 2s ease-out infinite ${m.delay + 0.5}s`,
-          }} />
+          {!isLowPerf && (
+            <>
+              <span style={{
+                position: "absolute", inset: 0,
+                border: "2px solid #33ccdd", borderRadius: "50%", opacity: 0,
+                animation: `pulse-expand 2s ease-out infinite ${m.delay}s`,
+              }} />
+              <span style={{
+                position: "absolute", inset: 0,
+                border: "2px solid #33ccdd", borderRadius: "50%", opacity: 0,
+                animation: `pulse-expand 2s ease-out infinite ${m.delay + 0.5}s`,
+              }} />
+            </>
+          )}
           <span style={{
             width: 10, height: 10, background: "#33ccdd", borderRadius: "50%",
             boxShadow: "0 0 0 3px #111, 0 0 0 5px #33ccdd",
