@@ -64,80 +64,82 @@ export function HelpButton() {
       {/* Modal Popup for Posters */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/85 p-4 backdrop-blur-md transition-opacity"
+          className="fixed inset-0 z-[99999] overflow-y-auto bg-black/85 backdrop-blur-md transition-opacity"
           onClick={() => setIsOpen(false)}
         >
-          <div
-            className="relative flex flex-col items-center justify-center gap-8 md:flex-row md:items-start w-full max-w-5xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Poster 1: DJ Tasha */}
-            {showTasha && (
-              <div className="group relative max-w-[90vw] shadow-2xl transition-all hover:shadow-[0_0_30px_rgba(34,211,238,0.3)]">
-                {/* Individual Close Button */}
-                <button
-                  onClick={handleCloseTasha}
-                  className="absolute -top-3 -right-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black/80 border border-white/20 transition-all hover:border-red-500 hover:bg-red-500/90"
-                  aria-label="Close DJ Tasha Poster"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="text-white transition-colors"
+          <div className="flex min-h-full items-center justify-center p-4 md:p-8">
+            <div
+              className="relative flex flex-col items-center justify-center gap-8 md:flex-row md:items-start w-full max-w-5xl my-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Poster 1: DJ Tasha */}
+              {showTasha && (
+                <div className="group relative max-w-[90vw] shadow-2xl transition-all hover:shadow-[0_0_30px_rgba(34,211,238,0.3)]">
+                  {/* Individual Close Button */}
+                  <button
+                    onClick={handleCloseTasha}
+                    className="absolute -top-3 -right-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black/80 border border-white/20 transition-all hover:border-red-500 hover:bg-red-500/90"
+                    aria-label="Close DJ Tasha Poster"
                   >
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                  </svg>
-                </button>
-                
-                {/* Actually load the image the user will drop as /dj-tasha.jpg */}
-                <img
-                  src="/dj-tasha.jpg"
-                  alt="DJ Tasha"
-                  className="max-h-[85vh] w-auto object-contain text-transparent transition-transform duration-500 block"
-                />
-              </div>
-            )}
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-white transition-colors"
+                    >
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </button>
+                  
+                  {/* Actually load the image the user will drop as /dj-tasha.jpg */}
+                  <img
+                    src="/dj-tasha.jpg"
+                    alt="DJ Tasha"
+                    className="max-h-[85vh] w-auto object-contain text-transparent transition-transform duration-500 block"
+                  />
+                </div>
+              )}
 
-            {/* Poster 2: Anuj Rehan */}
-            {showAnuj && (
-              <div className="group relative max-w-[90vw] shadow-2xl transition-all hover:shadow-[0_0_30px_rgba(232,121,249,0.3)]">
-                {/* Individual Close Button */}
-                <button
-                  onClick={handleCloseAnuj}
-                  className="absolute -top-3 -right-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black/80 border border-white/20 transition-all hover:border-red-500 hover:bg-red-500/90"
-                  aria-label="Close Anuj Rehan Poster"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="text-white transition-colors"
+              {/* Poster 2: Anuj Rehan */}
+              {showAnuj && (
+                <div className="group relative max-w-[90vw] shadow-2xl transition-all hover:shadow-[0_0_30px_rgba(232,121,249,0.3)]">
+                  {/* Individual Close Button */}
+                  <button
+                    onClick={handleCloseAnuj}
+                    className="absolute -top-3 -right-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black/80 border border-white/20 transition-all hover:border-red-500 hover:bg-red-500/90"
+                    aria-label="Close Anuj Rehan Poster"
                   >
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                  </svg>
-                </button>
-                
-                {/* Actually load the image the user will drop as /anuj-rehan.jpg */}
-                <img
-                  src="/anuj-rehan.jpg"
-                  alt="Anuj Rehan"
-                  className="max-h-[85vh] w-auto object-contain text-transparent transition-transform duration-500 block"
-                />
-              </div>
-            )}
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-white transition-colors"
+                    >
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </button>
+                  
+                  {/* Actually load the image the user will drop as /anuj-rehan.jpg */}
+                  <img
+                    src="/anuj-rehan.jpg"
+                    alt="Anuj Rehan"
+                    className="max-h-[85vh] w-auto object-contain text-transparent transition-transform duration-500 block"
+                  />
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
