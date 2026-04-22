@@ -4,17 +4,14 @@ import { useState, useEffect } from "react";
 
 export function HelpButton() {
   const [isOpen, setIsOpen] = useState(false);
-  const [showTasha, setShowTasha] = useState(true);
-  const [showAnuj, setShowAnuj] = useState(true);
 
   const handleOpen = () => {
     setIsOpen(true);
-    setShowTasha(true);
-    setShowAnuj(true);
   };
 
-  const handleCloseTasha = () => setShowTasha(false);
-  const handleCloseAnuj = () => setShowAnuj(false);
+  const handleClose = () => {
+    setIsOpen(false);
+  };
 
   // Close modal when pressing Escape
   useEffect(() => {
@@ -40,13 +37,6 @@ export function HelpButton() {
     };
   }, [isOpen]);
 
-  // Close the entire modal if both posters are closed
-  useEffect(() => {
-    if (isOpen && !showTasha && !showAnuj) {
-      setIsOpen(false);
-    }
-  }, [showTasha, showAnuj, isOpen]);
-
   return (
     <>
       <div className="fixed bottom-[4.5rem] right-5 z-[10020] flex flex-col items-center">
@@ -65,80 +55,43 @@ export function HelpButton() {
       {isOpen && (
         <div
           className="fixed inset-0 z-[99999] overflow-y-auto bg-black/85 backdrop-blur-md transition-opacity"
-          onClick={() => setIsOpen(false)}
+          onClick={handleClose}
         >
           <div className="flex min-h-full items-center justify-center p-4 md:p-8">
             <div
-              className="relative flex flex-col items-center justify-center gap-8 md:flex-row md:items-start w-full max-w-5xl my-4"
+              className="relative flex flex-col items-center justify-center w-full max-w-2xl my-4"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Poster 1: DJ Tasha */}
-              {showTasha && (
-                <div className="group relative max-w-[90vw] shadow-2xl transition-all hover:shadow-[0_0_30px_rgba(34,211,238,0.3)]">
-                  {/* Individual Close Button */}
-                  <button
-                    onClick={handleCloseTasha}
-                    className="absolute -top-3 -right-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black/80 border border-white/20 transition-all hover:border-red-500 hover:bg-red-500/90"
-                    aria-label="Close DJ Tasha Poster"
+              {/* Main Poster */}
+              <div className="group relative max-w-[90vw] shadow-2xl transition-all hover:shadow-[0_0_30px_rgba(34,211,238,0.3)]">
+                {/* Individual Close Button */}
+                <button
+                  onClick={handleClose}
+                  className="absolute -top-3 -right-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black/80 border border-white/20 transition-all hover:border-red-500 hover:bg-red-500/90"
+                  aria-label="Close Poster"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="text-white transition-colors"
                   >
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-white transition-colors"
-                    >
-                      <line x1="18" y1="6" x2="6" y2="18"></line>
-                      <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                  </button>
-                  
-                  {/* Actually load the image the user will drop as /dj-tasha.jpg */}
-                  <img
-                    src="/dj-tasha.jpg"
-                    alt="DJ Tasha"
-                    className="max-h-[85vh] w-auto object-contain text-transparent transition-transform duration-500 block"
-                  />
-                </div>
-              )}
-
-              {/* Poster 2: Anuj Rehan */}
-              {showAnuj && (
-                <div className="group relative max-w-[90vw] shadow-2xl transition-all hover:shadow-[0_0_30px_rgba(232,121,249,0.3)]">
-                  {/* Individual Close Button */}
-                  <button
-                    onClick={handleCloseAnuj}
-                    className="absolute -top-3 -right-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black/80 border border-white/20 transition-all hover:border-red-500 hover:bg-red-500/90"
-                    aria-label="Close Anuj Rehan Poster"
-                  >
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-white transition-colors"
-                    >
-                      <line x1="18" y1="6" x2="6" y2="18"></line>
-                      <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                  </button>
-                  
-                  {/* Actually load the image the user will drop as /anuj-rehan.jpg */}
-                  <img
-                    src="/anuj-rehan.jpg"
-                    alt="Anuj Rehan"
-                    className="max-h-[85vh] w-auto object-contain text-transparent transition-transform duration-500 block"
-                  />
-                </div>
-              )}
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+                
+                <img
+                  src="/dj-tasha.jpg"
+                  alt="Aayam Concert Poster"
+                  className="max-h-[85vh] w-auto object-contain text-transparent transition-transform duration-500 block"
+                />
+              </div>
             </div>
           </div>
         </div>
