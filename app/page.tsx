@@ -2,15 +2,17 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { AnimatedAboutStatsSection } from "@/components/sections/AnimatedAboutStatsSection";
+import dynamic from "next/dynamic";
 import { HomeTerminalFooter } from "@/components/sections/HomeTerminalFooter";
 import { InitializeRegistrationCTA } from "@/components/sections/InitializeRegistrationCTA";
-import { SponsorsPreviewSection } from "@/components/sections/SponsorsPreviewSection";
 import { CountdownTimer } from "@/components/ui/CountdownTimer";
-import Hyperspeed from "@/components/ui/Hyperspeed";
 import { hyperspeedPresets } from "@/components/ui/HyperspeedPresets";
-import { WarpSpeedIntro } from "@/components/ui/WarpSpeedIntro";
 import { usePerformance } from "@/lib/hooks/usePerformance";
+
+const Hyperspeed = dynamic(() => import("@/components/ui/Hyperspeed"), { ssr: false });
+const WarpSpeedIntro = dynamic(() => import("@/components/ui/WarpSpeedIntro").then(mod => mod.WarpSpeedIntro), { ssr: false });
+const AnimatedAboutStatsSection = dynamic(() => import("@/components/sections/AnimatedAboutStatsSection").then(mod => mod.AnimatedAboutStatsSection));
+const SponsorsPreviewSection = dynamic(() => import("@/components/sections/SponsorsPreviewSection").then(mod => mod.SponsorsPreviewSection));
 
 const glassCardClass =
   "border border-white/5 bg-gradient-to-br from-black/60 to-black/30 backdrop-blur-lg shadow-[0_12px_40px_rgba(0,0,0,0.28),inset_0_1px_0_0_rgba(255,255,255,0.1)] transition-all duration-300 hover:border-fuchsia-500/50 hover:shadow-[0_18px_55px_rgba(0,0,0,0.38),0_0_24px_rgba(217,70,239,0.16),inset_0_1px_0_0_rgba(255,255,255,0.1)]";
@@ -163,6 +165,7 @@ export default function HomePage() {
                       src="/aayam-logo.png"
                       alt="AAYAM Tech Fest official logo"
                       fill
+                      priority
                       className="object-contain"
                       sizes="(max-width: 640px) 400px, (max-width: 1024px) 560px, 860px"
                     />
