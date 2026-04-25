@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
+import Script from "next/script";
 import "./globals.css";
 import { AppFrame } from "@/components/layout/AppFrame";
 
@@ -59,6 +60,15 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         <AppFrame>{children}</AppFrame>
         <Analytics />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-8XMB1K8GPP" strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-8XMB1K8GPP');
+          `}
+        </Script>
       </body>
     </html>
   );
