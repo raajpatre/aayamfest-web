@@ -1,0 +1,101 @@
+"use client";
+
+import { useState, useEffect } from "react";
+
+export function HelpButton() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
+  // Close modal when pressing Escape
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  return (
+    <>
+      <div className="fixed bottom-[4.5rem] right-5 z-[10020] flex flex-col items-center">
+        {/* Party Button */}
+        <button
+          type="button"
+          onClick={handleOpen}
+          aria-label="Concert Posters"
+          className="inline-flex items-center justify-center rounded-full border px-3 py-3 backdrop-blur-md transition-all duration-300 border-white/20 bg-black/55 text-2xl shadow-[0_0_12px_rgba(255,255,255,0.06),inset_0_1px_0_0_rgba(255,255,255,0.06)] hover:border-cyan-400/50 hover:shadow-[0_0_18px_rgba(34,211,238,0.2)] hover:scale-110 active:scale-95 animate-bounce"
+        >
+          🎉
+        </button>
+      </div>
+
+      {/* Modal Popup for Posters */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-[99999] overflow-y-auto bg-black/85 backdrop-blur-md transition-opacity"
+          onClick={handleClose}
+        >
+          <div className="flex min-h-full items-center justify-center p-4 md:p-8">
+            <div
+              className="relative flex flex-col items-center justify-center w-full max-w-2xl my-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Main Poster */}
+              <div className="group relative max-w-[90vw] shadow-2xl transition-all hover:shadow-[0_0_30px_rgba(34,211,238,0.3)]">
+                {/* Individual Close Button */}
+                <button
+                  onClick={handleClose}
+                  className="absolute -top-3 -right-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black/80 border border-white/20 transition-all hover:border-red-500 hover:bg-red-500/90"
+                  aria-label="Close Poster"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="text-white transition-colors"
+                  >
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+                
+                <img
+                  src="/dj-tasha.jpg"
+                  alt="Aayam Concert Poster"
+                  className="max-h-[85vh] w-auto object-contain text-transparent transition-transform duration-500 block"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}

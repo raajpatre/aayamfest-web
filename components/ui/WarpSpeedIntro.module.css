@@ -1,0 +1,171 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  background: #020308;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.galaxyLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.95;
+}
+
+.prompt {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 3;
+}
+
+.promptCopy {
+  width: min(92vw, 44rem);
+  text-align: center;
+}
+
+.promptCopyFade {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 240ms ease, transform 240ms ease;
+}
+
+.eyebrow {
+  margin: 0 0 0.9rem;
+  color: rgba(103, 232, 249, 0.92);
+  font-family: "SFMono-Regular", "Menlo", "Monaco", "Cascadia Mono", "Segoe UI Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  text-shadow: 0 0 18px rgba(34, 211, 238, 0.28);
+}
+
+.title {
+  margin: 0;
+  color: #f8fafc;
+  font-family: "SFMono-Regular", "Menlo", "Monaco", "Cascadia Mono", "Segoe UI Mono", monospace;
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  line-height: 0.92;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 26px rgba(255, 255, 255, 0.08),
+    0 0 42px rgba(34, 211, 238, 0.08);
+}
+
+.copy {
+  margin: 1rem auto 0;
+  max-width: 32rem;
+  color: rgba(191, 219, 254, 0.82);
+  font-family: "SFMono-Regular", "Menlo", "Monaco", "Cascadia Mono", "Segoe UI Mono", monospace;
+  font-size: 0.98rem;
+  line-height: 1.9;
+  text-shadow: 0 0 14px rgba(59, 130, 246, 0.12);
+}
+
+.actions {
+  margin-top: 1.9rem;
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  border: 0;
+  background: transparent;
+  color: #67e8f9;
+  padding: 0.9rem 1.35rem;
+  font-family: "SFMono-Regular", "Menlo", "Monaco", "Cascadia Mono", "Segoe UI Mono", monospace;
+  font-size: 0.86rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 160ms ease, color 160ms ease, text-shadow 160ms ease;
+  text-shadow: 0 0 16px rgba(34, 211, 238, 0.22);
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  color: #f9a8d4;
+  text-shadow:
+    0 0 18px rgba(34, 211, 238, 0.2),
+    0 0 24px rgba(244, 114, 182, 0.28);
+}
+
+.button:focus-visible {
+  outline: 2px solid rgba(103, 232, 249, 0.65);
+  outline-offset: 4px;
+}
+
+.warpOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(circle at center, transparent 0%, rgba(2, 6, 23, 0.12) 35%, rgba(0, 0, 0, 0.72) 100%),
+    linear-gradient(180deg, rgba(2, 6, 23, 0.08), rgba(2, 6, 23, 0.52));
+}
+
+.flash {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.blackout {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  background: #000;
+}
+
+.blackoutActive {
+  animation: blackoutIn 550ms ease forwards;
+}
+
+.flashActive {
+  animation: flashReveal 1200ms ease-in-out forwards;
+}
+
+@keyframes blackoutIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes flashReveal {
+  0% {
+    opacity: 0;
+    background: rgba(255, 255, 255, 0);
+  }
+  45% {
+    opacity: 1;
+    background: rgba(255, 255, 255, 1);
+  }
+  68% {
+    opacity: 1;
+    background: rgba(255, 255, 255, 1);
+  }
+  100% {
+    opacity: 0;
+    background: rgba(255, 255, 255, 0);
+  }
+}
