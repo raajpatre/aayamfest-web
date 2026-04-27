@@ -1,6 +1,6 @@
-# AAYAM Tech Fest 2026 🚀
+# AAYAM Tech Fest 2026 
 
-**AAYAM** is the flagship technical festival of **Newton School of Technology**. This website serves as the digital terminal for the event, featuring a futuristic "cyber-grid" aesthetic, real-time event tracking, and a secure administration system.
+**AAYAM** is the flagship technical festival of **Newton School of Technology x S-VYASA University**. This website serves as the digital terminal for the event, featuring a futuristic "cyber-grid" aesthetic, real-time event tracking"
 
 ---
 
@@ -26,7 +26,7 @@
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Prerequisites
 - Node.js 18+ 
@@ -71,17 +71,9 @@ To perform administrative actions, include the following header in your requests
 
 ---
 
-## 🛡️ Security Audit 
-This project has undergone a comprehensive security audit, addressing:
-- **XSS/SSRF**: Strict content security policies and remote image allowlists.
-- **Dependency Hygiene**: Regular auditing and patching of high-severity vulnerabilities.
-- **Secure Communication**: Enforced TLS for all external integrations.
-
----
-
 ## 📄 License
 This project is for the AAYAM Tech Fest. All rights reserved.
 
 ---
 
-**Developed for AAYAM x Newton School of Technology**
+**Developed for AAYAM with ❤️**
