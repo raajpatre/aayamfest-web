@@ -1,6 +1,15 @@
+<img width="1459" height="869" alt="Screenshot 2026-05-16 at 4 50 46 PM" src="https://github.com/user-attachments/assets/a0548f41-65cf-4710-9a96-c6c662922a7d" />
+<img width="1457" height="868" alt="Screenshot 2026-05-16 at 4 50 57 PM" src="https://github.com/user-attachments/assets/6508e1c4-7dbb-4491-aa7c-2263b9869487" />
+<img width="1452" height="870" alt="Screenshot 2026-05-16 at 4 51 48 PM" src="https://github.com/user-attachments/assets/48065f2f-bc33-4128-80be-ec7c234f695f" />
+<img width="1458" height="868" alt="Screenshot 2026-05-16 at 4 51 24 PM" src="https://github.com/user-attachments/assets/f6d2faed-c97a-4a85-9a71-af331eab8a65" />
+<img width="1456" height="869" alt="Screenshot 2026-05-16 at 4 51 32 PM" src="https://github.com/user-attachments/assets/13b86c88-2aeb-45f8-b541-2e3a39733a93" />
+
+🚧 Current Status: Rebuilding homepage with Post event updates
+
 # AAYAM Tech Fest 2026 
 
-**AAYAM** is the flagship technical festival of **Newton School of Technology x S-VYASA University**. This website serves as the digital terminal for the event, featuring a futuristic "cyber-grid" aesthetic, real-time event tracking"
+**AAYAM 2026** — the official digital home for **Newton School of Technology x S-VYASA University's** National tech fest. A neon-drenched, performance-tuned web experience built to handle real traffic during a live event.
+🌐 Live: aayamfest.com · ⚡ Deployed on Vercel
 
 ---
 
@@ -10,8 +19,7 @@
 - **Event Terminal**: A centralized catalog for all technical events, robotics competitions, and workshops.
 - **Dynamic Content**: Managed via a secure admin API and MongoDB.
 - **Security-First Architecture**: Implemented with strict CSP headers, SSRF protection, and bearer-token authentication.
-- **Performance Optimized**: Features a low-performance detection system to ensure smooth 60fps experiences on all devices.
-
+- **Performance Optimized**: Low-end device detection that gracefully degrades animations to keep 60fps across hardware.
 ---
 
 ## 🛠️ Tech Stack
@@ -23,51 +31,6 @@
 - **Animations**: [Framer Motion](https://www.framer.com/motion/) & WebGL
 - **Image Hosting**: [Cloudinary](https://cloudinary.com/)
 - **Analytics**: Google Analytics 4
-
----
-
-## Getting Started
-
-### 1. Prerequisites
-- Node.js 18+ 
-- MongoDB (Local or Atlas)
-- Cloudinary Account
-
-### 2. Installation
-```bash
-git clone https://github.com/raajpatre/Aayam-TechFest-.git
-cd Aayam-TechFest-
-npm install
-```
-
-### 3. Environment Setup
-Create a `.env.local` file in the root directory and fill in the following:
-
-```env
-MONGODB_URI=your_mongodb_connection_string
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
-
-# Security
-ADMIN_PASSWORD=your_secure_bearer_token
-NEXT_PUBLIC_GA_MEASUREMENT_ID=your_ga_id
-```
-
-### 4. Running Locally
-```bash
-npm run dev
-```
-Open [http://localhost:3000](http://localhost:3000) to see the grid in action.
-
----
-
-## 🔐 Administration
-
-Administrative routes (`POST`, `PATCH`, `DELETE`) are protected by a **Bearer Token** authentication system. 
-
-To perform administrative actions, include the following header in your requests:
-`Authorization: Bearer <YOUR_ADMIN_PASSWORD>`
 
 ---
 
