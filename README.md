@@ -31,6 +31,44 @@
 - **Security-First Architecture**: Implemented with strict CSP headers, SSRF protection, and bearer-token authentication.
 - **Performance Optimized**: Low-end device detection that gracefully degrades animations to keep 60fps across hardware.
 
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+- MongoDB (Local or Atlas)
+- Cloudinary Account
+
+### Installation
+\`\`\`bash
+git clone https://github.com/raajpatre/aayamfest-web.git
+cd aayamfest-web
+npm install
+\`\`\`
+
+### Environment
+Copy \`.env.example\` to \`.env.local\` and fill in your keys.
+
+### Run locally
+\`\`\`bash
+npm run dev
+\`\`\`
+Open [http://localhost:3000](http://localhost:3000).
+
+---
+
+## 🔐 Administration
+
+Admin routes (`POST`, `PATCH`, `DELETE`) are protected by bearer-token auth.
+Include the header on requests:
+
+\`\`\`
+Authorization: Bearer <ADMIN_PASSWORD>
+\`\`\`
+
+
 ---
 
 ## 📸 Gallery
@@ -53,3 +91,13 @@
   <img src="https://img.shields.io/badge/Cloudinary-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white" alt="Cloudinary" />
   <img src="https://img.shields.io/badge/Deployed_on-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
 </p>
+
+
+---
+
+## 📄 License
+For AAYAM Tech Fest. All rights reserved.
+
+---
+
+Built for AAYAM with ❤️ by [@raajpatre](https://github.com/raajpatre)
